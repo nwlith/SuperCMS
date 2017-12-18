@@ -11,6 +11,9 @@ const Article = db.define('article', {
   titre: {
     type: Sequelize.STRING,
   },
+  chapo: {
+    type: Sequelize.TEXT,
+  },
   contenu: {
     type: Sequelize.TEXT,
   },

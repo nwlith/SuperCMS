@@ -4,17 +4,21 @@ block content
   h2 Modifiez l'article #{article.titre}
   form(method="post" action="/articles/"+article.id+"/edit")
   
-    label(for="titre") titre :
+    label(for="titre") Titre :
     p
       input(type="text" name="titre" id="titre" value=article.titre)
       
-    label(for="keyword") mot-clef :
+    label(for="keyword") Mot-clef :
     p
       input(type="text" name="keyword" id="keyword" value=article.keyword)
       
-    label(for="contenu") contenu :
+    label(for="chapo") Chapô :
+    p
+        input(type="text" name="chapo" id="chapo" value=article.chapo)
+      
+    label(for="contenu") Contenu :
     p
       textarea(name="contenu" id="contenu")= article.contenu  
       
     p
-      button(type="submit") envoyer
+      button(type="submit") Envoyer
