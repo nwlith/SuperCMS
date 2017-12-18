@@ -33,6 +33,7 @@ router.post('/:id/edit', function(req, res, next) {
   Article.findById(req.params.id).then(function(article) {
     article.update({
       titre: req.body.titre || 'titre par défaut',
+      chapo: req.body.titre || 'chapo par défaut',
       contenu: req.body.contenu || 'contenu par défaut',
       keyword: req.body.keyword || 'mot-clef nul',
     }).then(function() {
@@ -52,6 +53,7 @@ router.post('/:id/delete', function(req, res, next) {
 router.post('/', function(req, res, next) {
   Article.create({
     titre: req.body.titre || 'titre par défaut',
+    chapo: req.body.titre || 'chapo par défaut',
     contenu: req.body.contenu || 'contenu par défaut',
     keyword: req.body.keyword || 'mot-clef nul',
   }).then(function() {
