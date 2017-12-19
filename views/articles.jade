@@ -1,29 +1,29 @@
 extends layout
-
-link(rel="stylesheet" href="style.css")
+head
+  link(rel="stylesheet" href="style.css")
 
 block content
   h2 Entrez un article
   form(method="post" action="/articles")
   
-    label(for="titre") titre :
+    label(for="titre") Titre :
     p
       input(type="text" name="titre" id="titre")
       
-    label(for="keyword") mot-clef :
+    label(for="themes") Thèmes :
     p
-      input(type="text" name="keyword" id="keyword")
+      input(type="text" name="themes" id="themes")
     
-    label(for="chapo") chapô : 
+    label(for="chapo") Chapô : 
     p
       input(type="text" name="chapo" id="chapo")
         
-    label(for="contenu") contenu :
+    label(for="contenu") Contenu :
     p
       textarea(name="contenu" id="contenu")  
       
     p
-      button(type="submit") envoyer
+      button(type="submit") Envoyer
 
   hr  
 
@@ -31,8 +31,8 @@ block content
   each article, index in articles
     article.article
       h3.titre= "no." + index + " : " + article.titre
-      h4.motclef= "mot-clef :" + article.keyword
-      h5.chapo= "chapo :" + article.chapo 
+      h4.motclef= "themes : " + article.themes
+      h5.chapo= "chapo : " + article.chapo 
       p.contenu= article.contenu
       hr
       a(href="/articles/"+article.id+"/edit") éditer
