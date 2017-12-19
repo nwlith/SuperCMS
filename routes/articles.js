@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Article = require('./../database/article');
+var Article = require('./../database/modeles').Article;
 
 /* Liste des articles : va chercher tous les articles dans la base de données
 puis les passe à la vue "articles.jade" pour affichage */
@@ -33,9 +33,9 @@ router.post('/:id/edit', function(req, res, next) {
   Article.findById(req.params.id).then(function(article) {
     article.update({
       titre: req.body.titre || 'titre par défaut',
-      chapo: req.body.titre || 'chapo par défaut',
-      contenu: req.body.contenu || 'contenu par défaut',
-      keyword: req.body.keyword || 'mot-clef nul',
+      chapo: req.body.chapo || 'chapo par défaut',
+      contenu: req.body.contenu || 'Pas de contenu',
+      themes: req.body.themes || 'Pas de thèmes',
     }).then(function() {
       res.redirect('/articles');
     });
@@ -53,9 +53,9 @@ router.post('/:id/delete', function(req, res, next) {
 router.post('/', function(req, res, next) {
   Article.create({
     titre: req.body.titre || 'titre par défaut',
-    chapo: req.body.titre || 'chapo par défaut',
-    contenu: req.body.contenu || 'contenu par défaut',
-    keyword: req.body.keyword || 'mot-clef nul',
+    chapo: req.body.chapo || 'chapo par défaut',
+    contenu: req.body.contenu || 'Pas de contenu',
+    themes: req.body.themes || 'Pas de thèmes',
   }).then(function() {
     res.redirect('/articles');
   });
