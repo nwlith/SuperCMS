@@ -49,6 +49,8 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+// ??
 app.post('/nouvelle', upload.single('avatar'), (req, res) => {
   if (!req.file) {
     console.log("No file received");
