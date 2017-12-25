@@ -2,8 +2,17 @@ var express = require('express');
 var router = express.Router();
 var References = require('./../database/modeles').References;
 var Themes = require('./../database/modeles').Themes;
+var Images = require('./../database/modeles').Images;
+
+
+
+
 
 /* Créer / modifier / supprimer des références*******************************************************************************************************************/
+router.post('/upload', function(req, res) {
+
+})
+
 /* Page d'accueil*/
 router.get('/nouvelle', function(req, res, next) {
   References.findAll().then(function(reference) {
@@ -22,8 +31,6 @@ router.get('/nouvelle', function(req, res, next) {
     });
   });
 });
-
-
 
 
 /* Cartographie : thème / référence ******************************************************************************************************************/
@@ -52,12 +59,15 @@ router.post('/nouvelle', function(req, res, next) {
   }).then(function(){
   References.create({
     titre: req.body.titre || 'titre par défaut',
-    chapo: req.body.image || 'Pas d\'image',
     contenu: req.body.contenu || 'Pas de contenu',
+  })}).then(function(){
+  Images.create({
+    chapo: req.body.image || 'Pas d\'image',
   })}).then(function() {
     res.redirect('/reference/nouvelle');
   });
 });
+
 
 /* Affiche le formulaire permettant d'éditer une référence */
 router.get('/:id/edit', function(req, res, next) {
