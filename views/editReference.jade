@@ -1,0 +1,22 @@
+head
+  link(rel='stylesheet', href='../stylesheets/style.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
+
+block content
+  h2 Modifiez la référence #{reference.titre}
+  form(method="post" action="/reference/"+reference.id+"/edit")
+  
+    label(for="titre") Titre :
+    p
+      input(type="text" name="titre" id="titre" value=reference.titre)
+      
+    label(for="themes") Thèmes :
+    p
+      input(type="text" name="themes" id="themes" value=themes.nom)
+      
+    label(for="contenu") Contenu :
+    p
+      textarea(name="contenu" id="contenu")= reference.contenu  
+      
+    p
+      button(type="submit") Envoyer

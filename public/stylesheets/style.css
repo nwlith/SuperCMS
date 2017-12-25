@@ -5,7 +5,11 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  font-family: 'Source Code Pro', monospace;
+}
+
+p {
+  font-family: 'Source Code Pro', monospace;
 }
 
 .article {

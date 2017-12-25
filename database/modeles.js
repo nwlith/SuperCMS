@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
 
-/* définit constructeur Article */
-const Article = db.define('article', {
+/* définit constructeur reference */
+const References = db.define('reference', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
@@ -11,7 +11,7 @@ const Article = db.define('article', {
   titre: {
     type: Sequelize.STRING,
   },
-  chapo: {
+  image: {
     type: Sequelize.TEXT,
   },
   contenu: {
@@ -26,19 +26,18 @@ const Themes = db.define('themes', {
     primaryKey: true,
     autoIncrement: true,
   },
-
   nom: {
     type: Sequelize.STRING,
   },
 });
 
-/* Associe des thèmes aux articles et des articles aux thèmes */
-Article.belongsToMany(Themes, {through: 'ArticlesThemes'});
-Themes.belongsToMany(Article, {through: 'ArticlesThemes'});
+/* Associe des thèmes aux références et des références aux thèmes */
+References.belongsToMany(Themes, {through: 'ReferencesThemes'});
+Themes.belongsToMany(References, {through: 'ReferencesThemes'});
 
-db.sync();
+db.sync({force:true});
 
 module.exports = {
-  Article,
+  References,
   Themes,
 };
