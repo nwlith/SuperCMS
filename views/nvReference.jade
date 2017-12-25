@@ -1,0 +1,50 @@
+
+head
+  title Nouvelle référence
+  
+  link(rel='stylesheet', href='../stylesheets/style.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
+
+block content
+  h2 Entrez une référence
+  form(method="post" action="/reference/nouvelle")
+  
+    label(for="titre") Titre :
+    p
+      input(type="text" name="titre" id="titre")
+      
+    label(for="themes") Thèmes :
+    p
+      input(type="text" name="themes" id="themes")
+    
+    label(for="image") Image : 
+    p
+      input(type="file" name="image" id="image")
+        
+    label(for="contenu") Contenu :
+    p
+      textarea(name="contenu" id="contenu")  
+      
+    p
+      button(type="submit") Envoyer
+
+  hr  
+
+  h2 Balise pre
+  
+    p
+      pre= JSON.stringify(reference)
+    
+  
+  h2 Liste des références
+  each References, index in reference
+    reference.reference
+      h3.titre= "no." + index + " : " + References.titre
+      img(scr="References.image")
+      p.contenu= References.contenu
+      hr
+      form(style="display:none" method="post" id="edit"+References.id action="/reference/"+References.id+"/edit")
+      button(onclick="var d = document.querySelector('#edit"+References.id+"');d.submit();") éditer
+      a(href="/reference/"+References.id+"/edit") éditer  
+      form(style="display:none" method="post" id="deleteme"+References.id action="/reference/"+References.id+"/delete")
+      button(onclick="var d = document.querySelector('#deleteme"+References.id+"');d.submit();") supprimer

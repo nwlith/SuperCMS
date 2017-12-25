@@ -9,7 +9,7 @@ var database = require('./database/db');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var articles = require('./routes/articles');
+var reference = require('./routes/reference');
 
 var app = express();
 
@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/articles', articles);
+app.use('/reference', reference);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -49,3 +49,5 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+console.log(':)');
