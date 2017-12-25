@@ -20,6 +20,7 @@ block content
     label(for="image") Image : 
     p
       input(type="file" name="image" id="image")
+      input(type="submit" value="Upload Image")
         
     label(for="contenu") Contenu :
     p
@@ -30,17 +31,27 @@ block content
 
   hr  
 
+
   h2 Balise pre
   
     p
       pre= JSON.stringify(reference)
+      
+  h2 Images
+  each Images, index in image
+    Image.image
+    img(scr="Image.image")
+    hr  
     
+  h2 Liste des thèmes
+  each Themes, index in theme
+    p.theme= Themes.themes
+    hr  
   
   h2 Liste des références
   each References, index in reference
     reference.reference
       h3.titre= "no." + index + " : " + References.titre
-      img(scr="References.image")
       p.contenu= References.contenu
       hr
       form(style="display:none" method="post" id="edit"+References.id action="/reference/"+References.id+"/edit")
