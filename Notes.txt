@@ -1,0 +1,6 @@
+- Donner un ID aux images ?
+- Trouver comment appeler une image dans .jade
+- Appeler thème dans .jade
+- Lier images/références et thèmes/Références
+- voir bouton
+- Ligne 53 app.js (?)

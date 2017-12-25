@@ -4,23 +4,13 @@ var References = require('./../database/modeles').References;
 var Themes = require('./../database/modeles').Themes;
 var Images = require('./../database/modeles').Images;
 
-
-
+var uploading = multer({
+  dest: __dirname + '../public/uploads/',
+  limits: {fileSize: 1000000, files:1},
+})
 
 
 /* Créer / modifier / supprimer des références*******************************************************************************************************************/
-router.post('/upload', function(req, res) {
-
-})
-
-/* Page d'accueil*/
-router.get('/nouvelle', function(req, res, next) {
-  References.findAll().then(function(reference) {
-    res.render('nvReference', {
-      reference: reference,
-    });
-  });
-});
 
 /* Liste des réferences : va chercher tous les références dans la base de données
 puis les passe à la vue "nvReference.jade" pour affichage à l'adresse /nouvelle */
@@ -32,8 +22,77 @@ router.get('/nouvelle', function(req, res, next) {
   });
 });
 
+/* crée une nouvelle référence /!\ à revoir (Création image + lien thème/ref/image)/!\*/
+router.post('/nouvelle', function(req, res, next) {
+  Themes.create({
+    nom: req.body.themes || 'Pas de thèmes',
+  }).then(function(){
+  References.create({
+    titre: req.body.titre || 'titre par défaut',
+    contenu: req.body.contenu || 'Pas de contenu',
+  })}).then(function(){
+  Images.create({
+    image: req.body.image || 'Pas d\'image',
+  })}).then(function() {
+    res.redirect('/reference/nouvelle');
+  });
+});
 
-/* Cartographie : thème / référence ******************************************************************************************************************/
+router.post('/upload',uploading, function(req, res) {
+})
+
+/* Affiche le formulaire permettant d'éditer une référence */
+router.get('/:id/edit', function(req, res, next) {
+  References.findById(req.params.id).then(function(reference) {
+    res.render('editReference', {
+      reference: reference,
+    });
+  });
+});
+
+/* Redirige suite un edit + mise à jour des références /!\ à revoir /!\ */
+router.post('/:id/edit', function(req, res, next) {
+  References.findById(req.params.id).then(function(reference) {
+    reference.update({
+      titre: req.body.titre || 'titre par défaut',
+      contenu: req.body.contenu || 'Pas de contenu',
+    })}).then(function(image) {
+      image.update({
+        /*image: ? */
+    })}).then(function(theme){
+      theme.update({
+        /*theme: ? */
+    })}).then(function() {
+      res.redirect('/reference/nouvelle');
+    });
+});
+
+/* Supprime */
+router.post('/:id/delete', function(req, res, next) {
+  References.findById(req.params.id).then(function(reference) {
+    reference.destroy();
+  }).then(function(){
+  Images.findById(req.params.id).then(function(image) {
+    image.destroy();
+  })}).then(function(){
+  Themes.findById(req.params.id).then(function(theme) {
+    theme.destroy();
+  })}).then(function() {
+    res.redirect('/reference/nouvelle');
+  });
+});
+
+/* Cartographie : accueil / thème / référence ******************************************************************************************************************/
+
+/* Page d'accueil*/
+router.get('/nouvelle', function(req, res, next) {
+  References.findAll().then(function(reference) {
+    res.render('nvReference', {
+      reference: reference,
+    });
+  });
+});
+
 /* Affiche une référence */
 router.get('/reference/:id', function(req, res, next) {
   References.findById(req.params.id).then(function(reference) {
@@ -51,56 +110,5 @@ router.get('/theme/:id', function(req, res, next) {
     });
   });
 });
-
-/* crée une nouvelle référence */
-router.post('/nouvelle', function(req, res, next) {
-  Themes.create({
-    nom: req.body.themes || 'Pas de thèmes',
-  }).then(function(){
-  References.create({
-    titre: req.body.titre || 'titre par défaut',
-    contenu: req.body.contenu || 'Pas de contenu',
-  })}).then(function(){
-  Images.create({
-    chapo: req.body.image || 'Pas d\'image',
-  })}).then(function() {
-    res.redirect('/reference/nouvelle');
-  });
-});
-
-
-/* Affiche le formulaire permettant d'éditer une référence */
-router.get('/:id/edit', function(req, res, next) {
-  References.findById(req.params.id).then(function(reference) {
-    res.render('editReference', {
-      reference: reference,
-    });
-  });
-});
-
-/* Redirige suite un edit + mise à jour des références */
-router.post('/:id/edit', function(req, res, next) {
-  References.findById(req.params.id).then(function(reference) {
-    reference.update({
-      titre: req.body.titre || 'titre par défaut',
-      chapo: req.body.image || 'Pas d\'image',
-      contenu: req.body.contenu || 'Pas de contenu',
-      themes: req.body.themes || 'Pas de thèmes',
-    }).then(function() {
-      res.redirect('/reference/nouvelle');
-    });
-  });
-});
-
-/* Redirige suite à une suppression */
-router.post('/:id/delete', function(req, res, next) {
-  References.findById(req.params.id).then(function(reference) {
-    reference.destroy().then(function() {
-      res.redirect('/reference/nouvelle');
-    });
-  });
-});
-
-
 
 module.exports = router;
