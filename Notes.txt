@@ -4,3 +4,4 @@
 - Lier images/références et thèmes/Références
 - voir bouton
 - Ligne 53 app.js (?)
+- lignes 3-4 modeles.js 

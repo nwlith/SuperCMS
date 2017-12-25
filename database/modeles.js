@@ -21,7 +21,7 @@ const References = db.define('reference', {
   },
 });
 
-/* définit constructeur image */
+/* définit constructeur image (?)*/
 const Images = multer.diskStorage({
   id: {
     type: Sequelize.INTEGER,
