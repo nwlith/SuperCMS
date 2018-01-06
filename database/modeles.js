@@ -1,7 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('./db');
-const host = req.host;
-const filePath = req.protocol + "://" + host + '/' + req.file.path;
+
 
 /* définit constructeur reference */
 const References = db.define('reference', {
@@ -13,28 +12,24 @@ const References = db.define('reference', {
   titre: {
     type: Sequelize.STRING,
   },
-  image: {
-    type: Sequelize.TEXT,
-  },
   contenu: {
     type: Sequelize.TEXT,
   },
 });
 
-/* définit constructeur image (?)*/
-const Images = multer.diskStorage({
+/* définit constructeur image */
+const Images = db.define('images', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  destination: '/images',
-  filename: function (req, file, callback) {
-    crypto.pseudoRandomBytes(16, function(err, raw) {
-      if (err) return callback(err);
-      callback(null, raw.toString('hex') + path.extname(file.originalname));
-    });
+  description : {
+    type : Sequelize.STRING,
   },
+  path : {
+    type : Sequelize.STRING,
+  }
 });
 
 /* Definition du constructeur Themes */
@@ -58,4 +53,5 @@ db.sync({force:true});
 module.exports = {
   References,
   Themes,
+  Images,
 };

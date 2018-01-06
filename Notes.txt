@@ -1,7 +1,5 @@
-- Donner un ID aux images ?
-- Trouver comment appeler une image dans .jade
-- Appeler thème dans .jade
 - Lier images/références et thèmes/Références
-- voir bouton
 - Ligne 53 app.js (?)
-- lignes 3-4 modeles.js 
+- lignes 3-4 modeles.js
+
+- différents types de références et donc de formulaires; Image/article(titre, intro, lien)/vidéo(titre, intro, lien vidéo(voir si ))/livre
