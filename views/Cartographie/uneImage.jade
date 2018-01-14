@@ -1,0 +1,13 @@
+head
+  link(rel='stylesheet', href='../stylesheets/style.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
+
+block
+  h2.titre = "no." + index + " : " + Images.Titre
+
+  figure 
+    img(scr=id.Images.path)
+    figcaption= Images.description
+
+    a.action(href="/references") revenir à la liste
+    a.action(href="/reference/:id") lien aléatoire en fonction de thème \(ce lien ne fonctionne pas)

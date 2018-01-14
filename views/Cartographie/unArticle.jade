@@ -1,0 +1,9 @@
+head
+  link(rel='stylesheet', href='../stylesheets/style.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
+  
+article.article
+  h3.titre= "no." + index + " : " + article.titre
+  p.contenu= article.contenu
+
+a.action(href="/references") revenir à la liste

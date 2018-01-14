@@ -3,16 +3,16 @@ head
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
 block content
-  h2 Modifiez la référence #{reference.titre}
-  form(method="post" action="/reference/"+reference.id+"/edit")
+  h2 Modifiez la référence #{article.titre}
+  form(method="post" action="/reference/article/"+Articles.id+"/edit")
   
     label(for="titre") Titre :
     p
-      input(type="text" name="titre" id="titre" value=reference.titre)
+      input(type="text" name="titre" id="titre" value=article.titre)
       
     label(for="contenu") Contenu :
     p
-      textarea(name="contenu" id="contenu")= reference.contenu  
+      textarea(name="contenu" id="contenu")= article.contenu  
       
     p
       button(type="submit") Envoyer
