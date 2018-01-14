@@ -32,18 +32,18 @@ block content
 
   h2 Visualisation de l'objet
     p
-      pre= JSON.stringify(reference)
+      pre= JSON.stringify(article)
       
   
-  h2 Liste des références
-  each References, index in reference
-    reference.reference
-      h3.titre= "no." + index + " : " + References.titre
-      p.contenu= References.contenu
+  h2 Liste des articles
+  each Articles, index in article
+    article.article
+      h3.titre= "no." + index + " : " + Articles.titre
+      p.contenu= Articles.contenu
       hr
-      a.action(href="/reference/"+References.id+"/edit") éditer  
-      form(style="display:none" method="post" id="deleteme"+References.id action="/reference/"+References.id+"/delete")
-      a.action(href='' onclick="var d = document.querySelector('#deleteme"+References.id+"');d.submit();") supprimer
+      a.action(href="/reference/article/"+Articles.id+"/edit") éditer  
+      form(style="display:none" method="post" id="deleteme"+Articles.id action="/reference/article/"+Articles.id+"/delete")
+      a.action(href='' onclick="var d = document.querySelector('#deleteme"+Articles.id+"');d.submit();") supprimer
       
       
    h2 Liste des images
@@ -53,7 +53,7 @@ block content
         img(src=Images.path)
         figcaption= Images.description
         a.action(href='/reference/image/'+Images.id+'/edit') éditer
-        form(id='delete-#{Images.id}' style="display:none;" action='/reference/'+Images.id+'/delete' method="post")
+        form(id='delete-#{Images.id}' style="display:none;" action='/reference/image/'+Images.id+'/delete' method="post")
         a.action(href='' onclick="event.preventDefault();document.getElementById('delete-#{Images.id}').submit();") supprimer
     if images.length === 0
       p Il n'y a pas encore d'images :(

@@ -1,5 +1,10 @@
 - Lier images/références et thèmes/Références
 - Ligne 53 app.js (?)
 - lignes 3-4 modeles.js
+- différents types de références et donc de formulaires;
+Image/article(titre, intro, lien)/vidéo(titre, intro, lien vidéo(voir si ))/livre
 
-- différents types de références et donc de formulaires; Image/article(titre, intro, lien)/vidéo(titre, intro, lien vidéo(voir si ))/livre
+
+- générer lien aléatoire
+- toujours problème ID. Créer un ID commun à plusieurs prototypes ?
+- gérer les histoires de chemin
