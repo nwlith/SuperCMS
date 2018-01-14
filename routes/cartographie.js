@@ -38,3 +38,5 @@ router.get('/image/:id', function(req, res, next) {
     });
   });
 });
+
+module.exports = router;
