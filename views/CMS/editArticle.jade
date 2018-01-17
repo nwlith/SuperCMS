@@ -1,18 +1,20 @@
 head
+  title Editer un article
   link(rel='stylesheet', href='../stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
-block content
-  h2 Modifiez la référence #{article.titre}
-  form(method="post" action="/reference/article/"+Articles.id+"/edit")
-  
-    label(for="titre") Titre :
-    p
-      input(type="text" name="titre" id="titre" value=article.titre)
-      
-    label(for="contenu") Contenu :
-    p
-      textarea(name="contenu" id="contenu")= article.contenu  
-      
-    p
-      button(type="submit") Envoyer
+body
+  block content
+    h2 Modifiez la référence 
+    h3 #{article.titre}
+    
+    form(method="post" action="/cms/article/"+article.id+"/edit")
+      label(for="titre") Titre :
+      p
+        input(type="text" name="titre" id="titre" value=article.titre)
+      label(for="contenu") Contenu :
+      p
+        textarea(name="contenu" id="contenu")= article.contenu
+      p
+        button(type="submit" class="petit") Envoyer
+        a(href="/cms/nouvelle" class="petit") Annuler

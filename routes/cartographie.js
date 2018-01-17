@@ -8,13 +8,16 @@ var Images = require('./../database/modeles').Images;
 
 
 /* Accueil*******************************************************************************************************************/
+router.get('/accueil', function(req, res, next) {
+        res.render('Cartographie/accueil');
+      });
 
 /* Liste des références *************************************************************************************************************/
 router.get('/references', function(req, res, next) {
-  References.findAll().then((reference) => {
+  Articles.findAll().then((articles) => {
       Images.findAll().then((images) => {
         res.render('Cartographie/references',{
-          reference: reference,
+          articles: articles,
           images: images
         });
       });

@@ -1,18 +1,22 @@
+
 head
+  title Editer une image
   link(rel='stylesheet', href='../stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
 block content
   h2 Modifiez l'image
-  form(method="post" action="/reference/image/"+Images.id+"/edit" enctype="multipart/form-data")
+  h3 #{image.description}
   
+  form(method="post" action="/cms/image/"+image.id+"/edit" enctype="multipart/form-data")
     label(for="file") Image :
     p
       input(type="file" name="file" id="file")
       
-    label(for=description) Description :
+    label(for="description") Description :
     p
-      textarea(name="desctiption" id="description")= images.contenu  
+      textarea(name="description" id="description")= image.description  
       
     p
-      button(type="submit") Envoyer
+      button(type="submit" class="petit") Envoyer
+      a(href="" onclick="history.back();" class="petit") Annuler

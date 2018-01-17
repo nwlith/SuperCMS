@@ -1,9 +1,13 @@
 head
+  title.titre= article.titre
   link(rel='stylesheet', href='../stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
   
-article.article
-  h3.titre= "no." + index + " : " + article.titre
-  p.contenu= article.contenu
+block content
+  article.article
+    h3.titre= "no." + index + " : " + article.titre
+    p.contenu= article.contenu
+  a.action(href="/cms/article/"+article.id+"/edit" class="petit") éditer
 
-a.action(href="/references") revenir à la liste
+  p
+    a.action(href="/cartographie/references" class="petit") revenir à la liste

@@ -11,6 +11,8 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var cms = require('./routes/cms');
 var cartographie = require('./routes/cartographie');
+var themes = ('./routes/themes');
+var themeActions = ('./routes/theme');
 
 var app = express();
 

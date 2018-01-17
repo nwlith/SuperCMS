@@ -1,13 +1,17 @@
 head
+  title.titre= image.description
   link(rel='stylesheet', href='../stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
-block
-  h2.titre = "no." + index + " : " + Images.Titre
+block content
+  h2.titre= image.id +"-"+ image.description
 
-  figure 
-    img(scr=id.Images.path)
-    figcaption= Images.description
+  figure
+    img(scr=image.path)
+    figcaption= image.description
+  a(href="/cms/image/"+image.id+"/edit" class="petit") éditer
 
-    a.action(href="/references") revenir à la liste
-    a.action(href="/reference/:id") lien aléatoire en fonction de thème \(ce lien ne fonctionne pas)
+  p
+    a(href="/cartographie/references" class="petit") revenir à la liste
+  p
+    a(href="/reference/:id" class="petit") lien aléatoire en fonction de thème \(ce lien ne fonctionne pas)
