@@ -1,9 +1,18 @@
-h1 Cartographie des références
+head 
+  title Cartographie des références
+  link(rel='stylesheet', href='../stylesheets/style.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
-h2 salut salut
+body(class="accueil")
+  block content
+    h1 Cartographie des références
 
-p 
-  a(href="/references") Voir la liste des références
-  a(href="/uneReference") Référence aléatoire \(lien mort)
-  a(href="../cms/") Ajouter / éditer des références \(aucune idée de comment écire ce lien)
+    div(class="center")
+      p 
+        a(href="/cartographie/references" class="petit") Voir la liste des références
+      p  
+        a(href="/cartographie/uneReference" class="petit") Référence aléatoire 
+        p (ne marche pas)
+      p  
+        a(href="/cms/nouvelle" class="petit") Ajouter / éditer des références
   

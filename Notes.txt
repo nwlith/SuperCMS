@@ -5,6 +5,20 @@
 Image/article(titre, intro, lien)/vidéo(titre, intro, lien vidéo(voir si ))/livre
 
 
+
+- Ajouter dans cartographie lien références articles et image
 - générer lien aléatoire
 - toujours problème ID. Créer un ID commun à plusieurs prototypes ?
-- gérer les histoires de chemin
+
+
+
+Soucis vue CMS/edit
+- Appliquer feuille de style aux vues "edit"
+- Edit/suppression image ne fonctionnent pas
+
+Soucis vue Cartographie/references
+- p.description= Images.description ?
+
+Soucis vue Cartographie/UneRef
+-Appliquer une feuille de style image/article
+-Afficher images

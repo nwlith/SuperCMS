@@ -1,59 +1,71 @@
-
 head
   title Nouvelle référence
-  
   link(rel='stylesheet', href='../stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
 block content
   h1 Nouvelle référence
+  a(href="../" class="petit") Accueil 
+  a(href="../cartographie/accueil" class="petit") Cartographie
+  br
+  br
+  hr
   h2 Entrez une référence
-  form(method="post" action="/reference/nouvelle"  enctype="multipart/form-data")
-  
+  h3 Article
+  form(method="post" class="article" action="/cms/nouvel_article")
     label(for="titre") Titre :
       p
         input(type="text" name="titre" id="titre")
-        
     label(for="contenu") Contenu :
       p
         textarea(name="contenu" id="contenu")  
-        
+    p
+      button(type="submit" class="petit") Envoyer
+    
+  h3 Image  
+  form(method="post" class="image" action="/cms/nouvelle_image"  enctype="multipart/form-data")   
     label(for="file") Image : 
       p
-        input(type="file" name="file" id="file")
-        
+        input(type="file" name="file" id="file")    
     label(for="description") Description :
       p
         textarea(name="description" id="description")  
-        
-        p
-        button(type="submit") Envoyer
-
-
+    p
+      button(type="submit" class="petit") Envoyer
+  
+  hr
   h2 Visualisation de l'objet
     p
       pre= JSON.stringify(article)
+    p
+      pre= JSON.stringify(image)
       
-  
+  hr 
   h2 Liste des articles
   each Articles, index in article
     article.article
       h3.titre= "no." + index + " : " + Articles.titre
       p.contenu= Articles.contenu
-      hr
-      a.action(href="/reference/article/"+Articles.id+"/edit") éditer  
-      form(style="display:none" method="post" id="deleteme"+Articles.id action="/reference/article/"+Articles.id+"/delete")
-      a.action(href='' onclick="var d = document.querySelector('#deleteme"+Articles.id+"');d.submit();") supprimer
-      
-      
+      br
+      a.action(href="/cms/article/"+Articles.id+"/edit" class="petit") éditer  
+      form(id="delete" style="display:none" method="post" action="/cms/article/"+Articles.id+"/delete")
+      a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit") supprimer
+      hr  
+    
    h2 Liste des images
    each Images in images
     article
       figure
         img(src=Images.path)
-        figcaption= Images.description
-        a.action(href='/reference/image/'+Images.id+'/edit') éditer
-        form(id='delete-#{Images.id}' style="display:none;" action='/reference/image/'+Images.id+'/delete' method="post")
-        a.action(href='' onclick="event.preventDefault();document.getElementById('delete-#{Images.id}').submit();") supprimer
+      figcaption= Images.description
+      br  
+      a.action(href="/cms/image/"+Images.id+"/edit" class="petit") éditer
+      form(id="delete" style="display:none;" method="post" action="/cms/image/"+Images.id+"/delete")
+      a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit") supprimer
+      hr
     if images.length === 0
       p Il n'y a pas encore d'images :(
+      hr
+        
+        
+        

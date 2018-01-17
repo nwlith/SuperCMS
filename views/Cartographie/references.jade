@@ -1,19 +1,33 @@
-h1 Toutes les références
+head 
+  title Toutes les références
+  link(rel='stylesheet', href='../stylesheets/style.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
-h2 Liste des articles
-each Articles, index in article
-  article.article
-    h3.titre= "no." + index + " : " + Articles.titre
-    p.contenu= Articles.contenu
-    hr
-    
- h2 Liste des images
- each Images in images
-  article
-    figure
-      img(src=Images.path)
-      figcaption= Images.description
-        if images.length === 0
+block content
+  h1 Toutes les références
+  
+  hr
+  h2 Liste des articles
+  each Articles in articles
+    a(class="petit" href="article/"+Articles.id)
+      article.article
+        h3.titre= Articles.id + ' - ' + Articles.titre
+        p.contenu= Articles.contenu
+  if articles.length === 0
+    p Il n'y a pas encore d'articles :(
+  hr
+  
+  h2 Liste des images
+  each Images in images
+    article
+      a(href="image/"+Images.id)
+        img(src=Images.path)
+      p.description= Images.description
+  if images.length === 0
     p Il n'y a pas encore d'images :(
-      
-a.action(href="/reference/:id") lien aléatoire \(ce lien ne fonctionne pas)
+  hr
+  
+  p
+    a.action(href="/reference/:id" class="petit") lien aléatoire (ce lien ne fonctionne pas)
+  p
+    a(href="/cartographie/accueil" class="petit") Retour

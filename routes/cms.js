@@ -21,7 +21,7 @@ var rangement = Multer.diskStorage({
 
 var uploadHandler = Multer({ storage: rangement });
 
-router.use('/upload', uploadHandler.single('file'));
+router.use('/nouvelle_image', uploadHandler.single('file'));
 
 /* Créer / modifier / supprimer des références*******************************************************************************************************************/
 
@@ -56,64 +56,61 @@ router.post('/nouvelle', function(req, res, next) {
  */
 
 /* Créer soit article soit image et thèmes */
-router.post('/nouvelle', function(req, res, next) {
+router.post('/nouvel_article', function(req, res, next) {
   Articles.create({
       titre: req.body.titre || 'titre par défaut',
       contenu: req.body.contenu || 'Pas de contenu',
     }).then((article) => {
-        res.redirect('/reference/nouvelle');
+        res.redirect('/cms/nouvelle');
     });
   });
 
-router.post('/upload', function(req, res, next) {
+router.post('/nouvelle_image', function(req, res, next) {
       Images.create({
         path: req.file.filename ? '/images/' + req.file.filename : 'erreur',
         description: req.body.description || 'description par défaut',
       }).then((image) => {
-        res.redirect('/reference/nouvelle');
+        res.redirect('/cms/nouvelle');
     });
   });
 
-
-
-
-/* Affiche le formulaire permettant d'éditer une référence */
+/* Affiche le formulaire permettant d'éditer un article*/
 router.get('/article/:id/edit', function(req, res, next) {
   Articles.findById(req.params.id).then(function(article) {
-    res.render('editArticle', {
+    res.render('CMS/editArticle', {
       article: article,
     });
   });
 });
 
+/* Affiche le formulaire permettant d'éditer une image*/
+router.get('/image/:id/edit', function(req, res, next) {
+  Images.findById(req.params.id).then(function(image) {
+    res.render('CMS/editImage', {
+      image: image,
+    });
+  });
+});
 
-/* Redirige suite un edit + mise à jour des références */
+/* Redirige suite un edit de l'article et le met à jour*/
 router.post('/article/:id/edit', function(req, res, next) {
   Articles.findById(req.params.id).then(function(article) {
     article.update({
       titre: req.body.titre || 'titre par défaut',
       contenu: req.body.contenu || 'Pas de contenu',
     })}).then(function(article) {
-      res.redirect('/reference/nouvelle');
+      res.redirect('/cms/nouvelle');
     });
-});
-
-router.get('/image/:id/edit', function(req, res, next) {
-  Images.findById(req.params.id).then(function(images) {
-    res.render('editImage', {
-      images: images,
-    });
-  });
 });
 
 router.post('/image/:id/edit', function(req, res, next) {
-  Images.findById(req.params.id).then(function(images) {
-    images.update({
-      titre: req.body.titre || 'titre par défaut',
-      description: req.body.description || 'Pas de contenu',
-    })}).then(function(image) {
-      res.redirect('/reference/nouvelle');
+  Images.findById(req.params.id).then((image) => {
+    image.update({
+      description: req.body.description || image.description,
+    }).then(() => {
+      res.redirect('/cms/nouvelle');
     });
+  });
 });
 
 /* Supprime article*/
@@ -121,16 +118,16 @@ router.post('/article/:id/delete', function(req, res, next) {
   Articles.findById(req.params.id).then(function(article) {
     article.destroy();
   }).then(function() {
-    res.redirect('/reference/nouvelle');
+    res.redirect('/cms/nouvelle');
   });
 });
 
 /* Supprime image */
-router.post('/article/:id/delete', function(req, res, next) {
-  Images.findById(req.params.id).then(function(images) {
-    images.destroy();
+router.post('/image/:id/delete', function(req, res, next) {
+  Images.findById(req.params.id).then(function(image) {
+    image.destroy();
   }).then(function() {
-    res.redirect('/reference/nouvelle')
+    res.redirect('/cms/nouvelle')
   });
 });
 
