@@ -1,22 +1,37 @@
+extends ../layout
+include ../listeThemes
+include ../tagbox
 
 head
   title Editer une image
-  link(rel='stylesheet', href='../stylesheets/style.css')
+  link(rel='stylesheet', href='/stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
 block content
   h2 Modifiez l'image
   h3 #{image.description}
   
+
+  figure
+    img(src=image.path)
+    figcaption= image.description
+
   form(method="post" action="/cms/image/"+image.id+"/edit" enctype="multipart/form-data")
     label(for="file") Image :
     p
       input(type="file" name="file" id="file")
-      
     label(for="description") Description :
     p
       textarea(name="description" id="description")= image.description  
-      
     p
-      button(type="submit" class="petit") Envoyer
-      a(href="" onclick="history.back();" class="petit") Annuler
+      button(type="submit" class="petit noir") Envoyer
+  
+  div.themes
+    h4 Thèmes associés
+    +listeThemes(image, 'image')
+    h4 Thèmes disponibles
+    +tagbox(themes, image, 'image')
+
+
+  p
+    a(href="" onclick="history.back();" class="petit noir") Annuler

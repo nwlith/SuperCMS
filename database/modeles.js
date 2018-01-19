@@ -48,10 +48,12 @@ const Themes = db.define('themes', {
 });
 
 /* Associe des thèmes aux références et des références aux thèmes */
-Articles.belongsToMany(Themes, {through: 'ArticlesThemes'});
-Themes.belongsToMany(Articles, {through: 'ArticlesThemes'});
+Articles.belongsToMany(Themes, { through: 'ArticlesThemes' });
+Themes.belongsToMany(Articles, { through: 'ArticlesThemes' });
+Images.belongsToMany(Themes, { through: 'ImagesThemes'});
+Themes.belongsToMany(Images, { through: 'ImagesThemes'});
 
-db.sync({force:true});
+db.sync();
 
 module.exports = {
   Articles,

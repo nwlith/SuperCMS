@@ -12,7 +12,7 @@ var users = require('./routes/users');
 var cms = require('./routes/cms');
 var cartographie = require('./routes/cartographie');
 var themes = ('./routes/themes');
-var themeActions = ('./routes/theme');
+var themeActions = require('./routes/theme');
 
 var app = express();
 
@@ -29,6 +29,8 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/cartographie', cartographie);
 app.use('/cms', cms);
+app.use('/theme', themeActions);
+//app.use('/themes', themes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

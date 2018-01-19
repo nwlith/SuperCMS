@@ -1,0 +1,18 @@
+head
+  extends ../layout
+  title Editer un Thème
+  link(rel='stylesheet', href='../stylesheets/style.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
+
+body
+  block content
+    h2 Modifiez le thème 
+    h3 #{themes.nom}
+    
+    form(method="post" action="/cms/theme/"+themes.id+"/edit")
+      label(for="nom") Nom :
+      p
+        input(type="text" name="nom" id="nom" value=themes.nom)
+      p
+        button(type="submit" class="petit noir") Envoyer
+        a(href="/cms/nouvelle" class="petit noir") Annuler

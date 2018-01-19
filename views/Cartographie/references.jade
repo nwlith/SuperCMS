@@ -5,11 +5,13 @@ head
 
 block content
   h1 Toutes les références
-  
+  a(href="/" class="petit noir") Accueil 
+  a(href="/cartographie/aleatoire" class="petit noir") lien aléatoire
+  a(href="/cms/nouvelle" class="petit noir") Nouvelle référence
   hr
   h2 Liste des articles
   each Articles in articles
-    a(class="petit" href="article/"+Articles.id)
+    a(class="petit noir" href="article/"+Articles.id)
       article.article
         h3.titre= Articles.id + ' - ' + Articles.titre
         p.contenu= Articles.contenu
@@ -27,7 +29,6 @@ block content
     p Il n'y a pas encore d'images :(
   hr
   
+  
   p
-    a.action(href="/reference/:id" class="petit") lien aléatoire (ce lien ne fonctionne pas)
-  p
-    a(href="/cartographie/accueil" class="petit") Retour
+    a(href="/cartographie/accueil" class="petit noir") Retour

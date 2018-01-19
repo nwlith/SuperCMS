@@ -23,6 +23,18 @@ var uploadHandler = Multer({ storage: rangement });
 
 router.use('/nouvelle_image', uploadHandler.single('file'));
 
+var carte = {
+  image: Images,
+  article: Article,
+  theme: Themes,
+};
+var carteUrl = {
+  image: "image",
+  article: "articles",
+  theme:"theme"
+};
+
+
 /* Créer / modifier / supprimer des références*******************************************************************************************************************/
 
 /* Liste des réferences, thèmes, image : va chercher tous les références dans la base de données
@@ -30,32 +42,18 @@ puis les passe à la vue "nouvelleReference.jade" pour affichage à l'adresse /n
 router.get('/nouvelle', function(req, res, next) {
   Articles.findAll().then((article) => {
       Images.findAll().then((images) => {
-        res.render('CMS/nouvelleReference',{
-          article: article,
-          images: images
+        Themes.findAll().then((themes) => {
+          res.render('CMS/nouvelleReference',{
+            article: article,
+            images: images,
+            themes: themes
         });
       });
     });
   });
-
-/* crée une nouvelle référence */
-
-/*
-router.post('/nouvelle', function(req, res, next) {
-  References.create({
-    titre: req.body.titre || 'titre par défaut',
-    contenu: req.body.contenu || 'Pas de contenu',
-  }).then(function(){
-  Images.create({
-    path: req.file.filename ? '/images/' + req.file.filename : 'erreur',
-    description: req.body.description || 'description par défaut',
-  })}).then(function() {
-    res.redirect('/reference/nouvelle');
-  });
 });
- */
 
-/* Créer soit article soit image et thèmes */
+/* Crée référence et thème ***************************************************/
 router.post('/nouvel_article', function(req, res, next) {
   Articles.create({
       titre: req.body.titre || 'titre par défaut',
@@ -74,25 +72,40 @@ router.post('/nouvelle_image', function(req, res, next) {
     });
   });
 
-/* Affiche le formulaire permettant d'éditer un article*/
-router.get('/article/:id/edit', function(req, res, next) {
-  Articles.findById(req.params.id).then(function(article) {
-    res.render('CMS/editArticle', {
-      article: article,
+
+/** Ajouter thème*/
+router.post('/nouveau_theme', function(req, res, next) {
+    Themes.create({
+        nom: req.body.nom || 'Nom par défaut',
+      }).then((themes) => {
+          res.redirect('/cms/nouvelle');
+      });
+    });
+
+/* Affiche le formulaire permettant d'éditer référence et thème****************/
+router.get('/:model/:id/edit', function (req, res, next) {
+  var r = req.params;
+  carte[r.model].findById(r.modelId, {
+    include: [{
+      model: Themes,
+    }],
+  }).then(function(model) {
+    Themes.findAll().then((themes) => {
+        res.render("CMS/edit"+carteUrl[r.model]);
+      });
     });
   });
 });
 
-/* Affiche le formulaire permettant d'éditer une image*/
-router.get('/image/:id/edit', function(req, res, next) {
-  Images.findById(req.params.id).then(function(image) {
-    res.render('CMS/editImage', {
-      image: image,
+router.get('/theme/:id/edit', function(req, res, next) {
+  Themes.findById(req.params.id).then(function(themes) {
+    res.render('CMS/editTheme', {
+      themes: themes,
     });
   });
 });
 
-/* Redirige suite un edit de l'article et le met à jour*/
+/* Redirige suite un edit de l'article et le met à jour*************************/
 router.post('/article/:id/edit', function(req, res, next) {
   Articles.findById(req.params.id).then(function(article) {
     article.update({
@@ -113,31 +126,25 @@ router.post('/image/:id/edit', function(req, res, next) {
   });
 });
 
-/* Supprime article*/
-router.post('/article/:id/delete', function(req, res, next) {
-  Articles.findById(req.params.id).then(function(article) {
-    article.destroy();
+router.post('/theme/:id/edit', function(req, res, next) {
+  Themes.findById(req.params.id).then(function(themes) {
+    themes.update({
+      nom: req.body.nom || 'nom par défaut',
+    })}).then(function(themes) {
+      res.redirect('/cms/nouvelle');
+    });
+});
+
+/* Supprime article/image/theme**************************************************/
+
+router.post('/:model/:id/delete', function (req, res, next) {
+  var r = req.params;
+  carte[r.model].findById(r.modelId).then(function(model) {
+    model.destroy();
   }).then(function() {
     res.redirect('/cms/nouvelle');
   });
 });
 
-/* Supprime image */
-router.post('/image/:id/delete', function(req, res, next) {
-  Images.findById(req.params.id).then(function(image) {
-    image.destroy();
-  }).then(function() {
-    res.redirect('/cms/nouvelle')
-  });
-});
-
-/* Supprime thèmes */
-router.post('/theme/:id/delete', function(req, res, next) {
-  Themes.findById(req.params.id).then(function(theme) {
-    theme.destroy();
-  }).then(function() {
-    res.redirect('/reference/nouvelle')
-  });
-});
 
 module.exports = router;
