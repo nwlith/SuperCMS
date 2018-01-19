@@ -5,51 +5,77 @@ head
 
 block content
   h1 Nouvelle référence
-  a(href="../" class="petit") Accueil 
-  a(href="../cartographie/accueil" class="petit") Cartographie
+  a(href="../" class="petit noir") Accueil 
+  a(href="../cartographie/accueil" class="petit noir") Cartographie
   br
   br
-  hr
   h2 Entrez une référence
-  h3 Article
-  form(method="post" class="article" action="/cms/nouvel_article")
-    label(for="titre") Titre :
-      p
-        input(type="text" name="titre" id="titre")
-    label(for="contenu") Contenu :
-      p
-        textarea(name="contenu" id="contenu")  
-    p
-      button(type="submit" class="petit") Envoyer
-    
-  h3 Image  
-  form(method="post" class="image" action="/cms/nouvelle_image"  enctype="multipart/form-data")   
-    label(for="file") Image : 
-      p
-        input(type="file" name="file" id="file")    
-    label(for="description") Description :
-      p
-        textarea(name="description" id="description")  
-    p
-      button(type="submit" class="petit") Envoyer
   
-  hr
-  h2 Visualisation de l'objet
-    p
-      pre= JSON.stringify(article)
-    p
-      pre= JSON.stringify(image)
-      
+  div(class="spaceAround")
+    div(class="blocAjout")
+      h3 Article
+      form(method="post" class="article" action="/cms/nouvel_article")
+        label(for="titre") Titre :
+          p
+            input(type="text" name="titre" id="titre")
+        label(for="contenu") Contenu :
+          p
+            textarea(name="contenu" id="contenu")
+            aside Note: Utiliser Markdown pour le formatage  
+        p
+          button(type="submit" class="petit noir") Envoyer
+          
+    div(class="blocAjout")
+      h3 Image  
+      form(method="post" class="image" action="/cms/nouvelle_image"  enctype="multipart/form-data")   
+        label(for="file") Image : 
+          p
+            input(type="file" name="file" id="file")    
+        label(for="description") Description :
+          p
+            textarea(name="description" id="description")  
+        p
+          button(type="submit" class="petit noir") Envoyer
+          
+    div(class="blocAjout")
+      h3 Vidéo  
+      form(method="post" class="image" action="/cms/nouvelle_image"  enctype="multipart/form-data")   
+        label(for="file") Lien de la vidéo : 
+          p
+            input(type="text" name="lien" id="lien")    
+        label(for="description") Description :
+          p
+            textarea(name="description" id="description")  
+        p(class="petit noir") Je suis un faux bouton
+  
+  h3 Thème
+  form(method="post" action="/cms/nouveau_theme")
+    label(for="themes") Nom : 
+      p
+        input(type=text id="nom" name="nom")
+      p
+        button(type="submit" class="petit noir") Nouveau thème
+  //
+    hr
+    div(class="previsu")
+      h2 Visualisation de l'objet
+        p
+          pre= JSON.stringify(article)
+        p
+          pre= JSON.stringify(image)
+          
   hr 
   h2 Liste des articles
   each Articles, index in article
-    article.article
-      h3.titre= "no." + index + " : " + Articles.titre
-      p.contenu= Articles.contenu
-      br
-      a.action(href="/cms/article/"+Articles.id+"/edit" class="petit") éditer  
-      form(id="delete" style="display:none" method="post" action="/cms/article/"+Articles.id+"/delete")
-      a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit") supprimer
+    div(class="spaceAround")
+      div(class="liste")
+        article.article
+          h3.titre= "no." + index + " : " + Articles.titre
+          p.contenu= Articles.contenu
+          br
+          a.action(href="/cms/article/"+Articles.id+"/edit" class="petit noir") éditer  
+          form(id="delete" style="display:none" method="post" action="/cms/article/"+Articles.id+"/delete")
+          a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
       hr  
     
    h2 Liste des images
@@ -59,13 +85,23 @@ block content
         img(src=Images.path)
       figcaption= Images.description
       br  
-      a.action(href="/cms/image/"+Images.id+"/edit" class="petit") éditer
+      a.action(href="/cms/image/"+Images.id+"/edit" class="petit noir") éditer
       form(id="delete" style="display:none;" method="post" action="/cms/image/"+Images.id+"/delete")
-      a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit") supprimer
+      a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
       hr
     if images.length === 0
       p Il n'y a pas encore d'images :(
       hr
+      
+  h2 Liste des thèmes
+  each Themes in themes
+    p.id= Themes.id
+      a(href="/cms/theme/"+Themes.id+"/edit" class="petitRouge").nom= Themes.nom 
+    a.action(href="/cms/theme/"+Themes.id+"/edit" class="petit noir") éditer
+    form(id="delete" style="display:none;" method="post" action="/cms/theme/"+Themes.id+"/delete")
+    a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
+    br
+    br 
         
         
         

@@ -1,8 +1,13 @@
-head
+extends ../layout
+include ../listeThemes
+include ../tagbox
+
+head  
   title Editer un article
-  link(rel='stylesheet', href='../stylesheets/style.css')
+  link(rel='stylesheet', href='/stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
+  
 body
   block content
     h2 Modifiez la référence 
@@ -15,6 +20,14 @@ body
       label(for="contenu") Contenu :
       p
         textarea(name="contenu" id="contenu")= article.contenu
+        aside Note: Utiliser Markdown pour le formatage
       p
-        button(type="submit" class="petit") Envoyer
-        a(href="/cms/nouvelle" class="petit") Annuler
+        button(type="submit" class="petit noir") Envoyer  
+    div.themes
+      h4 Thèmes associés
+      +listeThemes(article)
+      h4 Thèmes disponibles
+      +tagbox(themes, article)
+    hr
+  p  
+    a(href="/cms/nouvelle" class="petit noir") Retour

@@ -1,17 +1,19 @@
 head
   title.titre= image.description
-  link(rel='stylesheet', href='../stylesheets/style.css')
+  link(rel='stylesheet', href='/stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
+include ../listeThemes
+
 block content
-  h2.titre= image.id +"-"+ image.description
-
+  h1.titre= image.id +"-"+ image.description
+  a(href="/cartographie/references" class="petit noir") Toutes les références
+  a(href="/cartographie/aleatoire" class="petit noir") Référence aléatoire
   figure
-    img(scr=image.path)
+    img(src=image.path)
     figcaption= image.description
-  a(href="/cms/image/"+image.id+"/edit" class="petit") éditer
-
+  section.themes
+    +listeThemes(image, 'image')
   p
-    a(href="/cartographie/references" class="petit") revenir à la liste
-  p
-    a(href="/reference/:id" class="petit") lien aléatoire en fonction de thème \(ce lien ne fonctionne pas)
+    a(href="/cms/image/"+image.id+"/edit" class="petit noir") éditer
+    

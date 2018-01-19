@@ -1,34 +1,72 @@
+/* I - Général */
+/* II - Liste des références */
+/* III - Ajouter une nouvelle référence */
+/* IV - Une référence */
+/* V - Editer une référence */
+
+
+/* I - Général ***************************************************************************************************************
+*/
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background: #FFE7E7;
 }
 
-p {
-  font-family: 'Source Code Pro', monospace;
-}
-
-pre {
-  font-family: monospace;
-}
-
-img {
-  max-width: 40%;
-  height:auto;
-}
-
 h2 {
   font-size: 20px;
 }
 
+/*Boutons et faux boutons*/
+.petit {
+  display: inline-block;
+  margin: 0 .25em;
+  padding: 0 .25em;
+  border: 1px solid;
+  border-radius: 3px;
+  text-decoration: none;
+  line-height: 1.2;
+}
+.noir {
+  color: black;
+  background: none;
+}
+.rouge {
+  color: red;
+  background-color: #F6CED8;
+}
+.bleu {
+  color: blue;
+  background-color: lightblue;
+}
+
+button:hover {
+  background-color: grey;
+}
+
+.rouge:hover {
+  backgroung-color: red;
+}
+
+.noir:hover {
+  background-color: grey;
+}
+
+.previsu {
+  width: 600px;
+}
+pre {
+  font-family: 'Source Code Pro', monospace;
+  font-size: 10px;
+}
 .article {
   margin: 2em 0;
-  width: 600px;
+  width: 500px;
 }
 
 .image {
   margin: 2em 0;
-  width: 600px;
+  width: 500px;
 }
 
 .grille {
@@ -40,28 +78,26 @@ h2 {
   padding: 8px;
 }
 
-.petit {
-  color: black;
-  display: inline-block;
-  margin: 0 .25em;
-  padding: 0 .25em;
-  border: 1px solid;
-  border-radius: 3px;
-  text-decoration: none;
-  line-height: 1.2;
-  background: none;
-}
-
-button:hover {
-  background-color: grey;
-}
-a:hover {
-  background-color: grey;
-}
-
+/* II - Liste des références */
+/* Accueil cartographie */
 .center {
   margin-left: auto;
   margin-right: auto;
   text-align: center;
   margin-top: 100px;
+}
+/* III - Ajouter une nouvelle référence */
+img {
+  max-width: 40%;
+  height:auto;
+}
+.spaceAround {
+  display: flex;
+  justify-content: flex-start;
+}
+.blocAjout {
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-right: 20px;
 }
