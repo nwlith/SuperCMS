@@ -1,6 +1,6 @@
 head
   title Nouvelle référence
-  link(rel='stylesheet', href='../stylesheets/style.css')
+  link(rel='stylesheet', href='/stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
 block content
@@ -8,6 +8,7 @@ block content
   a(href="../" class="petit noir") Accueil 
   a(href="../cartographie/accueil" class="petit noir") Cartographie
   br
+  img(href="/images/gommette_bleue.png")
   br
   h2 Entrez une référence
   
@@ -35,40 +36,52 @@ block content
           p
             textarea(name="description" id="description")  
         p
-          button(type="submit" class="petit noir") Envoyer
-          
+          button(type="submit" class="petit noir") Envoyer            
+    
     div(class="blocAjout")
       h3 Vidéo  
-      form(method="post" class="image" action="/cms/nouvelle_image"  enctype="multipart/form-data")   
-        label(for="file") Lien de la vidéo : 
+      form(method="post" class="video" action="/cms/nouvelle_video")   
+        label(for="titre") Titre :
+          p 
+            input(type="text" name="titre" id="titre")
+        label(for="lien") Lien de la vidéo : 
           p
             input(type="text" name="lien" id="lien")    
         label(for="description") Description :
           p
             textarea(name="description" id="description")  
-        p(class="petit noir") Je suis un faux bouton
-  
-  h3 Thème
-  form(method="post" action="/cms/nouveau_theme")
-    label(for="themes") Nom : 
-      p
-        input(type=text id="nom" name="nom")
-      p
-        button(type="submit" class="petit noir") Nouveau thème
-  //
-    hr
-    div(class="previsu")
-      h2 Visualisation de l'objet
         p
-          pre= JSON.stringify(article)
+          button(type="submit" class="petit noir") Nouvelle vidéo
+  
+  div.blocAjoutTheme
+    h3 Thème
+    form(method="post" action="/cms/nouveau_theme")
+      label(for="themes") Nom : 
+        p
+          input(type=text id="nom" name="nom")
+        p
+          select(type=text id="couleur" name="couleur")
+            option(value="mauve" class="mauve") mauve
+            option(value="vert" class="vert") vert
+            option(value="bleu" class="bleu") bleu
+            option(value="jaune" class="jaune") jaune
+            option(value="rouge" class="rouge") rouge
+            option(value="saumon" class="saumon") saumon
+        p
+          button(type="submit" class="petit noir") Nouveau thème
+  
+      hr
+  div
+    h2 Visualisation de l'objet
+      p
+        pre= JSON.stringify(video)
         p
           pre= JSON.stringify(image)
           
   hr 
   h2 Liste des articles
-  each Articles, index in article
-    div(class="spaceAround")
-      div(class="liste")
+  div(class="listes")  
+    each Articles, index in article
         article.article
           h3.titre= "no." + index + " : " + Articles.titre
           p.contenu= Articles.contenu
@@ -78,30 +91,44 @@ block content
           a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
       hr  
     
-   h2 Liste des images
-   each Images in images
+  h2 Liste des images
+  each Images in images
     article
       figure
         img(src=Images.path)
-      figcaption= Images.description
-      br  
-      a.action(href="/cms/image/"+Images.id+"/edit" class="petit noir") éditer
-      form(id="delete" style="display:none;" method="post" action="/cms/image/"+Images.id+"/delete")
-      a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
-      hr
+        br
+        figcaption= Images.description
+    br  
+    a.action(href="/cms/image/"+Images.id+"/edit" class="petit noir") éditer
+    form(id="delete" style="display:none;" method="post" action="/cms/image/"+Images.id+"/delete")
+    a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
     if images.length === 0
       p Il n'y a pas encore d'images :(
+  hr
+    
+  h2 Liste des videos
+  div(class="listes")  
+    each Videos, index in videos
+        article
+          h3.titre= "no." + index + " : " + Videos.titre
+          p.lien= Videos.lien
+          p.description= Videos.description
+          br
+          a.action(href="/cms/video/"+Videos.id+"/edit" class="petit noir") éditer  
+          form(id="delete" style="display:none" method="post" action="/cms/video/"+Videos.id+"/delete")
+          a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
       hr
-      
+        
   h2 Liste des thèmes
-  each Themes in themes
-    p.id= Themes.id
-      a(href="/cms/theme/"+Themes.id+"/edit" class="petitRouge").nom= Themes.nom 
-    a.action(href="/cms/theme/"+Themes.id+"/edit" class="petit noir") éditer
-    form(id="delete" style="display:none;" method="post" action="/cms/theme/"+Themes.id+"/delete")
-    a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
-    br
-    br 
+  div.lignes
+    each Themes in themes
+      div.blocTheme
+        p
+          a(href="/cms/theme/"+Themes.id+"/edit" class="theme #{Themes.couleur}")= Themes.nom
+        br
+        a.action(href="/cms/theme/"+Themes.id+"/edit" class="petit noir") éditer
+        form(id="delete" style="display:none;" method="post" action="/cms/theme/"+Themes.id+"/delete")
+        a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
         
         
         

@@ -19,6 +19,7 @@ h2 {
 
 /*Boutons et faux boutons*/
 .petit {
+  background-color:  #FFE7E7;
   display: inline-block;
   margin: 0 .25em;
   padding: 0 .25em;
@@ -27,29 +28,104 @@ h2 {
   text-decoration: none;
   line-height: 1.2;
 }
+
 .noir {
   color: black;
   background: none;
 }
-.rouge {
-  color: red;
-  background-color: #F6CED8;
+
+.theme {
+  color: black
+  display: inline-block;
+  margin: 10px;
+  margin-bottom: 10px;
+  padding:10px;
+  border: 3px solid;
+  border-radius: 20px;
+  font-size: 14px;
+  text-decoration: none;
+  line-height: 1.2;
 }
+.darkBlue {
+  background-color: #FFE7E7;
+  color: #0A0344;
+}
+
+.rouge {
+  color: #FFE7E7;
+  background-color: #FF2400;
+}
+
 .bleu {
-  color: blue;
-  background-color: lightblue;
+  color: #FFE7E7;
+  background-color: #94AEFF;
+}
+
+.jaune {
+  color: #FFE7E7;
+  background-color: #EFD76F;
+}
+
+.saumon {
+  color: #FFE7E7;
+  background-color: #FFA68A;
+}
+
+.mauve {
+  color: #FFE7E7;
+  background-color: #B558E0;
+}
+
+.vert {
+  color: #FFE7E7;
+  background-color: #26BCB5;
 }
 
 button:hover {
   background-color: grey;
 }
 
-.rouge:hover {
-  backgroung-color: red;
-}
-
 .noir:hover {
   background-color: grey;
+}
+
+.darkBlue:hover {
+  background-color: #0A0344;
+  color: #FFE7E7;
+}
+.rouge:hover {
+  background-color: #FFE7E7;
+  color: #FF2400;
+}
+
+.vert:hover {
+  background-color: #FFE7E7;
+  color: #26BCB5;
+}
+
+.mauve:hover {
+  background-color: #FFE7E7;
+  color: #B558E0;
+}
+
+.jaune:hover {
+  background-color: #FFE7E7;
+  color: #EFD76F;
+}
+
+.saumon:hover {
+  background-color: #FFE7E7;
+  color: #FFA68A;
+}
+
+.bleu:hover {
+  background-color: #FFE7E7;
+  color: #94AEFF;
+}
+
+.mauve:hover {
+  background-color: #FFE7E7;
+  color: #B558E0;
 }
 
 .previsu {
@@ -95,9 +171,30 @@ img {
   display: flex;
   justify-content: flex-start;
 }
+
+.lignes {
+  display: flex;
+  justify-content: flex-start;
+}
+
 .blocAjout {
   border: 1px solid;
   border-radius: 5px;
   padding: 10px;
-  margin-right: 20px;
+  margin: 10px;
+}
+
+.blocAjoutTheme {
+  border-radius: 5px;
+  padding: 10px;
+  border-color: lightgrey;
+  margin: 10px;
+  width: 500px;
+}
+
+.blocTheme {
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  margin-left: 10px;
 }

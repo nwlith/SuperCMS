@@ -1,19 +1,20 @@
 head
-  title.titre= image.titre
+  title.titre= video.titre
   link(rel='stylesheet', href='/stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
 include ../listeThemes
 
 block content
-  h1.titre= image.id +"-"+ image.titre
+  h1.titre= video.id +"-"+ video.titre
   a(href="/cartographie/references" class="petit noir") Toutes les références
   a(href="/cartographie/aleatoire" class="petit noir") Référence aléatoire
   figure
-    img(src=image.path)
-    figcaption= image.description
+    a(href="video.lien") video.titre
+    iframe(src="#{video.lien}" width="1160" height="652" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
+    figcaption= video.description
   section.themes
-    +listeThemes(image, 'image')
+    +listeThemes(video, 'video')
   p
-    a(href="/cms/image/"+image.id+"/edit" class="petit noir") éditer
+    a(href="/cms/video/"+video.id+"/edit" class="petit noir") éditer
     

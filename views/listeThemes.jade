@@ -5,6 +5,8 @@ mixin listeThemes(cible, type)
       p Pas de thèmes sur cette référence :(
     else
       each themes in cible.themes
-        span.themes.petit.bleu #{ themes.nom }
+        span
+          a.themes.petit(class="#{themes.couleur} theme") #{ themes.nom }
           form(style="display:none" id="untheme-#{cible.id}-#{themes.id}" action="/theme/remove/#{themes.id}/from/#{type}/#{cible.id}" method="post")
-          span.delete(onclick="var f = document.getElementById('untheme-#{cible.id}-#{themes.id}').submit();") 
+          span  
+            a.delete(onclick="var f = document.getElementById('untheme-#{cible.id}-#{themes.id}').submit();") 

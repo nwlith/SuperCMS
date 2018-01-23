@@ -1,20 +1,8 @@
-- Ligne 53 app.js (?)
-- lignes 3-4 modeles.js
-- différents types de références et donc de formulaires;
-
-Image/article(titre, intro, lien)/vidéo(titre, intro, lien vidéo(voir si ))/livre
-
 - Revoir formulaire ajout de thème
-- Ajouter dans cartographie lien références articles et image
-- générer lien aléatoire
-- Attention à "taglist" (listeThemes) et "tagbox"
 
-
-Soucis vue CMS/edit
-- Edit/suppression image ne fonctionnent pas
-
-Soucis vue Cartographie/references
-- p.description= Images.description ?
-
-Soucis vue Cartographie/UneRef
--Afficher images
+- Markdown ne fonctionne pas
+- l'aléatoire n'est pas bon
+- faire un aléatoire à partir d'un thème
+- la fonction "retirer un thème" ne fonctionne pas
+- afficher toutes les références mélangées
+- lien vers "uneVideo" pour les vidéos

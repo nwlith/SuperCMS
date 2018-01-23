@@ -10,7 +10,7 @@ head
   
 body
   block content
-    h2 Modifiez la référence 
+    h2 Modifier la référence 
     h3 #{article.titre}
     
     form(method="post" action="/cms/article/"+article.id+"/edit")
@@ -25,9 +25,9 @@ body
         button(type="submit" class="petit noir") Envoyer  
     div.themes
       h4 Thèmes associés
-      +listeThemes(article)
+      +listeThemes(article, 'article')
       h4 Thèmes disponibles
-      +tagbox(themes, article)
+      +tagbox(themes, article, 'article')
     hr
   p  
     a(href="/cms/nouvelle" class="petit noir") Retour

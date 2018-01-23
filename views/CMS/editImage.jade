@@ -3,34 +3,34 @@ include ../listeThemes
 include ../tagbox
 
 head
-  title Editer une image
+  title Modifier l'image
   link(rel='stylesheet', href='/stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
 block content
   h2 Modifiez l'image
-  h3 #{image.description}
+  h3 #{images.description}
   
 
   figure
-    img(src=image.path)
-    figcaption= image.description
+    img(src=images.path)
+    figcaption= images.description
 
-  form(method="post" action="/cms/image/"+image.id+"/edit" enctype="multipart/form-data")
+  form(method="post" action="/cms/image/"+images.id+"/edit" enctype="multipart/form-data")
     label(for="file") Image :
     p
       input(type="file" name="file" id="file")
     label(for="description") Description :
     p
-      textarea(name="description" id="description")= image.description  
+      textarea(name="description" id="description")= images.description  
     p
       button(type="submit" class="petit noir") Envoyer
   
   div.themes
     h4 Thèmes associés
-    +listeThemes(image, 'image')
+    +listeThemes(images, 'image')
     h4 Thèmes disponibles
-    +tagbox(themes, image, 'image')
+    +tagbox(themes, images, 'image')
 
 
   p
