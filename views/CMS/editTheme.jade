@@ -6,7 +6,7 @@ head
 
 body
   block content
-    h2 Modifiez le thème 
+    h2 Modifier le thème 
     h3 #{themes.nom}
     
     form(method="post" action="/cms/theme/"+themes.id+"/edit")
@@ -16,3 +16,6 @@ body
       p
         button(type="submit" class="petit noir") Envoyer
         a(href="/cms/nouvelle" class="petit noir") Annuler
+        
+        
+  

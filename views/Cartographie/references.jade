@@ -29,6 +29,15 @@ block content
     p Il n'y a pas encore d'images :(
   hr
   
+  h2 Liste des videos
+  each Videos in videos
+    article
+      p.titre= Videos.titre
+      p.description= Videos.description
+  if images.length === 0
+    p Il n'y a pas encore de video :(
+  hr
+  
   
   p
     a(href="/cartographie/accueil" class="petit noir") Retour

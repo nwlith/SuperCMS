@@ -9,6 +9,7 @@ block content
   each Themes in themes
     a(class="petit rouge" href="theme/"+Articles.id) Liste des références par thème
         p.nom= Themes.nom
+    p.description= Themes.description
   if Themes.length === 0
     p Il n'y a pas encore de thème :(
-  hr
+hr

@@ -1,0 +1,37 @@
+extends ../layout
+include ../listeThemes
+include ../tagbox
+
+head  
+  title Editer une video
+  link(rel='stylesheet', href='/stylesheets/style.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
+
+  
+body
+  block content
+    h2 Modifier la référence 
+    h3 #{video.titre}
+    
+    iframe(src="#{video.lien}" width="1160" height="652" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
+    form(method="post" action="/cms/video/"+video.id+"/edit")
+      label(for="titre") Titre :
+        p
+          input(type="text" name="titre" id="titre" value=video.titre)
+      label(for="lien") Lien :
+        p
+          input(type="text" name="lien" id="lien" value=video.lien)
+      label(for="description") description :
+        p
+          textarea(name="contenu" id="contenu")= video.description
+          aside Note: Utiliser Markdown pour le formatage
+      p
+        button(type="submit" class="petit noir") Envoyer  
+    div.themes
+      h4 Thèmes associés
+      +listeThemes(video, 'video')
+      h4 Thèmes disponibles
+      +tagbox(themes, video, 'video')
+    hr
+  p  
+    a(href="/cms/nouvelle" class="petit noir") Retour

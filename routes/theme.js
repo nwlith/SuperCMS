@@ -1,20 +1,23 @@
 var express = require('express');
 var router = express.Router();
-var Article = require('./../database/modeles').Article;
+var Articles = require('./../database/modeles').Articles;
 var Images = require('./../database/modeles').Images;
+var Videos = require('./../database/modeles').Videos;
 var Themes = require('./../database/modeles').Themes;
 
 var carte = {
   image: Images,
-  article: Article,
+  article: Articles,
+  video: Videos,
 };
 
 var carteUrl = {
   image: "image",
-  article: "articles",
+  article: "article",
+  video: "video",
 };
 
-/** Ajouter thème*/
+/** Ajouter thème sur une référence */
 router.post('/add/:themesId/on/:model/:modelId', function (req, res) {
   var r = req.params;
   carte[r.model].findById(r.modelId).then(function(model) {
@@ -26,7 +29,7 @@ router.post('/add/:themesId/on/:model/:modelId', function (req, res) {
   });
 });
 
-/** Supprimer thème*/
+/** Supprimer thème d'une référence */
 router.post('/remove/:themesId/from/:model/:modelId', function (req, res) {
   var r = req.params;
   carte[r.model].findById(r.modelId).then(function(model) {
