@@ -1,6 +1,6 @@
 extends ../layout
-include ../listeThemes
-include ../tagbox
+include ../mixinThemes/tagbox
+include ../mixinThemes/nouveauTheme
 
 head
   title Modifier l'image
@@ -8,30 +8,25 @@ head
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
 block content
-  h2 Modifiez l'image
-  h3 #{images.description}
-  
-
-  figure
-    img(src=images.path)
-    figcaption= images.description
-
-  form(method="post" action="/cms/image/"+images.id+"/edit" enctype="multipart/form-data")
-    label(for="file") Image :
-    p
-      input(type="file" name="file" id="file")
-    label(for="description") Description :
-    p
-      textarea(name="description" id="description")= images.description  
-    p
-      button(type="submit" class="petit noir") Envoyer
-  
-  div.themes
-    h4 Thèmes associés
-    +listeThemes(images, 'image')
-    h4 Thèmes disponibles
-    +tagbox(themes, images, 'image')
-
-
-  p
-    a(href="" onclick="history.back();" class="petit noir") Annuler
+  body.cms
+    nav
+      div.titrePrincipal  
+        h1 Editer #{image.titre}
+      div.liens
+        a(href="" onclick="history.back();" class="navigation") Retour
+    h2 #{image.titre}  
+    section.blocAjout
+      h3= "Modifiez la référence " + image.titre
+      figure
+        img(src=image.path)
+      form(method="post" action="/cms/image/"+image.id+"/edit" enctype="multipart/form-data")
+        label(for="titre") Titre :
+          p
+            input(type="text" name="titre" id="titre" value=image.titre)
+        label(for="description") Description :
+          p
+            textarea(rows="10" cols="150" name="description" id="description")= image.description  
+        p
+          button(type="submit" class="petit noir") Envoyer
+    div.themes
+      +tagbox(themes, image, 'image')

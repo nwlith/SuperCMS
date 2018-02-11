@@ -1,0 +1,75 @@
+head
+  title Liste des référence
+  link(rel='stylesheet', href='/stylesheets/style.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
+
+block content
+  body.cms
+    nav
+      div.titrePrincipal
+        h1 Liste des références
+      div.liens
+        a(href="../" class="navigation") Accueil
+        a(href="../cartographie/accueil" class="navigation") Cartographie
+        a(href="../cms/nouvelle" class="navigation") Nouvelle référence
+    h2
+      a(onclick="document.getElementById('recherche').classList.remove('hide');" class="grand bleu") Rechercher une référence
+    section(class="bloc hide" id="recherche")
+      h2 Rechercher une référence
+      label(for="recherche") Rechercher une référence :
+        p Type de référence
+          select(type=text id="type" name="type")
+            option(value="article" class="article") article
+            option(value="image" class="image") image
+            option(value="video" class="video") vidéo
+        p Thème associé : 
+          input(type="text" name="theme" id="theme")
+        p Rechercher :
+          input(type="text" name="recherche" id="recherche")
+        p.petit.noir Je suis un faux bouton
+    div(class="listes")
+      h2 Liste des articles
+      section.wrap
+        each Articles, index in article
+          article.blocReference
+            h3.titre= "no." + index + " : " + Articles.titre
+            a.action(href="/cms/article/"+Articles.id+"/edit" class="petit noir") éditer  
+            form(id="delete" style="display:none" method="post" action="/cms/article/"+Articles.id+"/delete")
+            a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
+      hr  
+      h2 Liste des images
+      section.wrap
+        each Images in images
+          div.blocReference
+            h3.titre= "no." + index + " : " + Images.titre
+            img(src=Images.path)
+            br
+            a.action(href="/cms/image/"+Images.id+"/edit" class="petit noir") éditer
+            form(id="delete" style="display:none;" method="post" action="/cms/image/"+Images.id+"/delete")
+            a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
+          if images.length === 0
+            p Il n'y a pas encore d'images :(
+          br
+      hr
+      h2 Liste des videos 
+      section.wrap
+        each Videos, index in videos
+            article.blocReference
+                h3.titre= Videos.titre
+                br
+                a.action(href="/cms/video/"+Videos.id+"/edit" class="petit noir") éditer  
+                form(id="delete" style="display:none" method="post" action="/cms/video/"+Videos.id+"/delete")
+                a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
+      hr  
+      h2 Liste des thèmes
+      div.wrap
+        each Themes in themes
+          div.blocTheme
+            p
+              a(href="/cms/theme/"+Themes.id+"/edit" class="theme #{Themes.couleur}" style="background:#{Themes.couleur}")= Themes.nom
+              br
+            a.action(href="/cms/theme/"+Themes.id+"/edit" class="petit noir") éditer
+            form(id="delete" style="display:none;" method="post" action="/cms/theme/"+Themes.id+"/delete")
+            a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
+        
+        

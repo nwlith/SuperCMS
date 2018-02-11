@@ -3,132 +3,67 @@ head
   link(rel='stylesheet', href='/stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
-block content
-  h1 Nouvelle référence
-  a(href="../" class="petit noir") Accueil 
-  a(href="../cartographie/accueil" class="petit noir") Cartographie
-  br
-  img(href="/images/gommette_bleue.png")
-  br
-  h2 Entrez une référence
-  
-  div(class="spaceAround")
-    div(class="blocAjout")
-      h3 Article
-      form(method="post" class="article" action="/cms/nouvel_article")
-        label(for="titre") Titre :
-          p
-            input(type="text" name="titre" id="titre")
-        label(for="contenu") Contenu :
-          p
-            textarea(name="contenu" id="contenu")
-            aside Note: Utiliser Markdown pour le formatage  
-        p
-          button(type="submit" class="petit noir") Envoyer
-          
-    div(class="blocAjout")
-      h3 Image  
-      form(method="post" class="image" action="/cms/nouvelle_image"  enctype="multipart/form-data")   
-        label(for="file") Image : 
-          p
-            input(type="file" name="file" id="file")    
-        label(for="description") Description :
-          p
-            textarea(name="description" id="description")  
-        p
-          button(type="submit" class="petit noir") Envoyer            
+body.cms
+  block content
+    nav
+      div.titrePrincipal
+        h1 Nouvelle référence
+      div.liens
+        a(href="../" class="navigation") Accueil 
+        a(href="../cartographie/accueil" class="navigation") Cartographie 
+        a(href="/cms/liste" class="navigation") Liste des références
+    div.center
+      h3
+        a(onclick="document.getElementById('nouvelArticle').classList.remove('hide');document.getElementById('nouvelleVideo').classList.add('hide');document.getElementById('nouvelleImage').classList.add('hide');" class="grand bleu") article
+        a(onclick="document.getElementById('nouvelleImage').classList.remove('hide');document.getElementById('nouvelArticle').classList.add('hide');document.getElementById('nouvelleVideo').classList.add('hide');" class="grand bleu") image
+        a(onclick="document.getElementById('nouvelleVideo').classList.remove('hide');document.getElementById('nouvelArticle').classList.add('hide');document.getElementById('nouvelleImage').classList.add('hide');" class="grand bleu") vidéo
+    section.center
+        div(class="bloc ajoutReference" id="nouvelArticle")
+              h2 Article
+              form(method="post" class="article" action="/cms/nouvel_article")
+                label(for="titre") Titre :
+                  p
+                    input(type="text" name="titre" id="titre")
+                label(for="contenu") Contenu :
+                  p
+                    textarea(rows="15" cols="150" name="contenu" id="contenu")
+                    aside Note: Utiliser Markdown pour le formatage  
+                h3
+                  button(type="submit" class="grand bleu") nouvel article
+                  // button(type="submit" onclick="window.open('#{article.id}/theme_article')" class="petit noir") nouvel article
+        div(class="bloc ajoutReference hide" id="nouvelleImage")
+              h2 Image  
+              form(method="post" class="image" action="/cms/nouvelle_image"  enctype="multipart/form-data")   
+                label(for="titre") Titre :
+                  p 
+                    input(type="text" name="titre" id="titre")
+                label(for="file") Image : 
+                  p
+                    input(type="file" name="file" id="file")    
+                label(for="description") Description :
+                  p
+                    textarea(rows="10" cols="150" name="description" id="description") 
+                    aside Note: Markdown pas encore prévu
+                h3
+                  button(type="submit" class="grand bleu") nouvelle image
+                //button(type="submit" onclick="window.open('#{image.id}/theme_image')" class="petit noir") Nouvelle image            
+        div(class="bloc ajoutReference hide" id="nouvelleVideo")
+              h2 Vidéo  
+              form(method="post" class="video" action="/cms/nouvelle_video")   
+                label(for="titre") Titre :
+                  p 
+                    input(type="text" name="titre" id="titre")
+                label(for="lien") Lien de la vidéo : 
+                  p
+                    input(type="text" name="lien" id="lien")    
+                label(for="description") Description :
+                  p
+                    textarea(rows="10" cols="150" name="description" id="description")
+                    aside Note: Markdown pas encore prévu  
+                h3
+                  button(type="submit" class="grand bleu") nouvelle vidéo
+                  
+                  
+                  
+              //-  button(type="submit" onclick="window.open('#{video.id}/theme_video')"class="petit noir") nouvelle vidéo
     
-    div(class="blocAjout")
-      h3 Vidéo  
-      form(method="post" class="video" action="/cms/nouvelle_video")   
-        label(for="titre") Titre :
-          p 
-            input(type="text" name="titre" id="titre")
-        label(for="lien") Lien de la vidéo : 
-          p
-            input(type="text" name="lien" id="lien")    
-        label(for="description") Description :
-          p
-            textarea(name="description" id="description")  
-        p
-          button(type="submit" class="petit noir") Nouvelle vidéo
-  
-  div.blocAjoutTheme
-    h3 Thème
-    form(method="post" action="/cms/nouveau_theme")
-      label(for="themes") Nom : 
-        p
-          input(type=text id="nom" name="nom")
-        p
-          select(type=text id="couleur" name="couleur")
-            option(value="mauve" class="mauve") mauve
-            option(value="vert" class="vert") vert
-            option(value="bleu" class="bleu") bleu
-            option(value="jaune" class="jaune") jaune
-            option(value="rouge" class="rouge") rouge
-            option(value="saumon" class="saumon") saumon
-        p
-          button(type="submit" class="petit noir") Nouveau thème
-  
-      hr
-  div
-    h2 Visualisation de l'objet
-      p
-        pre= JSON.stringify(video)
-        p
-          pre= JSON.stringify(image)
-          
-  hr 
-  h2 Liste des articles
-  div(class="listes")  
-    each Articles, index in article
-        article.article
-          h3.titre= "no." + index + " : " + Articles.titre
-          p.contenu= Articles.contenu
-          br
-          a.action(href="/cms/article/"+Articles.id+"/edit" class="petit noir") éditer  
-          form(id="delete" style="display:none" method="post" action="/cms/article/"+Articles.id+"/delete")
-          a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
-      hr  
-    
-  h2 Liste des images
-  each Images in images
-    article
-      figure
-        img(src=Images.path)
-        br
-        figcaption= Images.description
-    br  
-    a.action(href="/cms/image/"+Images.id+"/edit" class="petit noir") éditer
-    form(id="delete" style="display:none;" method="post" action="/cms/image/"+Images.id+"/delete")
-    a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
-    if images.length === 0
-      p Il n'y a pas encore d'images :(
-  hr
-    
-  h2 Liste des videos
-  div(class="listes")  
-    each Videos, index in videos
-        article
-          h3.titre= "no." + index + " : " + Videos.titre
-          p.lien= Videos.lien
-          p.description= Videos.description
-          br
-          a.action(href="/cms/video/"+Videos.id+"/edit" class="petit noir") éditer  
-          form(id="delete" style="display:none" method="post" action="/cms/video/"+Videos.id+"/delete")
-          a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
-      hr
-        
-  h2 Liste des thèmes
-  div.lignes
-    each Themes in themes
-      div.blocTheme
-        p
-          a(href="/cms/theme/"+Themes.id+"/edit" class="theme #{Themes.couleur}")= Themes.nom
-        br
-        a.action(href="/cms/theme/"+Themes.id+"/edit" class="petit noir") éditer
-        form(id="delete" style="display:none;" method="post" action="/cms/theme/"+Themes.id+"/delete")
-        a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
-        
-        
-        

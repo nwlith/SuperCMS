@@ -1,9 +1,0 @@
-mixin tagbox(themes, cible, type)
-  div.listeThemes
-    if (themes.length === 0)
-      p Pas de Thèmes !
-    else
-      each theme in themes
-        span
-          a.theme.petit.darkBlue(class=cible.themes.find(t => t.nom === theme.nom) ? 'selected':'' onclick="var f = document.getElementById('themes-#{cible.id}-#{theme.id}').submit();")= theme.nom
-          form(style="display:none" id="themes-#{cible.id}-#{theme.id}" action="/theme/add/#{theme.id}/on/#{type}/#{cible.id}" method="post") 

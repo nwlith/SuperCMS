@@ -1,0 +1,20 @@
+mixin tagbox(themes, cible, type)
+  section.tagbox
+    h3 Thèmes associés
+    div.listeThemes.center
+      if (cible.themes.length === 0)
+        p Pas de thèmes sur cette référence :(
+      else
+        each themes in cible.themes
+          span
+            a.themes.petit(onclick="var f = document.getElementById('untheme-#{cible.id}-#{themes.id}').submit();" class="#{themes.couleur} theme" style="background: #{themes.couleur}") #{ themes.nom }
+            form(style="display:none" id="untheme-#{cible.id}-#{themes.id}" action="/theme/remove/#{themes.id}/from/#{type}/#{cible.id}" method="post")
+    h3 Thèmes disponibles
+    div.listeThemes.center
+      if (themes.length === 0)
+        p Pas de Thèmes !
+      else
+        each theme in themes
+          span
+              a.theme.petit.bleu(class=cible.themes.find(t => t.nom === theme.nom) ? 'selected':'' onclick="var f = document.getElementById('themes-#{cible.id}-#{theme.id}').submit();")= theme.nom
+              form(style="display:none" id="themes-#{cible.id}-#{theme.id}" action="/theme/add/#{theme.id}/on/#{type}/#{cible.id}" method="post") 

@@ -1,5 +1,6 @@
 /* Variables**/
 /* Nouvelle référence **/
+/* Liste des références **/
 /* Editer **/
 /* Supprimer **/
 
@@ -11,6 +12,7 @@ var Articles = require('./../database/modeles').Articles;
 var Themes = require('./../database/modeles').Themes;
 var Images = require('./../database/modeles').Images;
 var Videos = require('./../database/modeles').Videos;
+var flasher = require('./../flash');
 /*  Nommer les images **/
 var dummyRandomString = require('./../util/dummyRandomString');
 /* Multer (upload images) **/
@@ -27,8 +29,6 @@ var rangement = Multer.diskStorage({
   limits: {fileSize: 1000000, files:1},
 });
 var uploadHandler = Multer({ storage: rangement });
-
-/* Nouvelle références ********************************************************************************************/
 router.use('/nouvelle_image', uploadHandler.single('file'));
 
 var carte = {
@@ -44,10 +44,21 @@ var carteUrl = {
   video:"video",
 };
 
+function pluralize(word) {
+  return word + 's';
+}
+
+function capitalize(word) {
+  return word.charAt(0).toUppercase() + word.substring(1);
+}
+
+function modelStringToDataParam(modelString) {
+  return capitalize(pluralize(modelString));
+}
 
 /* Nouvelle référence **************************************************************************************************/
 
-/* Créer une réferences */
+/* Créer une réference */
 router.get('/nouvelle', function(req, res, next) {
   Articles.findAll().then((article) => {
     Images.findAll().then((images) => {
@@ -70,17 +81,19 @@ router.post('/nouvel_article', function(req, res, next) {
       titre: req.body.titre || 'titre par défaut',
       contenu: req.body.contenu || 'Pas de contenu',
     }).then((article) => {
-        res.redirect('/cms/nouvelle');
+      flasher.flash({ message: 'Article ' + article.titre + ' créé avec succès !' });
+      res.redirect('/cms/article/'+ article.id);
     });
   });
 
 router.post('/nouvelle_image', function(req, res, next) {
       Images.create({
         path: req.file.filename ? '/images/' + req.file.filename : 'erreur',
-        titre: req.body.descritpion || 'titre par défaut',
+        titre: req.body.titre || 'titre par défaut',
         description: req.body.description || 'description par défaut',
       }).then((image) => {
-        res.redirect('/cms/nouvelle');
+        flasher.flash({ message: 'Image ' + image.titre + ' créé avec succès !' });
+        res.redirect('/cms/image/'+ image.id);
     });
   });
 
@@ -89,8 +102,9 @@ router.post('/nouvelle_video', function(req, res, next) {
         titre: req.body.titre || 'titre par défaut',
         lien: req.body.lien || 'oups pas de lien',
         description: req.body.description || 'Pas de description',
-      }).then((article) => {
-          res.redirect('/cms/nouvelle');
+      }).then((video) => {
+        flasher.flash({ message: 'Vidéo ' + video.titre + ' créé avec succès !' });
+        res.redirect('/cms/video/'+ video.id);
       });
     });
 
@@ -100,12 +114,78 @@ router.post('/nouveau_theme', function(req, res, next) {
         description: req.body.description || 'description par défaut',
         couleur: req.body.couleur || '#0A0344',
       }).then((themes) => {
-          res.redirect('/cms/nouvelle');
+          res.redirect(req.body.url_redir);
       });
     });
 
+/* Associer Article à un thème****************************************************************************************************************/
+router.get('/article/:id', function(req, res, next) {
+  Articles.findById(req.params.id, {
+      include: [{
+      model: Themes,
+      }],
+  }).then((article) => {
+    Themes.findAll().then((themes) => {
+      res.render('CMS/associerThemeArticle', {
+          article: article,
+          themes: themes
+      });
+    });
+  });
+});
+
+router.get('/image/:id', function(req, res, next) {
+  Images.findById(req.params.id, {
+      include: [{
+        model: Themes,
+      }],
+    }).then((image) => {
+      Themes.findAll().then((themes) => {
+        res.render('CMS/associerThemeImage', {
+            image: image,
+            themes: themes
+        });
+      });
+  });
+});
+
+router.get('/video/:id', function(req, res, next) {
+    Videos.findById(req.params.id, {
+      include: [{
+        model: Themes,
+      }],
+    }).then((video) => {
+      Themes.findAll().then((themes) => {
+        res.render('CMS/associerThemeVideo', {
+            video: video,
+            themes: themes
+        });
+      });
+    });
+});
+
+/* Liste des références ****************************************************************************************************************/
+
+router.get('/liste', function(req, res, next) {
+  Articles.findAll().then((article) => {
+    Images.findAll().then((images) => {
+      Themes.findAll().then((themes) => {
+        Videos.findAll().then((videos) => {
+          res.render('CMS/listeReferences',{
+            article: article,
+            images: images,
+            themes: themes,
+            videos: videos,
+          });
+        });
+      });
+    });
+  });
+});
+
+
 /* Editer****************************************************************************************************************/
-/* (tentative de factorisation qui ne marche pas du tout)
+/*
 router.get('/:model/:id/edit', function (req, res, next) {
   var r = req.params;
   carte[r.model].findById(r.modelId, {
@@ -114,14 +194,13 @@ router.get('/:model/:id/edit', function (req, res, next) {
     }],
   }).then(function(model) {
     Themes.findAll().then(function(model) {
-        res.render("CMS/edit"+carteUrl[r.model], {
-          carteUrl[model] : carteUrl[model];
-        });
+        var data = {};
+        data[modelStringToDataParam(carteUrl[model])] = model;
+        res.render("CMS/edit"+carteUrl[r.model], data);
       });
     });
   });
 */
-
 router.get('/article/:id/edit', function(req, res, next) {
   Articles.findById(req.params.id, {
     include: [{
@@ -131,7 +210,8 @@ router.get('/article/:id/edit', function(req, res, next) {
     Themes.findAll().then((themes) => {
       res.render('CMS/editArticle', {
         article: article,
-        themes: themes
+        themes: themes,
+        flash: flasher.getFlash(),
       });
     });
   });
@@ -142,10 +222,10 @@ router.get('/image/:id/edit', function(req, res, next) {
     include: [{
       model: Themes,
     }],
-  }).then((images) => {
+  }).then((image) => {
     Themes.findAll().then((themes) => {
       res.render('CMS/editImage', {
-        images: images,
+        image: image,
         themes: themes
       });
     });
@@ -158,7 +238,7 @@ router.get('/video/:id/edit', function(req, res, next) {
       model: Themes,
     }],
   }).then((video) => {
-    Videos.findAll().then((themes) => {
+    Themes.findAll().then((themes) => {
       res.render('CMS/editVideo', {
         video: video,
         themes: themes
@@ -168,9 +248,9 @@ router.get('/video/:id/edit', function(req, res, next) {
 });
 
 router.get('/theme/:id/edit', function(req, res, next) {
-  Themes.findById(req.params.id).then(function(themes) {
+  Themes.findById(req.params.id).then(function(theme) {
     res.render('CMS/editTheme', {
-      themes: themes,
+      theme: theme,
     });
   });
 });
@@ -179,19 +259,23 @@ router.get('/theme/:id/edit', function(req, res, next) {
 router.post('/article/:id/edit', function(req, res, next) {
   Articles.findById(req.params.id).then(function(article) {
     article.update({
-      titre: req.body.titre || 'titre par défaut',
-      contenu: req.body.contenu || 'Pas de contenu',
-    })}).then(function(article) {
-      res.redirect('/cms/nouvelle');
+      titre: req.body.titre || article.titre,
+      contenu: req.body.contenu || article.contenu,
+    }).then(function(a) {
+      flasher.flash({ message: 'Article ' + article.titre + ' modifié avec succès !' });
+      res.redirect(req.originalUrl);
     });
+  });
 });
 
 router.post('/image/:id/edit', function(req, res, next) {
   Images.findById(req.params.id).then((image) => {
     image.update({
+      titre: req.body.titre || image.titre,
       description: req.body.description || image.description,
     }).then(() => {
-      res.redirect('/cms/nouvelle');
+      flasher.flash({ message: 'Image ' + image.titre + ' modifiée avec succès !' });
+      res.redirect(req.originalUrl);
     });
   });
 });
@@ -203,7 +287,7 @@ router.post('/video/:id/edit', function(req, res, next) {
       lien: req.body.lien || 'oups, pas de lien',
       description: req.body.description || 'Pas de description',
     })}).then(function(video) {
-      res.redirect('/cms/nouvelle');
+      res.redirect(req.originalUrl);
     });
 });
 
@@ -212,7 +296,7 @@ router.post('/theme/:id/edit', function(req, res, next) {
     themes.update({
       nom: req.body.nom || 'nom par défaut',
     })}).then(function(themes) {
-      res.redirect('/cms/nouvelle');
+      res.redirect(req.originalUrl);
     });
 });
 
@@ -231,7 +315,7 @@ router.post('/article/:id/delete', function(req, res, next) {
   Articles.findById(req.params.id).then(function(article) {
     article.destroy();
   }).then(function() {
-    res.redirect('/cms/nouvelle');
+    res.redirect('/cms/liste');
   });
 });
 
@@ -239,7 +323,7 @@ router.post('/image/:id/delete', function(req, res, next) {
   Images.findById(req.params.id).then(function(image) {
     image.destroy();
   }).then(function() {
-    res.redirect('/cms/nouvelle');
+    res.redirect('/cms/liste');
   });
 });
 
@@ -247,7 +331,7 @@ router.post('/video/:id/delete', function(req, res, next) {
   Videos.findById(req.params.id).then(function(video) {
     video.destroy();
   }).then(function() {
-    res.redirect('/cms/nouvelle');
+    res.redirect('/cms/liste');
   });
 });
 
@@ -255,7 +339,7 @@ router.post('/theme/:id/delete', function(req, res, next) {
   Themes.findById(req.params.id).then(function(theme) {
     theme.destroy();
   }).then(function() {
-    res.redirect('/cms/nouvelle');
+    res.redirect('/cms/liste');
   });
 });
 

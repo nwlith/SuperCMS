@@ -1,0 +1,20 @@
+include ../originalUrl
+
+mixin nouveauTheme(cible, type)  
+  section(class="bloc nouveauTheme hide" id="nouveauTheme")
+      h2 Créer un thème
+      form(method="post" action="/cms/nouveau_theme")
+          +originalUrl
+          label(for="themes") Nom :
+            p
+              input(type=text id="nom" name="nom")
+            p
+              select(type=text id="couleur" name="couleur")
+                option(value="mauve" class="mauve") mauve
+                option(value="vert" class="vert") vert
+                option(value="bleuPastel" class="bleuPastel") bleu
+                option(value="jaune" class="jaune") jaune
+                option(value="rouge" class="rouge") rouge
+                option(value="saumon" class="saumon") saumon
+            h3
+              button(type="submit"  class="grand bleu") Nouveau thème

@@ -1,33 +1,29 @@
 extends ../layout
-include ../listeThemes
-include ../tagbox
+include ../mixinThemes/tagbox
+include ../mixinThemes/nouveauTheme
 
 head  
   title Editer un article
   link(rel='stylesheet', href='/stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
-  
-body
-  block content
-    h2 Modifier la référence 
-    h3 #{article.titre}
-    
-    form(method="post" action="/cms/article/"+article.id+"/edit")
-      label(for="titre") Titre :
-      p
-        input(type="text" name="titre" id="titre" value=article.titre)
-      label(for="contenu") Contenu :
-      p
-        textarea(name="contenu" id="contenu")= article.contenu
-        aside Note: Utiliser Markdown pour le formatage
-      p
-        button(type="submit" class="petit noir") Envoyer  
+block content
+  body.cms
+    +sacflash()
+    h2 #{article.titre}  
+    section.blocAjout
+      h3 Modifier la référence
+      form(method="post" action="/cms/article/"+article.id+"/edit")
+        label(for="titre") Titre :
+        p
+          input(type="text" name="titre" id="titre" value=article.titre)
+        label(for="contenu") Contenu :
+        p
+          textarea(rows="20" cols="150" name="contenu" id="contenu")= article.contenu
+          aside Note: Utiliser Markdown pour le formatage
+        p
+          button(type="submit" class="petit noir") Envoyer
     div.themes
-      h4 Thèmes associés
-      +listeThemes(article, 'article')
-      h4 Thèmes disponibles
       +tagbox(themes, article, 'article')
-    hr
-  p  
-    a(href="/cms/nouvelle" class="petit noir") Retour
+    nav  
+      a(href="" onclick="history.back();" class="navigation") Retour &nbsp 

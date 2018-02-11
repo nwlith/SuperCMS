@@ -1,0 +1,4 @@
+mixin sacflash()
+  if (typeof flash !== 'undefined')
+    div.flash(class="flash flash-"+flash.type)
+      p= flash.message
