@@ -1,12 +1,9 @@
-
 mixin listeThemes(cible, type)
-  div.listeThemes
+  section.listeThemes
     if (cible.themes.length === 0)
       p Pas de thèmes sur cette référence :(
     else
       each themes in cible.themes
         span
-          a.themes.petit(class="#{themes.couleur} theme") #{ themes.nom }
+          a.themes.petit(href="/cartographie/#{cible.id}/aleatoire" class="#{themes.couleur} theme" style="background: #{themes.couleur}") #{ themes.nom }
           form(style="display:none" id="untheme-#{cible.id}-#{themes.id}" action="/theme/remove/#{themes.id}/from/#{type}/#{cible.id}" method="post")
-          span  
-            a.delete(onclick="var f = document.getElementById('untheme-#{cible.id}-#{themes.id}').submit();") 

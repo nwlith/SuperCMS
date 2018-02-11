@@ -4,8 +4,13 @@ head
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
 block content
-  h1 Tous les thèmes
-  
+  nav
+    div.titrePrincipal    t
+      h1 Tous les thèmes
+    div.liens
+      a(href="/" class="petit noir") Accueil 
+      a(href="/cartographie/aleatoire" class="petit noir") lien aléatoire
+      a(href="/cms/nouvelle" class="petit noir") Nouvelle référence
   each Themes in themes
     a(class="petit rouge" href="theme/"+Articles.id) Liste des références par thème
         p.nom= Themes.nom

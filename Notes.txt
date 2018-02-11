@@ -1,8 +1,21 @@
-- Revoir formulaire ajout de thème
+- Revoir l'aléatoire, faire un aléatoire à partir d'un thème
+- afficher images/vidéos/articles mélangées (par date de création ?)
+- Nettoyer dépôt Github (base de données/public/notes)
+- code d'accès à la partie administration
 
-- Markdown ne fonctionne pas
-- l'aléatoire n'est pas bon
-- faire un aléatoire à partir d'un thème
-- la fonction "retirer un thème" ne fonctionne pas
-- afficher toutes les références mélangées
-- lien vers "uneVideo" pour les vidéos
+- (essayer toute seule plus tard) dans la liste des références : permettre recherche par titre/thème/contenu
+
+..........................................................
+
+CMS
+  - Suppression de thème ne fonctionne pas : supprime les références
+  - Redirection après création de thème vers la page initiale
+
+  - L'édit d'image ne fonctionne pas
+  - Affichage de l'index des images ne fonctionne pas
+  - Gérer les images dans les blocs !!
+
+...........................................................
+
+CARTO
+  - Design (-liste -une référence -tout les thèmes -accueil)

@@ -1,0 +1,30 @@
+extends ../layout
+include ../mixinThemes/nouveauTheme
+include ../mixinThemes/tagbox
+include ../sacflash
+
+head  
+  title Associer un thème
+  link(rel='stylesheet', href='/stylesheets/style.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
+
+block content
+  body.cms
+    nav
+      div.titrePrincipal
+        h1 Nouvelle référence
+      div.liens
+        a(href="../nouvelle" class="navigation") Nouvelle référence 
+        a(href="/cms/article/"+article.id+"/edit" class="navigation") Editer 
+        a(href="/cms/liste" class="navigation") Liste des références
+    +sacflash()
+    h2 Ajouter des thèmes à "#{article.titre}"
+    div.center
+        +tagbox(themes, article, 'article')
+    div.center  
+      h2
+        a(onclick="document.getElementById('nouveauTheme').classList.remove('hide');" class="grand bleu") Créer un nouveau thème
+        a(href="/cms/liste" class="grand bleu") terminé ! 
+    div
+        +nouveauTheme()
+     

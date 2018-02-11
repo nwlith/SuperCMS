@@ -4,17 +4,18 @@ head
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
 block content
-  h1 Toutes les références
-  a(href="/" class="petit noir") Accueil 
-  a(href="/cartographie/aleatoire" class="petit noir") lien aléatoire
-  a(href="/cms/nouvelle" class="petit noir") Nouvelle référence
-  hr
+  nav
+    div.titrePrincipal
+      h1 Toutes les références
+    div.liens
+      a(href="/" class="navigation") Accueil 
+      a(href="/cartographie/aleatoire" class="navigation") lien aléatoire
+      a(href="/cms/nouvelle" class="navigation") Nouvelle référence
   h2 Liste des articles
   each Articles in articles
     a(class="petit noir" href="article/"+Articles.id)
       article.article
-        h3.titre= Articles.id + ' - ' + Articles.titre
-        p.contenu= Articles.contenu
+        h3.titre= Articles.titre
   if articles.length === 0
     p Il n'y a pas encore d'articles :(
   hr
@@ -22,6 +23,7 @@ block content
   h2 Liste des images
   each Images in images
     article
+      h3.titre= Images.titre
       a(href="image/"+Images.id)
         img(src=Images.path)
       p.description= Images.description
@@ -31,9 +33,10 @@ block content
   
   h2 Liste des videos
   each Videos in videos
-    article
-      p.titre= Videos.titre
-      p.description= Videos.description
+    a(class="petit noir" href="video/"+Videos.id)
+      article
+        h3.titre= Videos.titre
+        p.description= Videos.description
   if images.length === 0
     p Il n'y a pas encore de video :(
   hr

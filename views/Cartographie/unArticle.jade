@@ -1,19 +1,21 @@
-include ../listeThemes
+include ../mixinThemes/listeThemes
 head
   title.titre= article.titre
   link(rel='stylesheet', href='/stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
   
 block content
+  nav
+    div.titrePrincipal
+      h1= article.titre
+    div.liens
+      a.action(href="/cartographie/references" class="navigation") revenir à la liste
+      a(href="/cartographie/aleatoire" class="navigation") Référence aléatoire
   article
-    h1.titre= article.titre
-    a.action(href="/cartographie/references" class="petit noir") revenir à la liste
-    a(href="/cms/nouvelle" class="petit noir") Nouvelle référence
+    h2= article.titre
     div !{article.contenu}
   
   section.themes
     +listeThemes(article, 'article')
   
-  p
-    a.action(href="/cms/article/"+article.id+"/edit" class="petit noir") éditer
     

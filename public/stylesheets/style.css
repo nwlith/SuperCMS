@@ -8,18 +8,69 @@
 /* I - Général ***************************************************************************************************************
 */
 body {
-  padding: 50px;
+  margin: 7em;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background: #FFE7E7;
 }
 
+h1 {
+  margin: 0px;
+  margin-left: 2em;
+  font-size: 25px;
+}
+
 h2 {
   font-size: 20px;
+  color: blue;
+}
+
+hr {
+  color:blue;
+}
+
+nav {
+  display: flex;
+  position: fixed;
+  padding: 1em;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: blue;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.titrePrincipal {
+  justify-content: flex-start;
+  color: #FFE7E7;
+}
+
+.liens {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+  width: 430px;
+}
+
+.liens a {
+  font-size: 20px;
+}
+
+.hide {
+  display: none;
+}
+
+.cms {
+  /*background: white; */
+}
+
+.listeThemes {
+  flex-wrap: wrap;
 }
 
 /*Boutons et faux boutons*/
 .petit {
-  background-color:  #FFE7E7;
   display: inline-block;
   margin: 0 .25em;
   padding: 0 .25em;
@@ -29,13 +80,42 @@ h2 {
   line-height: 1.2;
 }
 
+.navigation {
+  color : #FFE7E7;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.grand {
+  background-color:  #FFE7E7;
+  display: inline-block;
+  margin: 0 .25em;
+  padding: 0 .5em;
+  border: 3px solid;
+  border-radius: 3px;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.grand a {
+  text-decoration: none;
+  text-decoration-style: none;
+}
+
 .noir {
   color: black;
   background: none;
 }
 
+.bleu {
+  color: blue;
+}
+
+.bleu:hover {
+  background-color: rgba(0,0,255,0.5);
+}
+
 .theme {
-  color: black
   display: inline-block;
   margin: 10px;
   margin-bottom: 10px;
@@ -46,8 +126,8 @@ h2 {
   text-decoration: none;
   line-height: 1.2;
 }
+
 .darkBlue {
-  background-color: #FFE7E7;
   color: #0A0344;
 }
 
@@ -56,7 +136,7 @@ h2 {
   background-color: #FF2400;
 }
 
-.bleu {
+.bleuPastel {
   color: #FFE7E7;
   background-color: #94AEFF;
 }
@@ -89,6 +169,15 @@ button:hover {
   background-color: grey;
 }
 
+.navigation:hover {
+  text-decoration: underline;
+  text-decoration-style: wavy;
+}
+
+.theme:hover {
+  border: 3.5px solid;
+}
+
 .darkBlue:hover {
   background-color: #0A0344;
   color: #FFE7E7;
@@ -118,7 +207,7 @@ button:hover {
   color: #FFA68A;
 }
 
-.bleu:hover {
+.bleuPastel:hover {
   background-color: #FFE7E7;
   color: #94AEFF;
 }
@@ -132,17 +221,8 @@ button:hover {
   width: 600px;
 }
 pre {
-  font-family: 'Source Code Pro', monospace;
+  font-family: 'Source Code Pro', mono;
   font-size: 10px;
-}
-.article {
-  margin: 2em 0;
-  width: 500px;
-}
-
-.image {
-  margin: 2em 0;
-  width: 500px;
 }
 
 .grille {
@@ -154,22 +234,28 @@ pre {
   padding: 8px;
 }
 
+.wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 /* II - Liste des références */
 /* Accueil cartographie */
-.center {
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
+
+.accueilCarto {
   margin-top: 100px;
+  text-align: center;
 }
+
 /* III - Ajouter une nouvelle référence */
 img {
   max-width: 40%;
   height:auto;
 }
-.spaceAround {
+
+.center {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .lignes {
@@ -177,24 +263,42 @@ img {
   justify-content: flex-start;
 }
 
-.blocAjout {
-  border: 1px solid;
+.bloc {
+  border: 3px solid blue;
   border-radius: 5px;
-  padding: 10px;
-  margin: 10px;
+  padding: 20px;
 }
 
-.blocAjoutTheme {
-  border-radius: 5px;
-  padding: 10px;
-  border-color: lightgrey;
-  margin: 10px;
+.tagbox {
+  text-align: center;
+  padding: 20px;
+}
+
+.nouveauTheme {
   width: 500px;
 }
 
 .blocTheme {
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px;
-  margin-left: 10px;
+  margin: 0.5em;
+}
+
+.blocReference {
+  padding: 2em;
+  max-width: 500px;
+}
+
+.blocReference .titre {
+  width: 250px;
+}
+
+.flash {
+  border-radius: 2px;
+  border: 1px solid black;
+  padding: 1em;
+  margin:1em;
+}
+
+.flash-ok {
+  color: green;
+  border-color: green;
 }

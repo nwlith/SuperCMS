@@ -1,0 +1,10 @@
+mixin originalUrl()
+  input(type="hidden" name="url_redir" id="url_redir" value="")
+  
+  script. 
+    (function() {
+        var i = document.getElementByID('url_redir'); 
+        if (i) {
+          i.setAttribute('value', document.referrer);
+        }
+    })();

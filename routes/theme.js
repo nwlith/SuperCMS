@@ -5,6 +5,7 @@ var Images = require('./../database/modeles').Images;
 var Videos = require('./../database/modeles').Videos;
 var Themes = require('./../database/modeles').Themes;
 
+
 var carte = {
   image: Images,
   article: Articles,
@@ -23,7 +24,7 @@ router.post('/add/:themesId/on/:model/:modelId', function (req, res) {
   carte[r.model].findById(r.modelId).then(function(model) {
     Themes.findById(r.themesId).then((themes) => {
       model.addThemes(themes).then(() => {
-        res.redirect(`/cms/${carteUrl[r.model]}/${r.modelId}/edit`);
+        res.redirect(`/cms/${carteUrl[r.model]}/${r.modelId}`);
       });
     });
   });
@@ -35,7 +36,7 @@ router.post('/remove/:themesId/from/:model/:modelId', function (req, res) {
   carte[r.model].findById(r.modelId).then(function(model) {
     Themes.findById(r.themesId).then((themes) => {
       model.removeThemes(themes).then(() => {
-        res.redirect(`/cms/${carteUrl[r.model]}/${r.modelId}/edit`);
+        res.redirect(`/cms/${carteUrl[r.model]}/${r.modelId}`);
       });
     });
   });

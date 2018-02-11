@@ -1,19 +1,21 @@
+include ../mixinThemes/listeThemes
+
 head
   title.titre= image.titre
   link(rel='stylesheet', href='/stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
-include ../listeThemes
-
 block content
-  h1.titre= image.id +"-"+ image.titre
-  a(href="/cartographie/references" class="petit noir") Toutes les références
-  a(href="/cartographie/aleatoire" class="petit noir") Référence aléatoire
+  nav
+    div.titrePrincipal
+      h1= image.titre
+    div.liens
+      a(href="/cartographie/references" class="navigation") Toutes les références
+      a(href="/cartographie/aleatoire" class="navigation") Référence aléatoire
+      
   figure
     img(src=image.path)
-    figcaption= image.description
+    figcaption !{image.description}
   section.themes
     +listeThemes(image, 'image')
-  p
-    a(href="/cms/image/"+image.id+"/edit" class="petit noir") éditer
     
