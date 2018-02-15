@@ -1,16 +1,19 @@
 head 
   title Cartographie des références
-  link(rel='stylesheet', href='../stylesheets/style.css')
+  link(rel='stylesheet', href='/stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
-body(class="accueil")
+body
   block content
-    h1 Cartographie des références
-    
-    div(class="accueilCarto")
+    h1.titreCarto Cartographie 
+      p.titrePara des références
+    div.accueil
       h2  
-          a(href="/cartographie/aleatoire" class="grand bleu") Référence aléatoire
-      a(href="/cartographie/references" class="petit bleu") Liste des références
-      a(href="/cartographie/themes" class="petit bleu") Liste des thèmes
-      a(href="/cms/nouvelle" class="petit bleu") Ajouter / éditer des références
+        a(href="/cartographie/aleatoire" class="grand bleu") Référence aléatoire
+      h2
+        a(href="/cartographie/references" class="grand bleu") Liste des références
+      h2
+        a(href="/cartographie/themes" class="grand bleu") Liste des thèmes
+      h2
+        a(href="/cms/nouvelle" class="grand bleu") Ajouter / éditer des références
   

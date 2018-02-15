@@ -1,16 +1,25 @@
-/* I - Général */
-/* II - Liste des références */
-/* III - Ajouter une nouvelle référence */
-/* IV - Une référence */
-/* V - Editer une référence */
+/* 0 - Général */
+/* 1 - Accueil */
+
+/* CMS */
+/* I - Liste des références */
+/* II - Nouvelle référence */
+/* III - Associer thème/référence */
+/* IV - Editer une référence */
+
+/* CARTOGRAPHIE */
+/* A - Liste des références */
+/* B - Liste des thèmes */
+/* C - Une référence */
 
 
-/* I - Général ***************************************************************************************************************
+/* 0 - Général ***************************************************************************************************************
 */
 body {
   margin: 7em;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background: #FFE7E7;
+  box-sizing: border-box;
 }
 
 h1 {
@@ -61,10 +70,6 @@ nav {
   display: none;
 }
 
-.cms {
-  /*background: white; */
-}
-
 .listeThemes {
   flex-wrap: wrap;
 }
@@ -87,7 +92,6 @@ nav {
 }
 
 .grand {
-  background-color:  #FFE7E7;
   display: inline-block;
   margin: 0 .25em;
   padding: 0 .5em;
@@ -217,34 +221,30 @@ button:hover {
   color: #B558E0;
 }
 
-.previsu {
-  width: 600px;
-}
-pre {
-  font-family: 'Source Code Pro', mono;
-  font-size: 10px;
-}
-
-.grille {
-  display: flex;
-}
-
-.grille > * {
-  flex: 0 0 25%;
-  padding: 8px;
-}
-
 .wrap {
   display: flex;
   flex-wrap: wrap;
 }
 
-/* II - Liste des références */
+/* 1 - Accueil ***************************************************************************************************************
+*/
+
+.accueil {
+  position: fixed;
+  left: 50%; top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+/* II - Liste des références ..............................................................................................*/
 /* Accueil cartographie */
 
-.accueilCarto {
-  margin-top: 100px;
-  text-align: center;
+.titreCarto {
+  font-size: 40px;
+  color:blue;
+}
+
+.titrePara {
+  margin: 0px;
 }
 
 /* III - Ajouter une nouvelle référence */
@@ -267,6 +267,7 @@ img {
   border: 3px solid blue;
   border-radius: 5px;
   padding: 20px;
+  margin-bottom: 5em;
 }
 
 .tagbox {
@@ -285,6 +286,11 @@ img {
 .blocReference {
   padding: 2em;
   max-width: 500px;
+  box-sizing: border-box;
+}
+
+.blocReference a {
+  margin-top: 1em;
 }
 
 .blocReference .titre {

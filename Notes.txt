@@ -1,21 +1,33 @@
-- Revoir l'aléatoire, faire un aléatoire à partir d'un thème
-- afficher images/vidéos/articles mélangées (par date de création ?)
-- Nettoyer dépôt Github (base de données/public/notes)
-- code d'accès à la partie administration
-
-- (essayer toute seule plus tard) dans la liste des références : permettre recherche par titre/thème/contenu
+ (-)  Revoir l'aléatoire, + faire un aléatoire à partir d'un thème
+  -   afficher images/vidéos/articles mélangées (par date de création ?)
 
 ..........................................................
 
 CMS
-  - Suppression de thème ne fonctionne pas : supprime les références
-  - Redirection après création de thème vers la page initiale
-
-  - L'édit d'image ne fonctionne pas
-  - Affichage de l'index des images ne fonctionne pas
-  - Gérer les images dans les blocs !!
-
+  -   Redirection page initiale : - après création de thème - après association/dé-association
+  -   L'édit d'image ne fonctionne pas
+  -   sacflash edit article "not a function"
+  -   Gérer les images dans les blocs !!
+  -   Faire un bouton afficher/masquer (pour recherche et pour création thème)
+ /-\  Revoir constructeur thème (ajouter description)
 ...........................................................
 
 CARTO
-  - Design (-liste -une référence -tout les thèmes -accueil)
+  -   Faire attention au mixin listeThemes (pourquoi form delete ?)
+  -   Page thème : unexpected token "pipeless-text"
+
+............................................................
+
+-   Nettoyer dépôt Github (base de données/public/notes)
+-   code d'accès à la partie administration
+-   (essayer toute seule plus tard) dans la liste des références : permettre recherche par titre/thème/contenu
+
+Module: voir mon parcours
+  OK    bouton démarrer : référence aléatoire ou choisir un thème
+  PASOK bouton précédent/suivant
+        bouton voir mon parcours
+  PASOK enregistrer l'historique de navigation à partir de "démarrer"
+  PASOK   enregistrer id des références visitées, puis id des thèmes par lesquels on est passé dans un tableau
+  PASOK     générer page avec ce tableau
+            "Thème - référence - Thème - référence - Thème - référence - (...)"
+  OK    bouton enregistrer mon parcours ""

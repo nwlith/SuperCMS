@@ -1,0 +1,37 @@
+head 
+  title= theme.nom
+  link(rel='stylesheet', href='/stylesheets/style.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
+
+block content
+  body.theme
+    nav(style="background: #{theme.couleur}")
+      div.titrePrincipal
+        h1= theme.nom
+      div.liens
+        a(href="/" class="navigation") Accueil 
+        a(href="/cartographie/aleatoire" class="navigation") lien aléatoire
+        a(href="/cms/nouvelle" class="navigation") Nouvelle référence
+  h2 Liste des articles
+    each Articles in theme.articles
+      a(class="petit noir" href="article/"+Articles.id)
+        article
+          h3.titre= articles.titre
+    if Articles.length === 0
+        p Il n'y a pas encore d'articles :(            
+  hr
+  h2 Liste des images
+    each Images in themes.images
+      article
+        h3.titre= images.titre
+        a(href="image/"+images.id)
+          img(src=images.path)
+    if (theme.images.length === 0)
+        p Pas d'images liées à ce thème ! :(         
+  hr
+  h2 Liste des videos
+    each Videos in themes.videos
+          a(class="petit noir" href="video/"+videos.id)
+            h3.titre= videos.titre
+    if (theme.videos.length === 0)
+      p Pas de vidéos liées à ce thème ! :(    

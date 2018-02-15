@@ -1,20 +1,18 @@
 head 
   title Tous les thèmes
-  link(rel='stylesheet', href='../stylesheets/style.css')
+  link(rel='stylesheet', href='/stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
 block content
   nav
-    div.titrePrincipal    t
+    div.titrePrincipal
       h1 Tous les thèmes
     div.liens
-      a(href="/" class="petit noir") Accueil 
-      a(href="/cartographie/aleatoire" class="petit noir") lien aléatoire
-      a(href="/cms/nouvelle" class="petit noir") Nouvelle référence
-  each Themes in themes
-    a(class="petit rouge" href="theme/"+Articles.id) Liste des références par thème
-        p.nom= Themes.nom
-    p.description= Themes.description
-  if Themes.length === 0
-    p Il n'y a pas encore de thème :(
-hr
+      a(href="/" class="navigation") Accueil 
+      a(href="/cartographie/aleatoire" class="navigation") Lien aléatoire
+      a(href="/cartographie/references" class="navigation") Toutes les références
+  
+  section.listeThemes
+    each Themes in themes
+        span
+          a.themes.petit(href="/cartographie/theme/#{Themes.id}" class="#{Themes.couleur} theme" style="background: #{Themes.couleur}") #{ Themes.nom }

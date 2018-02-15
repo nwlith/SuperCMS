@@ -1,4 +1,4 @@
-include ../mixinThemes/listeThemes
+include ../mixin/listeThemes
 head
   title.titre= article.titre
   link(rel='stylesheet', href='/stylesheets/style.css')
@@ -9,7 +9,8 @@ block content
     div.titrePrincipal
       h1= article.titre
     div.liens
-      a.action(href="/cartographie/references" class="navigation") revenir à la liste
+      a(href="/" class="navigation") Accueil
+      a.action(href="/cartographie/references" class="navigation") Toutes les références
       a(href="/cartographie/aleatoire" class="navigation") Référence aléatoire
   article
     h2= article.titre

@@ -2,6 +2,8 @@ head
   title Liste des référence
   link(rel='stylesheet', href='/stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
+  //script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js")
+  
 
 block content
   body.cms
@@ -11,8 +13,8 @@ block content
       div.liens
         a(href="../" class="navigation") Accueil
         a(href="../cartographie/accueil" class="navigation") Cartographie
-        a(href="../cms/nouvelle" class="navigation") Nouvelle référence
     h2
+      a(href="../cms/nouvelle" class="grand bleu") Nouvelle référence
       a(onclick="document.getElementById('recherche').classList.remove('hide');" class="grand bleu") Rechercher une référence
     section(class="bloc hide" id="recherche")
       h2 Rechercher une référence
@@ -25,42 +27,39 @@ block content
         p Thème associé : 
           input(type="text" name="theme" id="theme")
         p Rechercher :
-          input(type="text" name="recherche" id="recherche")
+          input(type="text" name="recherche" id="recherche" placeholder:"Que recherchez vous ?")
         p.petit.noir Je suis un faux bouton
-    div(class="listes")
+    div(class="bloc listes")
       h2 Liste des articles
       section.wrap
         each Articles, index in article
           article.blocReference
             h3.titre= "no." + index + " : " + Articles.titre
             a.action(href="/cms/article/"+Articles.id+"/edit" class="petit noir") éditer  
-            form(id="delete" style="display:none" method="post" action="/cms/article/"+Articles.id+"/delete")
-            a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
-      hr  
+            form(id="deleteArticle"+Articles.id style="display:none" method="post" action="/cms/article/"+Articles.id+"/delete")
+            a.action(onclick="event.preventDefault();document.getElementById('deleteArticle#{Articles.id}').submit()" class="petit noir") supprimer
       h2 Liste des images
       section.wrap
-        each Images in images
+        each Images, index in images
           div.blocReference
             h3.titre= "no." + index + " : " + Images.titre
             img(src=Images.path)
             br
             a.action(href="/cms/image/"+Images.id+"/edit" class="petit noir") éditer
-            form(id="delete" style="display:none;" method="post" action="/cms/image/"+Images.id+"/delete")
-            a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
+            form(id="deleteImage"+Images.id style="display:none;" method="post" action="/cms/image/"+Images.id+"/delete")
+            a.action(onclick="event.preventDefault();document.getElementById('deleteImage#{Images.id}').submit()" class="petit noir") supprimer
           if images.length === 0
             p Il n'y a pas encore d'images :(
           br
-      hr
       h2 Liste des videos 
       section.wrap
         each Videos, index in videos
             article.blocReference
                 h3.titre= Videos.titre
-                br
                 a.action(href="/cms/video/"+Videos.id+"/edit" class="petit noir") éditer  
-                form(id="delete" style="display:none" method="post" action="/cms/video/"+Videos.id+"/delete")
-                a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
-      hr  
+                form(id="deleteVideo"+Videos.id style="display:none" method="post" action="/cms/video/"+Videos.id+"/delete")
+                a.action(onclick="event.preventDefault();document.getElementById('deleteVideo#{Videos.id}').submit()" class="petit noir") supprimer
+    div(class="bloc listes")  
       h2 Liste des thèmes
       div.wrap
         each Themes in themes
@@ -69,7 +68,8 @@ block content
               a(href="/cms/theme/"+Themes.id+"/edit" class="theme #{Themes.couleur}" style="background:#{Themes.couleur}")= Themes.nom
               br
             a.action(href="/cms/theme/"+Themes.id+"/edit" class="petit noir") éditer
-            form(id="delete" style="display:none;" method="post" action="/cms/theme/"+Themes.id+"/delete")
-            a.action(onclick="event.preventDefault();document.getElementById('delete').submit()" class="petit noir") supprimer
-        
+            form(id="deleteTheme"+Themes.id style="display:none;" method="post" action="/cms/theme/"+Themes.id+"/delete")
+            a.action(onclick="event.preventDefault();document.getElementById('deleteTheme#{Themes.id}').submit()" class="petit noir") supprimer
+    script.
+     
         

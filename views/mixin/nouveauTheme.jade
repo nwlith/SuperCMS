@@ -16,5 +16,8 @@ mixin nouveauTheme(cible, type)
                 option(value="jaune" class="jaune") jaune
                 option(value="rouge" class="rouge") rouge
                 option(value="saumon" class="saumon") saumon
+            label(for="description") Description :
+                p
+                  input(type=text id="description" name="description")    
             h3
               button(type="submit"  class="grand bleu") Nouveau thème
