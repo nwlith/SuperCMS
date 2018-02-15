@@ -86,6 +86,21 @@ router.get('/themes', function(req, res, next) {
       });
     });
 
+/* Thème et liste des reférences associées */
+router.get('/theme/:id', function(req, res, next) {
+  Themes.findById(req.params.id, {
+    include: [{
+      model: Articles,
+      model: Images,
+      model: Videos,
+    }],
+  }).then(function(theme) {
+      res.render('Cartographie/theme',{
+        theme: theme,
+      });
+    });
+  });
+
 /* Afficher une référence *********************************************************************************************************/
       /* Un article */
 router.get('/article/:id', function(req, res, next) {
@@ -139,6 +154,7 @@ router.get('/aleatoire', function(req, res) {
       res.redirect('/cartographie/' + model.n + '/' + resultats[0].id );
   });
 });
+
 /* En fonction d'un thème**/
 router.get(':id/aleatoire', function(req, res) {
   var model = carte[Math.floor(Math.random()*carte.length)];

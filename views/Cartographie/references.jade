@@ -1,6 +1,6 @@
 head 
   title Toutes les références
-  link(rel='stylesheet', href='../stylesheets/style.css')
+  link(rel='stylesheet', href='/stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
 block content
@@ -10,17 +10,13 @@ block content
     div.liens
       a(href="/" class="navigation") Accueil 
       a(href="/cartographie/aleatoire" class="navigation") lien aléatoire
-      a(href="/cms/nouvelle" class="navigation") Nouvelle référence
-  h2 Liste des articles
+      a(href="/cartographie/themes" class="navigation") tout les thèmes
   each Articles in articles
     a(class="petit noir" href="article/"+Articles.id)
       article.article
         h3.titre= Articles.titre
   if articles.length === 0
     p Il n'y a pas encore d'articles :(
-  hr
-  
-  h2 Liste des images
   each Images in images
     article
       h3.titre= Images.titre
@@ -29,18 +25,9 @@ block content
       p.description= Images.description
   if images.length === 0
     p Il n'y a pas encore d'images :(
-  hr
-  
-  h2 Liste des videos
   each Videos in videos
     a(class="petit noir" href="video/"+Videos.id)
       article
         h3.titre= Videos.titre
-        p.description= Videos.description
-  if images.length === 0
+  if videos.length === 0
     p Il n'y a pas encore de video :(
-  hr
-  
-  
-  p
-    a(href="/cartographie/accueil" class="petit noir") Retour

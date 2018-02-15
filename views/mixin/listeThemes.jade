@@ -5,5 +5,8 @@ mixin listeThemes(cible, type)
     else
       each themes in cible.themes
         span
-          a.themes.petit(href="/cartographie/#{cible.id}/aleatoire" class="#{themes.couleur} theme" style="background: #{themes.couleur}") #{ themes.nom }
+          a.themes.petit(href="/cartographie/theme/#{themes.id}" class="#{themes.couleur} theme" style="background: #{themes.couleur}") #{ themes.nom }
           form(style="display:none" id="untheme-#{cible.id}-#{themes.id}" action="/theme/remove/#{themes.id}/from/#{type}/#{cible.id}" method="post")
+
+      //  a.themes.petit(href="/cartographie/#{cible.id}/aleatoire" class="#{themes.couleur} theme" style="background: #{themes.couleur}") #{ themes.nom }
+        

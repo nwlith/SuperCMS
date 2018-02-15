@@ -1,4 +1,4 @@
-include ../mixinThemes/listeThemes
+include ../mixin/listeThemes
 
 head
   title.titre= video.titre
@@ -9,11 +9,13 @@ block content
   nav
     div.titrePrincipal
       h1.titre= video.titre
-    div.liens  
-      a(href="/cartographie/references" class="petit noir") Toutes les références
-      a(href="/cartographie/aleatoire" class="petit noir") Référence aléatoire
+    div.liens
+      a(href="/" class="navigation") Accueil
+      a(href="/cartographie/references" class="navigation") Toutes les références
+      a(href="/cartographie/aleatoire" class="navigation") Référence aléatoire
   figure
-    a(href="#{video.lien}")= video.titre
+    h3
+      a(href="#{video.lien}")= video.titre
     iframe(src="#{video.lien}" width="1160" height="652" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
     figcaption !{video.description}
   section.themes

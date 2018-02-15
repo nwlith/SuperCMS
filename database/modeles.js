@@ -66,7 +66,7 @@ const Themes = db.define('themes', {
     type: Sequelize.STRING,
   },
   description: {
-    type: Sequelize.TEXT,
+    type: Sequelize.STRING,
   }
 });
 

@@ -1,4 +1,4 @@
-include ../mixinThemes/listeThemes
+include ../mixin/listeThemes
 
 head
   title.titre= image.titre
@@ -10,6 +10,7 @@ block content
     div.titrePrincipal
       h1= image.titre
     div.liens
+      a(href="/" class="navigation") Accueil
       a(href="/cartographie/references" class="navigation") Toutes les références
       a(href="/cartographie/aleatoire" class="navigation") Référence aléatoire
       

@@ -6,6 +6,11 @@ head
 
 block content
   body.cms
+    nav
+      div.titrePrincipal  
+        h1 Editer #{theme.titre}
+      div.liens
+        a(href="" onclick="history.back();" class="navigation") Retour
     h2 Modifier le thème 
     h3 #{theme.nom}
     section.blocAjout
@@ -13,10 +18,13 @@ block content
         label(for="nom") Nom :
         p
           input(type="text" name="nom" id="nom" value=theme.nom)
+        label(for="description") Description :
         p
-          button(type="submit" class="petit noir") Envoyer
+          input(type=text id="description" name="description")
+        p
+          button(type="submit" class="grand bleu") Envoyer
     nav
-      a(href="" onclick="history.back();" class="navigation") Retour &nbsp 
+      a(href="" onclick="history.back();" class="navigation") Retour
         
         
   
