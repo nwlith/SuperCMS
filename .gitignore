@@ -3,3 +3,4 @@ node_modules
 public/images
 Notes.txt
 LIS-MOI.txt
+*.sqlite
