@@ -1,10 +1,18 @@
-head  
-  extends layout
-  title Page d'accueil
+head 
+  title Cartographie des références
+  link(rel='stylesheet', href='/stylesheets/style.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
-block content
-    div.accueil
-      h2.center
-        a(href="/cartographie/accueil" class="grand bleu") Voir la cartographie
-      h2.center
+body.accueil
+  block content
+    h1.titreCarto Cartographie 
+      p.titrePara des références
+    div
+      h2  
+        a(href="/cartographie/aleatoire" class="grand bleu") Référence aléatoire
+      h2
+        a(href="/cartographie/references" class="grand bleu") Liste des références
+      h2
+        a(href="/cartographie/themes" class="grand bleu") Liste des thèmes
+      h2
         a(href="/cms/liste" class="grand bleu") Modifier la cartographie

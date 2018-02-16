@@ -77,6 +77,8 @@ Images.belongsToMany(Themes, { through: 'ImagesThemes'});
 Themes.belongsToMany(Images, { through: 'ImagesThemes'});
 Videos.belongsToMany(Themes, { through: 'VideosThemes' });
 Themes.belongsToMany(Videos, { through: 'VideosThemes'});
+Articles.belongsToMany(Images, { through: 'ArticlesImages' });
+Images.belongsToMany(Articles, { through: 'ArticlesImages' });
 
 module.exports = {
   Articles,
