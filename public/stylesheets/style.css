@@ -231,8 +231,7 @@ button:hover {
 
 .accueil {
   position: fixed;
-  left: 50%; top: 50%;
-  transform: translate(-50%,-50%);
+  left: 15%; top: 15%;
 }
 
 /* II - Liste des références ..............................................................................................*/
@@ -241,11 +240,14 @@ button:hover {
 .titreCarto {
   font-size: 40px;
   color:blue;
+  margin-left: 0px;
+  margin-bottom: 1em;
 }
 
 .titrePara {
   margin: 0px;
 }
+
 
 /* III - Ajouter une nouvelle référence */
 img {

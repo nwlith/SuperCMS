@@ -1,7 +1,4 @@
- (-)  Revoir l'aléatoire, + faire un aléatoire à partir d'un thème
-  -   afficher images/vidéos/articles mélangées (par date de création ?)
-
-..........................................................
+ ..........................................................
 
 CMS
   -   Redirection page initiale : - après création de thème - après association/dé-association
@@ -10,6 +7,7 @@ CMS
   -   Gérer les images dans les blocs !!
   -   Faire un bouton afficher/masquer (pour recherche et pour création thème)
  /-\  Revoir constructeur thème (ajouter description)
+
 ...........................................................
 
 CARTO
@@ -21,6 +19,11 @@ CARTO
 -   Nettoyer dépôt Github (base de données/public/notes)
 -   code d'accès à la partie administration
 -   (essayer toute seule plus tard) dans la liste des références : permettre recherche par titre/thème/contenu
+(-)  Revoir l'aléatoire, + faire un aléatoire à partir d'un thème
+ -   afficher images/vidéos/articles mélangées (par date de création ?)
+
+
+
 
 Module: voir mon parcours
   OK    bouton démarrer : référence aléatoire ou choisir un thème
