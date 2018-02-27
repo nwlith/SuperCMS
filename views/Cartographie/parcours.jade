@@ -1,0 +1,32 @@
+title Parcours
+link(rel='stylesheet', href='/stylesheets/style.css')
+link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
+
+block content
+nav
+  div.titrePrincipal
+    h1 Parcours
+  div.liens
+    a(href="/" class="navigation") Accueil 
+    a(href="/cartographie/aleatoire" class="navigation") lien aléatoire
+    a(href="/cartographie/themes" class="navigation") tout les thèmes
+each Articles in articles
+  a(class="petit noir" href="article/"+Articles.id)
+    article.article
+      h3.titre= Articles.titre
+if articles.length === 0
+  p Pas d'articles !
+each Images in images
+  article
+    h3.titre= Images.titre
+    a(href="image/"+Images.id)
+      img(src=Images.path)
+    p.description= Images.description
+if images.length === 0
+  p Pas d'images !
+each Videos in videos
+  a(class="petit noir" href="video/"+Videos.id)
+    article
+      h3.titre= Videos.titre
+if videos.length === 0
+  p pas de video

@@ -57,13 +57,13 @@ nav {
 .liens {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   font-size: 20px;
-  width: 430px;
 }
 
 .liens a {
   font-size: 20px;
+  margin-left: 2em;
 }
 
 .hide {

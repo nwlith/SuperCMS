@@ -2,6 +2,34 @@ const Sequelize = require('sequelize');
 const db = require('./db');
 
 
+/* définit constructeur référence
+const References = db.define('reference', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  attribut:{
+    type: Sequelize.STRING,
+  },
+  titre: {
+    type: Sequelize.STRING,
+  },
+  description: {
+    type: Sequelize.TEXT,
+  },
+  path : {
+    type: Sequelize.STRING,
+  },
+  lien : {
+    type: Sequelize.STRING,
+  },
+  /*date: {
+    type: Sequelize.STRING,
+  },
+});
+*/
+
 /* définit constructeur article */
 const Articles = db.define('article', {
   id: {
@@ -15,6 +43,9 @@ const Articles = db.define('article', {
   contenu: {
     type: Sequelize.TEXT,
   },
+  /*date: {
+    type: Sequelize.STRING,
+  },*/
 });
 
 /* définit constructeur image */
@@ -24,6 +55,9 @@ const Images = db.define('images', {
     primaryKey: true,
     autoIncrement: true,
   },
+  /*date: {
+    type: Sequelize.STRING,
+  },*/
   titre : {
     type : Sequelize.STRING,
   },
@@ -32,7 +66,7 @@ const Images = db.define('images', {
   },
   path : {
     type : Sequelize.STRING,
-  }
+  },
 });
 
 const Videos = db.define('video', {
@@ -41,6 +75,9 @@ const Videos = db.define('video', {
     primaryKey: true,
     autoIncrement: true,
   },
+  /*date: {
+    type: Sequelize.STRING,
+  },*/
   titre: {
     type: Sequelize.STRING,
   },
@@ -66,7 +103,7 @@ const Themes = db.define('themes', {
     type: Sequelize.STRING,
   },
   description: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
   }
 });
 
@@ -79,6 +116,11 @@ Videos.belongsToMany(Themes, { through: 'VideosThemes' });
 Themes.belongsToMany(Videos, { through: 'VideosThemes'});
 Articles.belongsToMany(Images, { through: 'ArticlesImages' });
 Images.belongsToMany(Articles, { through: 'ArticlesImages' });
+
+/*
+Themes.belongsToMany(References, { through: 'ReferencesThemes'});
+References.belongsToMany(Themes, { through: 'ReferencesThemes' });
+*/
 
 module.exports = {
   Articles,

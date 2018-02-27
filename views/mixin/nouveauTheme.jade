@@ -1,10 +1,7 @@
-include ../originalUrl
-
 mixin nouveauTheme(cible, type)  
   section(class="bloc nouveauTheme hide" id="nouveauTheme")
       h2 Créer un thème
       form(method="post" action="/cms/nouveau_theme")
-          +originalUrl
           label(for="themes") Nom :
             p
               input(type=text id="nom" name="nom")
@@ -18,6 +15,7 @@ mixin nouveauTheme(cible, type)
                 option(value="saumon" class="saumon") saumon
             label(for="description") Description :
                 p
-                  input(type=text id="description" name="description")    
+                  textarea(rows="3" cols="40" id="description" name="description")    
             h3
               button(type="submit"  class="grand bleu") Nouveau thème
+              

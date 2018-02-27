@@ -7,6 +7,7 @@
 /* Variables**********************************************************************************************************/
 var express = require('express');
 var router = express.Router();
+const fs = require('fs');
 /*  Modèles **/
 var Articles = require('./../database/modeles').Articles;
 var Themes = require('./../database/modeles').Themes;
@@ -80,6 +81,7 @@ router.post('/nouvel_article', function(req, res, next) {
   Articles.create({
       titre: req.body.titre || 'titre par défaut',
       contenu: req.body.contenu || 'Pas de contenu',
+      date: date.now(),
     }).then((article) => {
       flasher.flash({ message: 'Article ' + article.titre + ' créé avec succès !' });
       res.redirect('/cms/article/'+ article.id);
@@ -91,6 +93,7 @@ router.post('/nouvelle_image', function(req, res, next) {
         path: req.file.filename ? '/images/' + req.file.filename : 'erreur',
         titre: req.body.titre || 'titre par défaut',
         description: req.body.description || 'description par défaut',
+        date: date.now(),
       }).then((image) => {
         flasher.flash({ message: 'Image ' + image.titre + ' créé avec succès !' });
         res.redirect('/cms/image/'+ image.id);
@@ -102,6 +105,7 @@ router.post('/nouvelle_video', function(req, res, next) {
         titre: req.body.titre || 'titre par défaut',
         lien: req.body.lien || 'oups pas de lien',
         description: req.body.description || 'Pas de description',
+        date: date.now(),
       }).then((video) => {
         flasher.flash({ message: 'Vidéo ' + video.titre + ' créé avec succès !' });
         res.redirect('/cms/video/'+ video.id);
@@ -111,10 +115,10 @@ router.post('/nouvelle_video', function(req, res, next) {
 router.post('/nouveau_theme', function(req, res, next) {
     Themes.create({
         nom: req.body.nom || 'Nom par défaut',
-        description: req.body.description || 'description par défaut',
         couleur: req.body.couleur || '#0A0344',
+        description: req.body.description || 'description par défaut',
       }).then((themes) => {
-          res.redirect(req.body.url_redir);
+          res.redirect('back');
       });
     });
 
@@ -182,7 +186,6 @@ router.get('/liste', function(req, res, next) {
     });
   });
 });
-
 
 /* Editer****************************************************************************************************************/
 /*
@@ -273,6 +276,7 @@ router.post('/image/:id/edit', function(req, res, next) {
     image.update({
       titre: req.body.titre || image.titre,
       description: req.body.description || image.description,
+      path: req.body.filename || image.path,
     }).then(() => {
       flasher.flash({ message: 'Image ' + image.titre + ' modifiée avec succès !' });
       res.redirect(req.originalUrl);
@@ -283,18 +287,20 @@ router.post('/image/:id/edit', function(req, res, next) {
 router.post('/video/:id/edit', function(req, res, next) {
   Videos.findById(req.params.id).then(function(video) {
     video.update({
-      titre: req.body.titre || 'titre par défaut',
-      lien: req.body.lien || 'oups, pas de lien',
-      description: req.body.description || 'Pas de description',
+      titre: req.body.titre || video.titre,
+      lien: req.body.lien || video.lien,
+      description: req.body.description || video.description,
     })}).then(function(video) {
       res.redirect(req.originalUrl);
     });
 });
 
 router.post('/theme/:id/edit', function(req, res, next) {
-  Themes.findById(req.params.id).then(function(themes) {
-    themes.update({
-      nom: req.body.nom || 'nom par défaut',
+  Themes.findById(req.params.id).then(function(theme) {
+    theme.update({
+      nom: req.body.nom || theme.nom,
+      couleur: req.body.couleur || theme.couleur,
+      description: req.body.description || theme.description,
     })}).then(function(themes) {
       res.redirect(req.originalUrl);
     });
@@ -322,6 +328,11 @@ router.post('/article/:id/delete', function(req, res, next) {
 router.post('/image/:id/delete', function(req, res, next) {
   Images.findById(req.params.id).then(function(image) {
     image.destroy();
+    console.log(__dirname+'<====== dirname');
+    fs.unlink(path.resolve(__dirname,'../public', image.path), (err) => {
+      if (err) throw err;
+      console.log('image.titre supprimée avec succès');
+    });
   }).then(function() {
     res.redirect('/cms/liste');
   });

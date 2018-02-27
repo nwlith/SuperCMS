@@ -21,7 +21,9 @@ block content
         label(for="contenu") Contenu :
         p
           textarea(rows="20" cols="150" name="contenu" id="contenu")= article.contenu
-          aside Note: Utiliser Markdown pour le formatage
+        label(for="file") Image : 
+          p
+            input(type="file" name="file" id="file") 
         p
           button(type="submit" class="petit noir") Envoyer
     div.themes

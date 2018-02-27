@@ -9,6 +9,11 @@ head
 
 block content
   body.cms
+    nav
+      div.titrePrincipal  
+        h1 Editer #{video.titre}
+      div.liens
+        a(href="" onclick="history.back();" class="navigation") Retour
     h2 #{video.titre}     
     section.blocAjout
       h3 Modifier la référence
@@ -28,6 +33,3 @@ block content
           button(type="submit" class="petit noir") Envoyer
     div.themes
       +tagbox(themes, video, 'video')
-    hr
-    nav
-      a(href="" onclick="history.back();" class="navigation") Retour &nbsp

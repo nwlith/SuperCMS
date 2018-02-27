@@ -24,7 +24,8 @@ router.post('/add/:themesId/on/:model/:modelId', function (req, res) {
   carte[r.model].findById(r.modelId).then(function(model) {
     Themes.findById(r.themesId).then((themes) => {
       model.addThemes(themes).then(() => {
-        res.redirect(`/cms/${carteUrl[r.model]}/${r.modelId}`);
+        //res.redirect(`/cms/${carteUrl[r.model]}/${r.modelId}`);
+        res.redirect('back');
       });
     });
   });
@@ -36,7 +37,8 @@ router.post('/remove/:themesId/from/:model/:modelId', function (req, res) {
   carte[r.model].findById(r.modelId).then(function(model) {
     Themes.findById(r.themesId).then((themes) => {
       model.removeThemes(themes).then(() => {
-        res.redirect(`/cms/${carteUrl[r.model]}/${r.modelId}`);
+        //res.redirect(`/cms/${carteUrl[r.model]}/${r.modelId}`);
+        res.redirect('back');
       });
     });
   });

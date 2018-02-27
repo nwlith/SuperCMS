@@ -14,14 +14,14 @@ block content
         a(href="/cms/nouvelle" class="navigation") Nouvelle référence
   h2 Liste des articles
     each Articles in theme.articles
-      a(class="petit noir" href="article/"+Articles.id)
+      a(class="petit noir" href="article/"+articles.id)
         article
           h3.titre= articles.titre
-    if Articles.length === 0
+    if theme.articles.length === 0
         p Il n'y a pas encore d'articles :(            
   hr
   h2 Liste des images
-    each Images in themes.images
+    each Images in theme.images
       article
         h3.titre= images.titre
         a(href="image/"+images.id)
