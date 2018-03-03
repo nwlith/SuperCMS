@@ -6,7 +6,6 @@ head
   link(rel='stylesheet', href='/stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
   script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js")
-  
 
 block content
   body.cms
@@ -31,36 +30,18 @@ block content
         p Rechercher :
           input(type="text" name="recherche" id="recherche" placeholder:"Que recherchez vous ?")
         p.petit.noir Je suis un faux bouton
-    div(class="bloc listes")
-      h2 Liste des articles
+    div(class="bloc liste")
+      h2 Liste des références
       section.wrap
-        each Articles, index in article
+        each References, index in references
           article.blocReference
-            h3.titre= "no." + index + " : " + Articles.titre
-            a.action(href="/cms/article/"+Articles.id+"/edit" class="petit noir") éditer  
-            form(id="deleteArticle"+Articles.id style="display:none" method="post" action="/cms/article/"+Articles.id+"/delete")
-            a.action(onclick="event.preventDefault();document.getElementById('deleteArticle#{Articles.id}').submit()" class="petit noir") supprimer
-      h2 Liste des images
-      section.wrap
-        each Images, index in images
-          div.blocReference
-            h3.titre= "no." + index + " : " + Images.titre
-            img(src=Images.path)
-            br
-            a.action(href="/cms/image/"+Images.id+"/edit" class="petit noir") éditer
-            form(id="deleteImage"+Images.id style="display:none;" method="post" action="/cms/image/"+Images.id+"/delete")
-            a.action(onclick="event.preventDefault();document.getElementById('deleteImage#{Images.id}').submit()" class="petit noir") supprimer
-          if images.length === 0
-            p Il n'y a pas encore d'images :(
-          br
-      h2 Liste des videos 
-      section.wrap
-        each Videos, index in videos
-            article.blocReference
-                h3.titre= Videos.titre
-                a.action(href="/cms/video/"+Videos.id+"/edit" class="petit noir") éditer  
-                form(id="deleteVideo"+Videos.id style="display:none" method="post" action="/cms/video/"+Videos.id+"/delete")
-                a.action(onclick="event.preventDefault();document.getElementById('deleteVideo#{Videos.id}').submit()" class="petit noir") supprimer
+            div
+              h3 !{References.titre}
+              img(src=References.path)
+              figcaption #{References.classe}
+            a.action(href="/cms/reference/"+References.id+"/edit" class="petit noir") éditer  
+            form(id="deleteReference"+References.id style="display:none" method="post" action="/cms/reference/"+References.id+"/delete")
+            a.action(onclick="event.preventDefault();document.getElementById('deleteReference#{References.id}').submit()" class="petit noir") supprimer
     div
       h2
         a(onclick="document.getElementById('nouveauTheme').classList.remove('hide');" class="grand bleu") Créer un nouveau thème
@@ -68,7 +49,7 @@ block content
     div(class="bloc listes")  
       h2 Liste des thèmes
       div.wrap
-        each Themes in themes
+        each Themes, index in themes
           div.blocTheme
             p
               a(href="/cms/theme/"+Themes.id+"/edit" class="theme #{Themes.couleur}" style="background:#{Themes.couleur}")= Themes.nom
@@ -76,6 +57,3 @@ block content
             a.action(href="/cms/theme/"+Themes.id+"/edit" class="petit noir") éditer
             form(id="deleteTheme"+Themes.id style="display:none;" method="post" action="/cms/theme/"+Themes.id+"/delete")
             a.action(onclick="event.preventDefault();document.getElementById('deleteTheme#{Themes.id}').submit()" class="petit noir") supprimer
-    script.
-     
-        

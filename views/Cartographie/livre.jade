@@ -1,22 +1,22 @@
 include ../mixin/listeThemes
+
 head
-  title.titre= article.titre
+  title= reference.titre
   link(rel='stylesheet', href='/stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
-  
+
 block content
   nav
     div.titrePrincipal
-      h1= article.titre
+      h1 !{reference.titre}
     div.liens
       a(href="/" class="navigation") Accueil
-      a.action(href="/cartographie/references" class="navigation") Toutes les références
+      a(href="/cartographie/references" class="navigation") Toutes les références
       a(href="/cartographie/aleatoire" class="navigation") Référence aléatoire
-  article
-    h2= article.titre
-    div !{article.contenu}
-  
+      
+  figure
+    img(src=reference.path)
+    figcaption !{reference.description}
   section.themes
-    +listeThemes(article, 'article')
-  
+    +listeThemes(reference, 'reference')
     

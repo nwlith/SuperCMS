@@ -1,0 +1,23 @@
+include ../mixin/listeThemes
+
+head
+  title.titre= reference.titre
+  link(rel='stylesheet', href='/stylesheets/style.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
+
+block content
+  nav
+    div.titrePrincipal
+      h1 !{reference.titre}
+    div.liens
+      a(href="/" class="navigation") Accueil
+      a(href="/cartographie/references" class="navigation") Toutes les références
+      a(href="/cartographie/aleatoire" class="navigation") Référence aléatoire
+  figure
+    h3
+      a(href="#{reference.lien}")= reference.titre
+    iframe(src="#{reference.lien}" width="1160" height="652" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
+    figcaption !{reference.description}
+  section.themes
+    +listeThemes(reference, 'reference')
+    

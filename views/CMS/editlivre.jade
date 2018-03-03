@@ -1,0 +1,35 @@
+extends ../layout
+include ../mixin/tagbox
+include ../mixin/nouveauTheme
+include ../mixin/sacflash
+
+head  
+  title Editer un article
+  link(rel='stylesheet', href='/stylesheets/style.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
+
+block content
+  body.cms
+    nav
+      div.titrePrincipal  
+        h1 Editer #{reference.titre}
+      div.liens
+        a(href="" onclick="history.back();" class="navigation") Retour
+    +sacflash()
+    h2 #{reference.titre}  
+    section.blocAjout
+      h3 Modifier la référence
+      form(method="post" action="/cms/article/"+reference.id+"/edit")
+        label(for="titre") Titre :
+        p
+          input(type="text" name="titre" id="titre" value=reference.titre)
+        label(for="file") Image : 
+          p
+            input(type="file" name="file" id="file") 
+        label(for="description") Description :
+        p
+          textarea(rows="20" cols="150" name="description" id="description")= reference.description
+        p
+          button(type="submit" class="petit bleu") Envoyer
+    div.themes
+      +tagbox(themes, reference, 'reference')

@@ -5,4 +5,6 @@ const db = new Sequelize({
   storage: 'db.sqlite',
 });
 
+
+
 module.exports = db;

@@ -12,26 +12,10 @@ block content
         a(href="/" class="navigation") Accueil 
         a(href="/cartographie/aleatoire" class="navigation") lien aléatoire
         a(href="/cms/nouvelle" class="navigation") Nouvelle référence
-  h2 Liste des articles
-    each Articles in theme.articles
-      a(class="petit noir" href="article/"+articles.id)
+  h2 Liste des références
+    each References in theme.references
+      a(class="petit noir" href=References.classe+"/"+References.id)
         article
-          h3.titre= articles.titre
-    if theme.articles.length === 0
-        p Il n'y a pas encore d'articles :(            
-  hr
-  h2 Liste des images
-    each Images in theme.images
-      article
-        h3.titre= images.titre
-        a(href="image/"+images.id)
-          img(src=images.path)
-    if (theme.images.length === 0)
-        p Pas d'images liées à ce thème ! :(         
-  hr
-  h2 Liste des videos
-    each Videos in themes.videos
-          a(class="petit noir" href="video/"+videos.id)
-            h3.titre= videos.titre
-    if (theme.videos.length === 0)
-      p Pas de vidéos liées à ce thème ! :(    
+          img(src=References.path)
+          h3.titre= References.titre
+          h5= References.auteur

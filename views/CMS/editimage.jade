@@ -11,22 +11,22 @@ block content
   body.cms
     nav
       div.titrePrincipal  
-        h1 Editer #{image.titre}
+        h1 Editer #{reference.titre}
       div.liens
         a(href="" onclick="history.back();" class="navigation") Retour
-    h2 #{image.titre}  
+    h2 #{reference.titre}  
     section.blocAjout
-      h3= "Modifiez la référence " + image.titre
+      h3= "Modifiez la référence " + reference.titre
       figure
-        img(src=image.path)
-      form(method="post" action="/cms/image/"+image.id+"/edit" enctype="multipart/form-data")
+        img(src=reference.path)
+      form(method="post" action="/cms/image/"+reference.id+"/edit" enctype="multipart/form-data")
         label(for="titre") Titre :
           p
-            input(type="text" name="titre" id="titre" value=image.titre)
+            input(type="text" name="titre" id="titre" value=reference.titre)
         label(for="description") Description :
           p
-            textarea(rows="10" cols="150" name="description" id="description")= image.description  
+            textarea(rows="10" cols="150" name="description" id="description")= reference.description  
         p
           button(type="submit" class="petit noir") Envoyer
     div.themes
-      +tagbox(themes, image, 'image')
+      +tagbox(themes, reference, 'reference')

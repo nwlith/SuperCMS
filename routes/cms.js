@@ -9,14 +9,18 @@ var express = require('express');
 var router = express.Router();
 const fs = require('fs');
 /*  Modèles **/
-var Articles = require('./../database/modeles').Articles;
+var References = require('./../database/modeles').References;
 var Themes = require('./../database/modeles').Themes;
-var Images = require('./../database/modeles').Images;
-var Videos = require('./../database/modeles').Videos;
+
 var flasher = require('./../flash');
-/*  Nommer les images **/
+var marked = require('marked');
+
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  sanitize: true,
+});
+
 var dummyRandomString = require('./../util/dummyRandomString');
-/* Multer (upload images) **/
 var path = require('path');
 var Multer = require('multer');
 var rangement = Multer.diskStorage({
@@ -30,85 +34,83 @@ var rangement = Multer.diskStorage({
   limits: {fileSize: 1000000, files:1},
 });
 var uploadHandler = Multer({ storage: rangement });
+
+router.use('/nouvelle_video', uploadHandler.single('file'));
 router.use('/nouvelle_image', uploadHandler.single('file'));
+router.use('/nouvel_article', uploadHandler.single('file'));
+router.use('/nouveau_livre', uploadHandler.single('file'));
 
 var carte = {
-  image: Images,
-  article: Articles,
   theme: Themes,
-  video: Videos,
+  reference: References,
 };
 var carteUrl = {
-  image: "image",
-  article: "article",
   theme:"theme",
-  video:"video",
+  reference: "reference",
 };
 
-function pluralize(word) {
-  return word + 's';
-}
-
-function capitalize(word) {
-  return word.charAt(0).toUppercase() + word.substring(1);
-}
-
-function modelStringToDataParam(modelString) {
-  return capitalize(pluralize(modelString));
-}
 
 /* Nouvelle référence **************************************************************************************************/
 
 /* Créer une réference */
 router.get('/nouvelle', function(req, res, next) {
-  Articles.findAll().then((article) => {
-    Images.findAll().then((images) => {
-      Themes.findAll().then((themes) => {
-        Videos.findAll().then((videos) => {
-          res.render('CMS/nouvelleReference',{
-            article: article,
-            images: images,
+    Themes.findAll().then((themes) => {
+        res.render('CMS/nouvelleReference',{
             themes: themes,
-            videos: videos,
-          });
         });
-      });
     });
-  });
 });
 
 router.post('/nouvel_article', function(req, res, next) {
-  Articles.create({
+  References.create({
+      classe: 'article',
       titre: req.body.titre || 'titre par défaut',
-      contenu: req.body.contenu || 'Pas de contenu',
-      date: date.now(),
-    }).then((article) => {
-      flasher.flash({ message: 'Article ' + article.titre + ' créé avec succès !' });
-      res.redirect('/cms/article/'+ article.id);
+      auteur: req.body.auteur || 'auteur inconnu',
+      path: req.file.filename ? '/images/'+ req.file.filename : 'erreur',
+      description: req.body.description || 'Pas de descritpion',
+    }).then((reference) => {
+      flasher.flash({ message: 'Article ' + reference.titre + ' créé avec succès !' });
+      res.redirect('/cms/article/'+ reference.id);
     });
   });
 
 router.post('/nouvelle_image', function(req, res, next) {
-      Images.create({
-        path: req.file.filename ? '/images/' + req.file.filename : 'erreur',
+      References.create({
+        classe: 'image',
         titre: req.body.titre || 'titre par défaut',
+        auteur: req.body.auteur || 'auteur inconnu',
+        path: req.file.filename ? '/images/' + req.file.filename : 'erreur',
         description: req.body.description || 'description par défaut',
-        date: date.now(),
-      }).then((image) => {
-        flasher.flash({ message: 'Image ' + image.titre + ' créé avec succès !' });
-        res.redirect('/cms/image/'+ image.id);
+      }).then((reference) => {
+        flasher.flash({ message: 'Image ' + reference.titre + ' créé avec succès !' });
+        res.redirect('/cms/reference/'+ reference.id);
+    });
+  });
+
+router.post('/nouveau_livre', function(req, res, next) {
+  References.create({
+      classe: 'livre',
+      titre: req.body.titre || 'titre par défaut',
+      auteur: req.body.auteur || 'auteur inconnu',
+      path: req.file.filename ? '/images/'+ req.file.filename : 'erreur',
+      description: req.body.description || 'Pas de descritpion',
+    }).then((reference) => {
+      flasher.flash({ message: 'Livre ' + reference.titre + ' créé avec succès !' });
+      res.redirect('/cms/livre/'+ reference.id);
     });
   });
 
 router.post('/nouvelle_video', function(req, res, next) {
-    Videos.create({
+    References.create({
+        classe: 'video',
         titre: req.body.titre || 'titre par défaut',
+        auteur: req.body.auteur || 'auteur inconnu',
+        path: req.file.filename ? '/images/'+ req.file.filename : 'erreur',
         lien: req.body.lien || 'oups pas de lien',
         description: req.body.description || 'Pas de description',
-        date: date.now(),
-      }).then((video) => {
-        flasher.flash({ message: 'Vidéo ' + video.titre + ' créé avec succès !' });
-        res.redirect('/cms/video/'+ video.id);
+      }).then((reference) => {
+        flasher.flash({ message: 'Vidéo ' + reference.titre + ' créé avec succès !' });
+        res.redirect('/cms/reference/'+ reference.id);
       });
     });
 
@@ -122,129 +124,49 @@ router.post('/nouveau_theme', function(req, res, next) {
       });
     });
 
-/* Associer Article à un thème****************************************************************************************************************/
-router.get('/article/:id', function(req, res, next) {
-  Articles.findById(req.params.id, {
+/* Associer une référence à un thème****************************************************************************************************************/
+router.get('/reference/:id', function(req, res, next) {
+  References.findById(req.params.id, {
       include: [{
       model: Themes,
       }],
-  }).then((article) => {
+  }).then((reference) => {
     Themes.findAll().then((themes) => {
-      res.render('CMS/associerThemeArticle', {
-          article: article,
-          themes: themes
+      res.render('CMS/associerThemeReference', {
+          reference: reference,
+          themes: themes,
       });
     });
   });
-});
-
-router.get('/image/:id', function(req, res, next) {
-  Images.findById(req.params.id, {
-      include: [{
-        model: Themes,
-      }],
-    }).then((image) => {
-      Themes.findAll().then((themes) => {
-        res.render('CMS/associerThemeImage', {
-            image: image,
-            themes: themes
-        });
-      });
-  });
-});
-
-router.get('/video/:id', function(req, res, next) {
-    Videos.findById(req.params.id, {
-      include: [{
-        model: Themes,
-      }],
-    }).then((video) => {
-      Themes.findAll().then((themes) => {
-        res.render('CMS/associerThemeVideo', {
-            video: video,
-            themes: themes
-        });
-      });
-    });
 });
 
 /* Liste des références ****************************************************************************************************************/
 
 router.get('/liste', function(req, res, next) {
-  Articles.findAll().then((article) => {
-    Images.findAll().then((images) => {
-      Themes.findAll().then((themes) => {
-        Videos.findAll().then((videos) => {
-          res.render('CMS/listeReferences',{
-            article: article,
-            images: images,
-            themes: themes,
-            videos: videos,
-          });
-        });
+  References.findAll().then((references) => {
+    Themes.findAll().then((themes) => {
+      /*references.titre = marked(references.titre);*/
+      res.render('CMS/listeReferences',{
+        themes: themes,
+        references: references,
       });
     });
   });
 });
 
 /* Editer****************************************************************************************************************/
-/*
-router.get('/:model/:id/edit', function (req, res, next) {
-  var r = req.params;
-  carte[r.model].findById(r.modelId, {
+
+router.get('/reference/:id/edit' , function(req, res, next) {
+  References.findById(req.params.id, {
     include: [{
       model: Themes,
     }],
-  }).then(function(model) {
-    Themes.findAll().then(function(model) {
-        var data = {};
-        data[modelStringToDataParam(carteUrl[model])] = model;
-        res.render("CMS/edit"+carteUrl[r.model], data);
-      });
-    });
-  });
-*/
-router.get('/article/:id/edit', function(req, res, next) {
-  Articles.findById(req.params.id, {
-    include: [{
-      model: Themes,
-    }],
-  }).then((article) => {
+  }).then((reference) => {
     Themes.findAll().then((themes) => {
-      res.render('CMS/editArticle', {
-        article: article,
+      res.render('CMS/edit'+ reference.classe, {
+        reference: reference,
         themes: themes,
         flash: flasher.getFlash(),
-      });
-    });
-  });
-});
-
-router.get('/image/:id/edit', function(req, res, next) {
-  Images.findById(req.params.id, {
-    include: [{
-      model: Themes,
-    }],
-  }).then((image) => {
-    Themes.findAll().then((themes) => {
-      res.render('CMS/editImage', {
-        image: image,
-        themes: themes
-      });
-    });
-  });
-});
-
-router.get('/video/:id/edit', function(req, res, next) {
-  Videos.findById(req.params.id, {
-    include: [{
-      model: Themes,
-    }],
-  }).then((video) => {
-    Themes.findAll().then((themes) => {
-      res.render('CMS/editVideo', {
-        video: video,
-        themes: themes
       });
     });
   });
@@ -260,38 +182,56 @@ router.get('/theme/:id/edit', function(req, res, next) {
 
 /* Redirige suite un edit de l'article et le met à jour */
 router.post('/article/:id/edit', function(req, res, next) {
-  Articles.findById(req.params.id).then(function(article) {
-    article.update({
-      titre: req.body.titre || article.titre,
-      contenu: req.body.contenu || article.contenu,
+  References.findById(req.params.id).then(function(reference) {
+    reference.update({
+      titre: req.body.titre || reference.titre,
+      auteur: req.body.auteur || reference.auteur,
+      description: req.body.description || reference.description,
+      path: req.body.filename || reference.path,
     }).then(function(a) {
-      flasher.flash({ message: 'Article ' + article.titre + ' modifié avec succès !' });
-      res.redirect(req.originalUrl);
+      flasher.flash({ message: 'Article ' + reference.titre + ' modifié avec succès !' });
+      res.redirect('back');
     });
   });
 });
 
 router.post('/image/:id/edit', function(req, res, next) {
-  Images.findById(req.params.id).then((image) => {
-    image.update({
-      titre: req.body.titre || image.titre,
-      description: req.body.description || image.description,
-      path: req.body.filename || image.path,
+  References.findById(req.params.id).then((reference) => {
+    reference.update({
+      titre: req.body.titre || reference.titre,
+      auteur: req.body.auteur || reference.auteur,
+      description: req.body.description || reference.description,
+      path: req.body.filename || reference.path,
     }).then(() => {
-      flasher.flash({ message: 'Image ' + image.titre + ' modifiée avec succès !' });
-      res.redirect(req.originalUrl);
+      flasher.flash({ message: 'Image ' + reference.titre + ' modifiée avec succès !' });
+      res.redirect('back');
+    });
+  });
+});
+
+router.post('/livre/:id/edit', function(req, res, next) {
+  References.findById(req.params.id).then((reference) => {
+    reference.update({
+      titre: req.body.titre || reference.titre,
+      auteur: req.body.auteur || reference.auteur,
+      description: req.body.description || reference.description,
+      path: req.body.filename || reference.path,
+    }).then(() => {
+      flasher.flash({ message: 'Image ' + reference.titre + ' modifiée avec succès !' });
+      res.redirect('back');
     });
   });
 });
 
 router.post('/video/:id/edit', function(req, res, next) {
-  Videos.findById(req.params.id).then(function(video) {
-    video.update({
-      titre: req.body.titre || video.titre,
-      lien: req.body.lien || video.lien,
-      description: req.body.description || video.description,
-    })}).then(function(video) {
-      res.redirect(req.originalUrl);
+  References.findById(req.params.id).then(function(reference) {
+    reference.update({
+      titre: req.body.titre || reference.titre,
+      auteur: req.body.auteur || reference.auteur,
+      lien: req.body.lien || reference.lien,
+      description: req.body.description || reference.description,
+    })}).then(() => {
+      res.redirect('back');
     });
 });
 
@@ -307,31 +247,28 @@ router.post('/theme/:id/edit', function(req, res, next) {
 });
 
 /* Supprimer *************************************************************************************************************/
-/*(tentative numéro 2 de factorisation qui ne fonctionne pas non plus */ /*
-router.post('/:model/:id/delete', function (req, res, next) {
-  var r = req.params;
-  carte[r.model].findById(r.modelId).then(function(model) {
-    model.destroy();
-  }).then(function() {
-    res.redirect('/cms/nouvelle');
-  });
-});
-*/
-router.post('/article/:id/delete', function(req, res, next) {
-  Articles.findById(req.params.id).then(function(article) {
-    article.destroy();
+
+router.post('/reference/:id/delete', function(req, res, next) {
+  References.findById(req.params.id).then(function(reference) {
+    reference.destroy();
+    /*
+    fs.unlink(path.resolve(__dirname,'../public', image.path), (err) => {
+      if (err) throw err;
+      console.log('Image de #{reference.titre} supprimée !');
+    });
+    */
   }).then(function() {
     res.redirect('/cms/liste');
   });
 });
 
 router.post('/image/:id/delete', function(req, res, next) {
-  Images.findById(req.params.id).then(function(image) {
-    image.destroy();
+  References.findById(req.params.id).then(function(reference) {
+    reference.destroy();
     console.log(__dirname+'<====== dirname');
     fs.unlink(path.resolve(__dirname,'../public', image.path), (err) => {
       if (err) throw err;
-      console.log('image.titre supprimée avec succès');
+      console.log('#{reference.titre} supprimée !');
     });
   }).then(function() {
     res.redirect('/cms/liste');
@@ -339,8 +276,8 @@ router.post('/image/:id/delete', function(req, res, next) {
 });
 
 router.post('/video/:id/delete', function(req, res, next) {
-  Videos.findById(req.params.id).then(function(video) {
-    video.destroy();
+  Reference.findById(req.params.id).then(function(reference) {
+    reference.destroy();
   }).then(function() {
     res.redirect('/cms/liste');
   });

@@ -40,7 +40,7 @@ hr {
 nav {
   display: flex;
   position: fixed;
-  padding: 1em;
+  padding : 1em;
   top: 0px;
   left: 0px;
   right: 0px;
@@ -309,4 +309,16 @@ img {
 .flash-ok {
   color: green;
   border-color: green;
+}
+
+.articleDescription {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10em;
+}
+
+.articleTitre {
+  margin: 0em;
+  font-size: 30px;
 }

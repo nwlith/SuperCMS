@@ -15,21 +15,16 @@ block content
         h1 Nouvelle référence
       div.liens
         a(href="../nouvelle" class="navigation") Nouvelle référence 
-        a(href="/cms/image/"+image.id+"/edit" class="navigation") Editer 
-        a(href="/cms/liste" class="navigation") Liste des références    
+        a(href="/cms/"+reference.classe+"/"+reference.id+"/edit" class="navigation") Editer 
+        a(href="/cms/liste" class="navigation") Liste des références
     +sacflash()
+    h2 Ajouter des thèmes à "#{reference.titre}"
     div.center
-      h2 Ajouter des thèmes à "#{image.titre}"
-    div.center
-      +tagbox(themes, image, 'image')
-    div.center
+        +tagbox(themes, reference, 'reference')
+    div.center  
       h2
         a(onclick="document.getElementById('nouveauTheme').classList.remove('hide');" class="grand bleu") Créer un nouveau thème
-        a(href="/cms/liste" class="grand bleu") terminé !
-        
-    div.center
-      +nouveauTheme()
-    
-
-        
-      
+        a(href="/cms/liste" class="grand bleu") terminé ! 
+    div
+        +nouveauTheme()
+     

@@ -11,25 +11,28 @@ block content
   body.cms
     nav
       div.titrePrincipal  
-        h1 Editer #{video.titre}
+        h1 Editer #{reference.titre}
       div.liens
         a(href="" onclick="history.back();" class="navigation") Retour
-    h2 #{video.titre}     
+    h2 #{reference.titre}     
     section.blocAjout
       h3 Modifier la référence
-      iframe(src="#{video.lien}" width="1160" height="652" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
-      form(method="post" action="/cms/video/"+video.id+"/edit")
+      iframe(src="#{reference.lien}" width="1160" height="652" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
+      form(method="post" action="/cms/video/"+reference.id+"/edit")
         label(for="titre") Titre :
           p
-            input(type="text" name="titre" id="titre" value=video.titre)
+            input(type="text" name="titre" id="titre" value=reference.titre)
         label(for="lien") Lien :
           p
-            input(type="text" name="lien" id="lien" value=video.lien)
+            input(type="text" name="lien" id="lien" value=reference.lien)
+        label(for="file") Aperçu image : 
+          p
+            input(type="file" name="file" id="file") 
         label(for="description") description :
           p
-            textarea(rows="20" cols="150" name="contenu" id="contenu")= video.description
+            textarea(rows="20" cols="150" name="description" id="description")= reference.description
             aside Note: Utiliser Markdown pour le formatage
         p
           button(type="submit" class="petit noir") Envoyer
     div.themes
-      +tagbox(themes, video, 'video')
+      +tagbox(themes, reference, 'reference')

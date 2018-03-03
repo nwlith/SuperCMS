@@ -10,10 +10,8 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var marked = require('marked');
-var Articles = require('./../database/modeles').Articles;
 var Themes = require('./../database/modeles').Themes;
-var Images = require('./../database/modeles').Images;
-var Videos = require('./../database/modeles').Videos;
+var References = require('./../database/modeles').References;
 
 marked.setOptions({
   renderer: new marked.Renderer(),
@@ -21,12 +19,10 @@ marked.setOptions({
 });
 
 var db = require('./../database/db');
-
-var carte = [{ 'Articles' : Articles }, { 'Images' : Images }, { 'Videos': Videos}];
-var carteAl = [{ m : Articles }, { m : Images }, { m : Videos}];
+var carte = [{ 'References' : References }];
+var model = [{m : References}];
 
 var visites = [];
-var visitesThemes = [];
 
 /* Accueil*******************************************************************************************************************/
 router.get('/accueil', function(req, res, next) {
@@ -35,26 +31,13 @@ router.get('/accueil', function(req, res, next) {
 
 /* Liste des références *************************************************************************************************************/
 router.get('/references', function(req, res, next) {
-  var withThemes = { include: [{ model: Themes, }]};
-  Promise.all([
-    Articles.findAll(withThemes),
-    Images.findAll(withThemes),
-    Videos.findAll(withThemes)
-  ]).then(function(donnees) {
-    var articles = donnees[0].map(art => {
-      var article = art;
-      article.contenu = marked(art.contenu);
-      return article;
-    });
-    var images = donnees[1];
-    var videos = donnees[2];
-    res.render('Cartographie/references',{
-      articles,
-      images,
-      videos,
+    References.findAll().then(function(references) {
+      res.render('Cartographie/references',{
+      references: references,
     });
   });
 });
+
 /* Liste des thèmes *************************************************************************************************************/
 router.get('/themes', function(req, res, next) {
   Themes.findAll().then((themes) => {
@@ -64,17 +47,15 @@ router.get('/themes', function(req, res, next) {
       });
     });
 
-/* Thème et liste des reférences associées */
+/* Un thème et liste des reférences associées */
 router.get('/theme/:id', function(req, res, next) {
   Themes.findById(req.params.id, {
     include: [{
-      model: Articles,
-      model: Images,
-      model: Videos,
+      model: References,
     }],
   }).then(function(theme) {
-      visitesThemes.push(theme.id);
-      console.log(visitesThemes);
+      visites.push(theme.id+'-theme');
+      console.log(visites);
       res.render('Cartographie/theme',{
         theme: theme,
       });
@@ -82,76 +63,97 @@ router.get('/theme/:id', function(req, res, next) {
   });
 
 /* Afficher une référence *********************************************************************************************************/
-      /* Un article */
+
+/* Une référence */
 router.get('/article/:id', function(req, res, next) {
-  Articles.findById(req.params.id, {
+  References.findById(req.params.id, {
     include: [{
       model: Themes,
     }],
-  }).then(function(article) {
-    visites.push(article.id+'-Articles');
+  }).then(function(reference) {
+    visites.push(reference.id+'-reference');
     console.log(visites);
-    article.contenu = marked(article.contenu);
-    res.render('Cartographie/unArticle', {
-      article: article,
+    reference.description = marked(reference.description);
+    reference.titre = marked(reference.titre);
+    res.render('Cartographie/'+reference.classe, {
+      reference: reference,
     });
   });
 });
-      /* Une image */
+
 router.get('/image/:id', function(req, res, next) {
-  Images.findById(req.params.id, {
+  References.findById(req.params.id, {
     include: [{
       model: Themes,
     }],
-  }).then(function(image) {
-    visites.push(image.id+'-Images');
+  }).then(function(reference) {
+    visites.push(reference.id+'-reference');
     console.log(visites);
-    image.description = marked(image.description);
-    res.render('Cartographie/uneImage', {
-      image: image,
+    reference.description = marked(reference.description);
+    reference.titre = marked(reference.titre);
+    res.render('Cartographie/'+reference.classe, {
+      reference: reference,
     });
   });
 });
 
-/* Une vidéo */
+router.get('/livre/:id', function(req, res, next) {
+  References.findById(req.params.id, {
+    include: [{
+      model: Themes,
+    }],
+  }).then(function(reference) {
+    visites.push(reference.id+'-reference');
+    console.log(visites);
+    reference.description = marked(reference.description);
+    reference.titre = marked(reference.titre);
+    res.render('Cartographie/'+reference.classe, {
+      reference: reference,
+    });
+  });
+});
+
 router.get('/video/:id', function(req, res, next) {
-  Videos.findById(req.params.id, {
+  References.findById(req.params.id, {
     include: [{
       model: Themes,
     }],
-  }).then(function(video) {
-    visites.push(video.id+'-Videos')
+  }).then(function(reference) {
+    visites.push(reference.id+'-reference');
     console.log(visites);
-    video.description = marked(video.description);
-    res.render('Cartographie/uneVideo', {
-      video: video,
+    reference.description = marked(reference.description);
+    reference.titre = marked(reference.titre);
+    res.render('Cartographie/'+reference.classe, {
+      reference: reference,
     });
   });
 });
-
 /* Aléatoire en fonction d'un thème *************************************************************************************************************/
 /* juste aléatoire **/
 router.get('/aleatoire', function(req, res) {
-  var model = carteAl[Math.floor(Math.random()*carteAl.length)];
-  model.m.findAll({
+  References.findAll({
     limit: 1,
     order: db.fn('RANDOM'),
   }).then(function(resultats) {
-      res.redirect('/cartographie/' + model.n + '/' + resultats[0].id );
+      res.redirect('/cartographie/' + resultats[0].classe + '/' + resultats[0].id );
   });
 });
 
-/* En fonction d'un thème**/
-router.get('/:id/aleatoire', function(req, res) {
-  var model = carteAl[Math.floor(Math.random()*carteAl.length)];
-  model.m.findAll({
-    limit: 1,
-    order: db.fn('RANDOM'),
-  }).then(function(resultats) {
-      res.redirect('/cartographie/' + model.n + '/' + resultats[0].id );
-  });
-});
 
+/* En fonction d'un thème  **/
+router.get('/:id/aleatoire', function(req, res, next) {
+  Themes.findById(req.params.id, {
+    include: [{
+      model: References.findById({ limit: 1, order: db.fn('RANDOM'),}),
+    }],
+  }).then(function(reference) {
+      visites.push(Themes.id+'-theme');
+      console.log(visites);
+      res.redirect('/cartographie/'+reference[0].classe+'/'+reference[0].id,{
+        theme: theme,
+      });
+    });
+  });
 
 /*  Parcours *************************************************************************************************************/
 
@@ -193,7 +195,7 @@ router.get('/references', function(req, res, next) {
   ]).then(function(donnees) {
     var articles = donnees[0].map(art => {
       var article = art;
-      article.contenu = marked(art.contenu);
+      article.descritpion = marked(art.descritpion);
       return article;
     });
     var images = donnees[1];

@@ -13,29 +13,38 @@ body.cms
         a(href="/cms/liste" class="navigation") Liste des références
     div.center
       h3
-        a(onclick="document.getElementById('nouvelArticle').classList.remove('hide');document.getElementById('nouvelleVideo').classList.add('hide');document.getElementById('nouvelleImage').classList.add('hide');" class="grand bleu") article
-        a(onclick="document.getElementById('nouvelleImage').classList.remove('hide');document.getElementById('nouvelArticle').classList.add('hide');document.getElementById('nouvelleVideo').classList.add('hide');" class="grand bleu") image
-        a(onclick="document.getElementById('nouvelleVideo').classList.remove('hide');document.getElementById('nouvelArticle').classList.add('hide');document.getElementById('nouvelleImage').classList.add('hide');" class="grand bleu") vidéo
+        a(onclick="document.getElementById('nouvelArticle').classList.remove('hide');document.getElementById('nouvelleVideo').classList.add('hide');document.getElementById('nouvelleImage').classList.add('hide');document.getElementById('nouveauLivre').classList.add('hide');" class="grand bleu") article
+        a(onclick="document.getElementById('nouvelleImage').classList.remove('hide');document.getElementById('nouvelArticle').classList.add('hide');document.getElementById('nouvelleVideo').classList.add('hide');document.getElementById('nouveauLivre').classList.add('hide');" class="grand bleu") image
+        a(onclick="document.getElementById('nouveauLivre').classList.remove('hide');document.getElementById('nouvelArticle').classList.add('hide');document.getElementById('nouvelleImage').classList.add('hide');document.getElementById('nouvelleVideo').classList.add('hide');" class="grand bleu") livre
+        a(onclick="document.getElementById('nouvelleVideo').classList.remove('hide');document.getElementById('nouvelArticle').classList.add('hide');document.getElementById('nouvelleImage').classList.add('hide');document.getElementById('nouveauLivre').classList.add('hide');" class="grand bleu") vidéo
     section.center
         div(class="bloc ajoutReference" id="nouvelArticle")
               h2 Article
-              form(method="post" class="article" action="/cms/nouvel_article")
+              form(method="post" class="article" action="/cms/nouvel_article"  enctype="multipart/form-data")
                 label(for="titre") Titre :
                   p
                     input(type="text" name="titre" id="titre")
-                label(for="contenu") Contenu :
+                label(for="auteur") Auteur :
                   p
-                    textarea(rows="15" cols="150" name="contenu" id="contenu")
+                    input(type="text" name="auteur" id="auteur")
+                label(for="file") Image : 
+                  p
+                    input(type="file" name="file" id="file") 
+                label(for="description") Contenu :
+                  p
+                    textarea(rows="15" cols="150" name="description" id="description")
                     aside Note: Utiliser Markdown pour le formatage  
                 h3
                   button(type="submit" class="grand bleu") nouvel article
-                  // button(type="submit" onclick="window.open('#{article.id}/theme_article')" class="petit noir") nouvel article
         div(class="bloc ajoutReference hide" id="nouvelleImage")
               h2 Image  
               form(method="post" class="image" action="/cms/nouvelle_image"  enctype="multipart/form-data")   
                 label(for="titre") Titre :
-                  p 
+                  p
                     input(type="text" name="titre" id="titre")
+                label(for="auteur") Auteur :
+                  p
+                    input(type="text" name="auteur" id="auteur")
                 label(for="file") Image : 
                   p
                     input(type="file" name="file" id="file") 
@@ -44,14 +53,37 @@ body.cms
                     textarea(rows="10" cols="150" name="description" id="description") 
                     aside Note: Markdown fonctionne !
                 h3
-                  button(type="submit" class="grand bleu") nouvelle image
-                //button(type="submit" onclick="window.open('#{image.id}/theme_image')" class="petit noir") Nouvelle image            
+                  button(type="submit" class="grand bleu") nouvelle image   
+        div(class="bloc ajoutReference hide" id="nouveauLivre")
+              h2 Livre
+              form(method="post" class="livre" action="/cms/nouveau_livre"  enctype="multipart/form-data")
+                label(for="titre") Titre :
+                  p
+                    input(type="text" name="titre" id="titre")
+                label(for="auteur") Auteur :
+                  p
+                    input(type="text" name="auteur" id="auteur")
+                label(for="file") Couverture : 
+                  p
+                    input(type="file" name="file" id="file") 
+                label(for="description") Résumé :
+                  p
+                    textarea(rows="15" cols="150" name="description" id="description")
+                    aside Note: Utiliser Markdown pour le formatage  
+                h3
+                  button(type="submit" class="grand bleu") nouveau livre
         div(class="bloc ajoutReference hide" id="nouvelleVideo")
               h2 Vidéo  
-              form(method="post" class="video" action="/cms/nouvelle_video")   
+              form(method="post" class="video" action="/cms/nouvelle_video" enctype="multipart/form-data")   
                 label(for="titre") Titre :
                   p 
                     input(type="text" name="titre" id="titre")
+                label(for="auteur") Auteur :
+                  p
+                    input(type="text" name="auteur" id="auteur")
+                label(for="file") Image : 
+                  p
+                    input(type="file" name="file" id="file") 
                 label(for="lien") Lien de la vidéo : 
                   p
                     input(type="text" name="lien" id="lien")    
@@ -61,6 +93,4 @@ body.cms
                     aside Note: Markdown fonctionne !  
                 h3
                   button(type="submit" class="grand bleu") nouvelle vidéo
-                  
-              //-  button(type="submit" onclick="window.open('#{video.id}/theme_video')"class="petit noir") nouvelle vidéo
     
