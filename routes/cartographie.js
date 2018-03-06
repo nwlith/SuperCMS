@@ -56,6 +56,7 @@ router.get('/theme/:id', function(req, res, next) {
   }).then(function(theme) {
       visites.push(theme.id+'-theme');
       console.log(visites);
+      theme.description = marked(theme.description);
       res.render('Cartographie/theme',{
         theme: theme,
       });

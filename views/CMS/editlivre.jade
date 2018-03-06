@@ -21,15 +21,23 @@ block content
       h3 Modifier la référence
       form(method="post" action="/cms/article/"+reference.id+"/edit")
         label(for="titre") Titre :
-        p
-          input(type="text" name="titre" id="titre" value=reference.titre)
+          p
+            input(type="text" name="titre" id="titre" value=reference.titre)
+        label(for="auteur") Auteur :
+          p
+            input(type="text" name="auteur" id="auteur" value=reference.auteur)
         label(for="file") Image : 
           p
             input(type="file" name="file" id="file") 
         label(for="description") Description :
-        p
-          textarea(rows="20" cols="150" name="description" id="description")= reference.description
+          p
+            textarea(rows="20" cols="150" name="description" id="description")= reference.description
         p
           button(type="submit" class="petit bleu") Envoyer
     div.themes
       +tagbox(themes, reference, 'reference')
+    div.center
+      h2
+        a(onclick="document.getElementById('nouveauTheme').classList.remove('hide');" class="grand bleu") Créer un nouveau thème
+    div.center
+      +nouveauTheme()

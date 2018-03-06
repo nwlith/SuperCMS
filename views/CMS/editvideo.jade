@@ -22,6 +22,9 @@ block content
         label(for="titre") Titre :
           p
             input(type="text" name="titre" id="titre" value=reference.titre)
+        label(for="auteur") Auteur :
+          p
+            input(type="text" name="auteur" id="auteur" value=reference.auteur)
         label(for="lien") Lien :
           p
             input(type="text" name="lien" id="lien" value=reference.lien)
@@ -36,3 +39,8 @@ block content
           button(type="submit" class="petit noir") Envoyer
     div.themes
       +tagbox(themes, reference, 'reference')
+    div.center
+      h2
+        a(onclick="document.getElementById('nouveauTheme').classList.remove('hide');" class="grand bleu") Créer un nouveau thème
+    div.center
+      +nouveauTheme()

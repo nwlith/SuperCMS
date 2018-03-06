@@ -4,18 +4,21 @@ head
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
 
 block content
-  body.theme
-    nav(style="background: #{theme.couleur}")
+  body
+    nav(class='background#{theme.couleur}')
       div.titrePrincipal
         h1= theme.nom
       div.liens
         a(href="/" class="navigation") Accueil 
-        a(href="/cartographie/aleatoire" class="navigation") lien aléatoire
+        a(href="/cartographie/aleatoire" class="navigation") référence aléatoire
         a(href="/cms/nouvelle" class="navigation") Nouvelle référence
-  h2 Liste des références
+  
+  p(class='font#{theme.couleur}') !{theme.description}
+  h2(class='font#{theme.couleur}') Liste des références associées au thème "#{theme.nom}" 
+  section.colonnes
     each References in theme.references
-      a(class="petit noir" href=References.classe+"/"+References.id)
-        article
-          img(src=References.path)
-          h3.titre= References.titre
-          h5= References.auteur
+        article(class='listeReferences lRTheme#{theme.couleur}')
+          a(href="/cartographie/"+References.classe+"/"+References.id)
+            img(src=References.path class='listeImagesC')
+            h3.titre= References.titre
+            h5= References.auteur

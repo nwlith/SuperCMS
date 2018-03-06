@@ -11,8 +11,9 @@ block content
       a(href="/" class="navigation") Accueil 
       a(href="/cartographie/aleatoire" class="navigation") lien aléatoire
       a(href="/cartographie/themes" class="navigation") tout les thèmes
-  each References, index in references
-    a(class="petit noir" href=References.classe+"/"+References.id)
-      article.article
-        img(src=References.path width='300px')
-        h3 !{References.titre}
+  section.colonnes
+    each References, index in references
+        article.listeReferences
+          a(href=References.classe+"/"+References.id)
+            img(src=References.path class='listeImagesC')
+            h3 !{References.titre}

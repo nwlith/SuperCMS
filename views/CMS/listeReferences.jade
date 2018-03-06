@@ -6,6 +6,7 @@ head
   link(rel='stylesheet', href='/stylesheets/style.css')
   link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
   script(src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js")
+  
 
 block content
   body.cms
@@ -26,22 +27,22 @@ block content
             option(value="image" class="image") image
             option(value="video" class="video") vidéo
         p Thème associé : 
-          input(type="text" name="theme" id="theme")
+          input(type="search" name="theme" id="theme")
         p Rechercher :
-          input(type="text" name="recherche" id="recherche" placeholder:"Que recherchez vous ?")
-        p.petit.noir Je suis un faux bouton
-    div(class="bloc liste")
+          input(type="search" name="q" id="recherche" placeholder="Que recherchez vous ?")
+          button.petit.bleu Rechercher
+    div(class="bloc")
       h2 Liste des références
-      section.wrap
-        each References, index in references
-          article.blocReference
-            div
-              h3 !{References.titre}
-              img(src=References.path)
-              figcaption #{References.classe}
-            a.action(href="/cms/reference/"+References.id+"/edit" class="petit noir") éditer  
-            form(id="deleteReference"+References.id style="display:none" method="post" action="/cms/reference/"+References.id+"/delete")
-            a.action(onclick="event.preventDefault();document.getElementById('deleteReference#{References.id}').submit()" class="petit noir") supprimer
+      section.colonnes
+          each References, index in references
+            article.blocReference
+                h3 !{References.titre}
+                h5 #{References.auteur}
+                img.listeImages(src=References.path)
+                figcaption (#{References.classe})
+                a.action(href="/cms/reference/"+References.id+"/edit" class="petit noir") éditer  
+                form(id="deleteReference"+References.id style="display:none" method="post" action="/cms/reference/"+References.id+"/delete")
+                a.action(onclick="event.preventDefault();document.getElementById('deleteReference#{References.id}').submit()" class="petit noir") supprimer
     div
       h2
         a(onclick="document.getElementById('nouveauTheme').classList.remove('hide');" class="grand bleu") Créer un nouveau thème
@@ -57,3 +58,7 @@ block content
             a.action(href="/cms/theme/"+Themes.id+"/edit" class="petit noir") éditer
             form(id="deleteTheme"+Themes.id style="display:none;" method="post" action="/cms/theme/"+Themes.id+"/delete")
             a.action(onclick="event.preventDefault();document.getElementById('deleteTheme#{Themes.id}').submit()" class="petit noir") supprimer
+  script.
+    $('li').click(function () {
+      ...
+    });

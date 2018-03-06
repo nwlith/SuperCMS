@@ -8,16 +8,18 @@ head
 block content
   nav
     div.titrePrincipal
-      h1 !{reference.titre}
+      h1 Cartographie des références
     div.liens
       a(href="/" class="navigation") Accueil
       a(href="/cartographie/references" class="navigation") Toutes les références
       a(href="/cartographie/aleatoire" class="navigation") Référence aléatoire
-  figure
-    h3
-      a(href="#{reference.lien}")= reference.titre
-    iframe(src="#{reference.lien}" width="1160" height="652" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
-    figcaption !{reference.description}
+  section
+    a(href="#{reference.lien}")
+      h3.articleTitre !{reference.titre}
+    div.videoVideo
+      iframe(src="#{reference.lien}" width="800" height="450" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen)
+  figcaption.videoDescription !{reference.description}
   section.themes
     +listeThemes(reference, 'reference')
+  
     

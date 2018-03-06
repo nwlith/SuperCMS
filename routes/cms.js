@@ -70,7 +70,7 @@ router.post('/nouvel_article', function(req, res, next) {
       description: req.body.description || 'Pas de descritpion',
     }).then((reference) => {
       flasher.flash({ message: 'Article ' + reference.titre + ' créé avec succès !' });
-      res.redirect('/cms/article/'+ reference.id);
+      res.redirect('/cms/reference/'+ reference.id);
     });
   });
 
@@ -96,7 +96,7 @@ router.post('/nouveau_livre', function(req, res, next) {
       description: req.body.description || 'Pas de descritpion',
     }).then((reference) => {
       flasher.flash({ message: 'Livre ' + reference.titre + ' créé avec succès !' });
-      res.redirect('/cms/livre/'+ reference.id);
+      res.redirect('/cms/reference/'+ reference.id);
     });
   });
 

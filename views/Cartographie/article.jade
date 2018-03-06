@@ -7,17 +7,15 @@ head
 block content
   nav
     div.titrePrincipal
-      h1 !{reference.titre}
+      h1 Cartographie des références
     div.liens
       a(href="/" class="navigation") Accueil
       a.action(href="/cartographie/references" class="navigation") Toutes les références
       a(href="/cartographie/aleatoire" class="navigation") Référence aléatoire
   article.articleDescription 
     h2.articleTitre !{reference.titre}
-    img(src=reference.path)
-    p !{reference.description}
-  
+    div.description 
+      !{reference.description}
   section.themes
     +listeThemes(reference, 'reference')
-  
-    
+  //  img(src=reference.path)   
