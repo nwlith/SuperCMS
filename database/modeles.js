@@ -50,6 +50,25 @@ const References = db.define('references', {
   },
 });
 
+
+/* Utilisateurs */
+const User = db.define('users', {
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  nom: {
+    type: Sequelize.STRING,
+  },
+  password: {
+    type: Sequelize.STRING,
+  },
+  email: {
+    type: Sequelize.STRING,
+  },
+});
+
 /* Associe des thèmes aux références et des références aux thèmes */
 
 Themes.belongsToMany(References, { through: 'ReferencesThemes'});
@@ -60,4 +79,5 @@ db.sync({ });
 module.exports = {
   References,
   Themes,
+  User,
 };

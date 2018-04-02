@@ -1,0 +1,23 @@
+include ../mixin/listeThemes
+
+head
+  title= reference.titre
+  link(rel='stylesheet', href='/stylesheets/style.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
+
+block content
+  nav
+    div.titrePrincipal
+      h1 Cartographie des références
+    div.liens
+      a(href="/" class="navigation") Accueil
+      a(href="/cartographie/references" class="navigation") Toutes les références
+      a(href="/cartographie/aleatoire" class="navigation") Référence aléatoire
+      
+  figure
+    h2.articleTitre !{reference.titre}
+    img.livreImage(src=reference.path)
+    figcaption.livreDescription !{reference.description}
+  section.themes
+    +listeThemes(reference, 'reference')
+    

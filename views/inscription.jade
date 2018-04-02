@@ -1,0 +1,26 @@
+include ../mixin/sacflash
+
+head 
+  title Inscription
+  link(rel='stylesheet', href='/stylesheets/style.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
+
+body.accueil
+  block content
+    h1.titreCarto Inscription
+    +sacflash()
+    div
+      form(method="post" action="/nouvel_utilisateur")
+        label(for="nom") Nom :
+          p
+            input(type="text" name="nom" id="nom" value=user.nom)
+        label(for="mail") Email :
+          p
+            input(type="text" name="email" id="email" value=user.email)
+        label(for="password") Mot de passe : 
+          p
+            input(type="text" name="password" id="password" value=user.password)
+      p
+          button(type="submit" class="petit bleu") Créer un compte
+    div
+      a(href="/users/connexion") Retour à la page de connexion

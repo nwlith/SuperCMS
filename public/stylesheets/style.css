@@ -16,9 +16,8 @@
 /* 0 - Général ***************************************************************************************************************
 */
 body {
-  margin: 7em;
-  font: 18px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background: #FFE7E7;
+  margin: 5em;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   box-sizing: border-box;
 }
 
@@ -68,7 +67,7 @@ nav {
 
 .titrePrincipal {
   justify-content: flex-start;
-  color: #FFE7E7;
+  color: white;
 }
 
 .liens {
@@ -104,7 +103,7 @@ nav {
 }
 
 .navigation {
-  color : #FFE7E7;
+  color : white;
   font-size: 16px;
 }
 
@@ -115,6 +114,15 @@ nav {
   border: 3px solid;
   border-radius: 3px;
   line-height: 1.2;
+}
+
+.edit {
+  font-size: 22px;
+  color : blue;
+  margin-right: 0.5em;
+}
+
+.edit:hover {
 }
 
 .noir {
@@ -146,32 +154,32 @@ nav {
 }
 
 .rouge {
-  color: #FFE7E7;
+  color: white;
   background-color: #FF2400;
 }
 
 .bleuPastel {
-  color: #FFE7E7;
+  color: white;
   background-color: #94AEFF;
 }
 
 .jaune {
-  color: #FFE7E7;
+  color: white;
   background-color: #EFD76F;
 }
 
 .saumon {
-  color: #FFE7E7;
+  color: white;
   background-color: #FFA68A;
 }
 
 .mauve {
-  color: #FFE7E7;
+  color: white;
   background-color: #B558E0;
 }
 
 .vert {
-  color: #FFE7E7;
+  color: white;
   background-color: #26BCB5;
 }
 
@@ -194,40 +202,40 @@ button:hover {
 
 .darkBlue:hover {
   background-color: #0A0344;
-  color: #FFE7E7;
+  color: white;
 }
 .rouge:hover {
-  background-color: #FFE7E7;
+  background-color: white;
   color: #FF2400;
 }
 
 .vert:hover {
-  background-color: #FFE7E7;
+  background-color: white;
   color: #26BCB5;
 }
 
 .mauve:hover {
-  background-color: #FFE7E7;
+  background-color: white;
   color: #B558E0;
 }
 
 .jaune:hover {
-  background-color: #FFE7E7;
+  background-color: white;
   color: #EFD76F;
 }
 
 .saumon:hover {
-  background-color: #FFE7E7;
+  background-color: white;
   color: #FFA68A;
 }
 
 .bleuPastel:hover {
-  background-color: #FFE7E7;
+  background-color: white;
   color: #94AEFF;
 }
 
 .mauve:hover {
-  background-color: #FFE7E7;
+  background-color: white;
   color: #B558E0;
 }
 
@@ -320,9 +328,9 @@ button:hover {
 }
 
 .colonnes {
-  columns: 4 300px;
-    -webkit-columns: 4 300px;
-    -moz-columns: 4 300px;
+  columns: 4 200px;
+    -webkit-columns: 4 200px;
+    -moz-columns: 4 200px;
   z-index: 0;
 }
 
@@ -369,18 +377,24 @@ button:hover {
   color: green;
   border-color: green;
 }
-/* ************************************************************************************************************************************************** */
+
+.flash-error {
+  color: red;
+  border-color: red;
+}
+
+/* Liste des références************************************************************************************************************************************************** */
 .listeThemes {
   margin-top: 2em;
   margin-bottom: 2em;
 }
 
 .listeImages {
-  max-width: 300px;
+  max-width: 200px;
 }
 
 .listeReferences {
-  border: 3px solid  #FFE7E7;
+  border: 3px solid  white;
   border-radius: 5px;
   width: 300px;
   padding: 20px;
@@ -516,12 +530,74 @@ button:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-right: 25em;
-  margin-left: 10em;
+  margin-right: 16em;
+  margin-left: 4em;
   margin-top: 10em;
 }
 
 .articleTitre {
   margin: 0em;
   font-size: 40px;
+}
+
+/**********************************************************************************************************/
+
+.listeParcours {
+  font-size: 50px;
+  color: blue;
+  font-family: 'Source Code Pro', monospace;
+}
+
+.listeParcours h3 {
+  font-size: 21px;
+  font-family: arial;
+}
+
+.listeParcours h4 {
+  font-size: 18px;
+  margin-top: 5px;
+  font-family: arial;
+}
+
+
+.referencesParcours {
+  border: 3px solid  white;
+  border-radius: 5px;
+  width: 600px;
+  padding: 20px;
+  color: black;
+}
+
+.referencesParcours a {
+  color: black
+}
+
+.referencesParcours .listeImagesC {
+  width: 300px;
+  margin-right: 1em;
+  filter: grayscale(1);
+     -webkit-filter: grayscale(1);
+     -moz-filter: grayscale(1);
+     -ms-filter: grayscale(1);
+     -o-filter: grayscale(1);
+}
+
+.referencesParcours:hover .listeImagesC {
+  filter: grayscale(0);
+     -webkit-filter: grayscale(0);
+     -moz-filter: grayscale(0);
+     -ms-filter: grayscale(0);
+     -o-filter: grayscale(0);
+}
+
+.referencesParcours:hover a {
+  color: blue;
+}
+
+.referencesParcours:hover {
+  border-color: blue;
+}
+
+.flex {
+  display: flex;
 }

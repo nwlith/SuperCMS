@@ -1,3 +1,5 @@
+include ./mixin/sacflash
+
 head 
   title Cartographie des références
   link(rel='stylesheet', href='/stylesheets/style.css')
@@ -5,6 +7,7 @@ head
 
 body.accueil
   block content
+    +sacflash()
     h1.titreCarto Cartographie 
       p.titrePara des références
     div
@@ -16,3 +19,7 @@ body.accueil
         a(href="/cartographie/themes" class="grand bleu") Liste des thèmes
       h2
         a(href="/cms/liste" class="grand bleu") Modifier la cartographie
+      h2
+        a(href="/connexion") Se connecter
+      h2
+        a(href="/inscription") Créer un compte

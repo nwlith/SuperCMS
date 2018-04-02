@@ -1,0 +1,23 @@
+head 
+  title Connexion
+  link(rel='stylesheet', href='/stylesheets/style.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
+
+body.accueil
+  block content
+    h1.titreCarto Connexion
+    div
+      form(method="post" action="/connexion")
+        label(for="nom") Nom :
+          p
+            input(type="text" name="nom" id="nom" value=user.nom)
+        label(for="mail") Email :
+          p
+            input(type="text" name="email" id="email" value=user.email)
+        label(for="password") Mot de passe : 
+          p
+            input(type="text" name="password" id="password" value=user.password)
+    div
+      a(href="/inscription") Créer un compte
+    div
+      a(href="/") Retour

@@ -8,7 +8,8 @@
 var express = require('express');
 var router = express.Router();
 const fs = require('fs');
-/*  Modèles **/
+
+//  modèles
 var References = require('./../database/modeles').References;
 var Themes = require('./../database/modeles').Themes;
 
@@ -54,11 +55,15 @@ var carteUrl = {
 
 /* Créer une réference */
 router.get('/nouvelle', function(req, res, next) {
+  ensureLoggedIn('../users/connexion'),
+  function(req, res) {
     Themes.findAll().then((themes) => {
-        res.render('CMS/nouvelleReference',{
-            themes: themes,
-        });
+      res.render('CMS/nouvelleReference', { 
+         user: req.user, 
+         themes: themes,
+       });
     });
+  };
 });
 
 router.post('/nouvel_article', function(req, res, next) {
@@ -69,7 +74,7 @@ router.post('/nouvel_article', function(req, res, next) {
       path: req.file.filename ? '/images/'+ req.file.filename : 'erreur',
       description: req.body.description || 'Pas de descritpion',
     }).then((reference) => {
-      flasher.flash({ message: 'Article ' + reference.titre + ' créé avec succès !' });
+      flasher.flash(req, { message: 'Article ' + reference.titre + ' créé avec succès !' });
       res.redirect('/cms/reference/'+ reference.id);
     });
   });
@@ -82,7 +87,7 @@ router.post('/nouvelle_image', function(req, res, next) {
         path: req.file.filename ? '/images/' + req.file.filename : 'erreur',
         description: req.body.description || 'description par défaut',
       }).then((reference) => {
-        flasher.flash({ message: 'Image ' + reference.titre + ' créé avec succès !' });
+        flasher.flash(req, { message: 'Image ' + reference.titre + ' créé avec succès !' });
         res.redirect('/cms/reference/'+ reference.id);
     });
   });
@@ -95,7 +100,20 @@ router.post('/nouveau_livre', function(req, res, next) {
       path: req.file.filename ? '/images/'+ req.file.filename : 'erreur',
       description: req.body.description || 'Pas de descritpion',
     }).then((reference) => {
-      flasher.flash({ message: 'Livre ' + reference.titre + ' créé avec succès !' });
+      flasher.flash(req, { message: 'Livre ' + reference.titre + ' créé avec succès !' });
+      res.redirect('/cms/reference/'+ reference.id);
+    });
+  });
+
+router.post('/nouvelle_revue', function(req, res, next) {
+  References.create({
+      classe: 'revue',
+      titre: req.body.titre || 'titre par défaut',
+      auteur: req.body.auteur || 'auteur inconnu',
+      path: req.file.filename ? '/images/'+ req.file.filename : 'erreur',
+      description: req.body.description || 'Pas de descritpion',
+    }).then((reference) => {
+      flasher.flash(req, { message: 'Revue ' + reference.revue + ' créé avec succès !' });
       res.redirect('/cms/reference/'+ reference.id);
     });
   });
@@ -109,7 +127,7 @@ router.post('/nouvelle_video', function(req, res, next) {
         lien: req.body.lien || 'oups pas de lien',
         description: req.body.description || 'Pas de description',
       }).then((reference) => {
-        flasher.flash({ message: 'Vidéo ' + reference.titre + ' créé avec succès !' });
+        flasher.flash(req, { message: 'Vidéo ' + reference.titre + ' créé avec succès !' });
         res.redirect('/cms/reference/'+ reference.id);
       });
     });
@@ -166,7 +184,7 @@ router.get('/reference/:id/edit' , function(req, res, next) {
       res.render('CMS/edit'+ reference.classe, {
         reference: reference,
         themes: themes,
-        flash: flasher.getFlash(),
+        flash: flasher.getFlash(req),
       });
     });
   });
@@ -189,7 +207,7 @@ router.post('/article/:id/edit', function(req, res, next) {
       description: req.body.description || reference.description,
       path: req.body.filename || reference.path,
     }).then(function(a) {
-      flasher.flash({ message: 'Article ' + reference.titre + ' modifié avec succès !' });
+      flasher.flash(req, { message: 'Article ' + reference.titre + ' modifié avec succès !' });
       res.redirect('back');
     });
   });
@@ -203,7 +221,7 @@ router.post('/image/:id/edit', function(req, res, next) {
       description: req.body.description || reference.description,
       path: req.body.filename || reference.path,
     }).then(() => {
-      flasher.flash({ message: 'Image ' + reference.titre + ' modifiée avec succès !' });
+      flasher.flash(req, { message: 'Image ' + reference.titre + ' modifiée avec succès !' });
       res.redirect('back');
     });
   });
@@ -217,7 +235,21 @@ router.post('/livre/:id/edit', function(req, res, next) {
       description: req.body.description || reference.description,
       path: req.body.filename || reference.path,
     }).then(() => {
-      flasher.flash({ message: 'Image ' + reference.titre + ' modifiée avec succès !' });
+      flasher.flash(req, { message: 'Livre ' + reference.titre + ' modifiée avec succès !' });
+      res.redirect('back');
+    });
+  });
+});
+
+router.post('/revue/:id/edit', function(req, res, next) {
+  References.findById(req.params.id).then((reference) => {
+    reference.update({
+      titre: req.body.titre || reference.titre,
+      auteur: req.body.auteur || reference.auteur,
+      description: req.body.description || reference.description,
+      path: req.body.filename || reference.path,
+    }).then(() => {
+      flasher.flash(req, { message: 'Revue ' + reference.titre + ' modifiée avec succès !' });
       res.redirect('back');
     });
   });
@@ -231,6 +263,7 @@ router.post('/video/:id/edit', function(req, res, next) {
       lien: req.body.lien || reference.lien,
       description: req.body.description || reference.description,
     })}).then(() => {
+      flasher.flash(req, { message: 'Revue ' + reference.titre + ' modifiée avec succès !' });
       res.redirect('back');
     });
 });
@@ -250,33 +283,11 @@ router.post('/theme/:id/edit', function(req, res, next) {
 
 router.post('/reference/:id/delete', function(req, res, next) {
   References.findById(req.params.id).then(function(reference) {
-    reference.destroy();
-    /*
-    fs.unlink(path.resolve(__dirname,'../public', image.path), (err) => {
+    var image_path = path.resolve(__dirname,'../public' + reference.path);
+    fs.unlink(image_path, (err) => {
       if (err) throw err;
-      console.log('Image de #{reference.titre} supprimée !');
+      console.log(`Image de ${reference.titre} supprimée !`);
     });
-    */
-  }).then(function() {
-    res.redirect('/cms/liste');
-  });
-});
-
-router.post('/image/:id/delete', function(req, res, next) {
-  References.findById(req.params.id).then(function(reference) {
-    reference.destroy();
-    console.log(__dirname+'<====== dirname');
-    fs.unlink(path.resolve(__dirname,'../public', image.path), (err) => {
-      if (err) throw err;
-      console.log('#{reference.titre} supprimée !');
-    });
-  }).then(function() {
-    res.redirect('/cms/liste');
-  });
-});
-
-router.post('/video/:id/delete', function(req, res, next) {
-  Reference.findById(req.params.id).then(function(reference) {
     reference.destroy();
   }).then(function() {
     res.redirect('/cms/liste');

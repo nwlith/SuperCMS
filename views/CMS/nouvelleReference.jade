@@ -13,10 +13,11 @@ body.cms
         a(href="/cms/liste" class="navigation") Liste des références
     div.center
       h3
-        a(onclick="document.getElementById('nouvelArticle').classList.remove('hide');document.getElementById('nouvelleVideo').classList.add('hide');document.getElementById('nouvelleImage').classList.add('hide');document.getElementById('nouveauLivre').classList.add('hide');" class="grand bleu") article
-        a(onclick="document.getElementById('nouvelleImage').classList.remove('hide');document.getElementById('nouvelArticle').classList.add('hide');document.getElementById('nouvelleVideo').classList.add('hide');document.getElementById('nouveauLivre').classList.add('hide');" class="grand bleu") image
-        a(onclick="document.getElementById('nouveauLivre').classList.remove('hide');document.getElementById('nouvelArticle').classList.add('hide');document.getElementById('nouvelleImage').classList.add('hide');document.getElementById('nouvelleVideo').classList.add('hide');" class="grand bleu") livre
-        a(onclick="document.getElementById('nouvelleVideo').classList.remove('hide');document.getElementById('nouvelArticle').classList.add('hide');document.getElementById('nouvelleImage').classList.add('hide');document.getElementById('nouveauLivre').classList.add('hide');" class="grand bleu") vidéo
+        a(onclick="document.getElementById('nouvelArticle').classList.remove('hide');document.getElementById('nouvelleVideo').classList.add('hide');document.getElementById('nouvelleImage').classList.add('hide');document.getElementById('nouveauLivre').classList.add('hide');document.getElementById('nouvelleRevue').classList.add('hide');" class="grand bleu") article
+        a(onclick="document.getElementById('nouvelleImage').classList.remove('hide');document.getElementById('nouvelArticle').classList.add('hide');document.getElementById('nouvelleVideo').classList.add('hide');document.getElementById('nouveauLivre').classList.add('hide');document.getElementById('nouvelleRevue').classList.add('hide');" class="grand bleu") image
+        a(onclick="document.getElementById('nouveauLivre').classList.remove('hide');document.getElementById('nouvelArticle').classList.add('hide');document.getElementById('nouvelleImage').classList.add('hide');document.getElementById('nouvelleVideo').classList.add('hide');document.getElementById('nouvelleRevue').classList.add('hide');" class="grand bleu") livre
+        a(onclick="document.getElementById('nouvelleVideo').classList.remove('hide');document.getElementById('nouvelArticle').classList.add('hide');document.getElementById('nouvelleImage').classList.add('hide');document.getElementById('nouveauLivre').classList.add('hide');document.getElementById('nouvelleRevue').classList.add('hide');" class="grand bleu") vidéo
+        a(onclick="document.getElementById('nouvelleRevue').classList.remove('hide');document.getElementById('nouvelArticle').classList.add('hide');document.getElementById('nouvelleImage').classList.add('hide');document.getElementById('nouvelleVideo').classList.add('hide');document.getElementById('nouveauLivre').classList.add('hide');" class="grand bleu") revue
     section.center
         div(class="bloc ajoutReference" id="nouvelArticle")
               h2 Article
@@ -72,6 +73,24 @@ body.cms
                     aside Note: Utiliser Markdown pour le formatage  
                 h3
                   button(type="submit" class="grand bleu") nouveau livre
+        div(class="bloc ajoutReference hide" id="nouvelleRevue")
+              h2 Revue
+              form(method="post" class="revue" action="/cms/nouvelle_revue"  enctype="multipart/form-data")
+                label(for="titre") Titre :
+                  p
+                    input(type="text" name="titre" id="titre")
+                label(for="auteur") Auteur :
+                  p
+                    input(type="text" name="auteur" id="auteur")
+                label(for="file") Couverture : 
+                  p
+                    input(type="file" name="file" id="file") 
+                label(for="description") Résumé :
+                  p
+                    textarea(rows="15" cols="150" name="description" id="description")
+                    aside Note: Utiliser Markdown pour le formatage  
+                h3
+                  button(type="submit" class="grand bleu") nouvelle revue
         div(class="bloc ajoutReference hide" id="nouvelleVideo")
               h2 Vidéo  
               form(method="post" class="video" action="/cms/nouvelle_video" enctype="multipart/form-data")   

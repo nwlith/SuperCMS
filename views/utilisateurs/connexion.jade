@@ -1,0 +1,26 @@
+include ../mixin/sacflash
+
+head 
+  title Connexion
+  link(rel='stylesheet', href='/stylesheets/style.css')
+  link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Code+Pro')
+
+body.accueil
+  block content
+    h1.titreCarto Connexion
+    +sacflash()
+    div
+      form(method="post" action="/users/connexion")
+        label(for="email") Email :
+          p
+            input(type="text" name="email" id="email")
+        label(for="password") Mot de passe : 
+          p
+            input(type="text" name="password" id="password")
+        p
+          button(type="submit")
+
+    div
+      a(href="/users/inscription") Créer un compte
+    div
+      a(href="/") Retour
